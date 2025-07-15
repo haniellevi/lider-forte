@@ -250,6 +250,28 @@ export function useCurrentUserProfile() {
   });
 }
 
+export function useUserProfile(userId: string) {
+  const supabase = useSupabase();
+  const { user } = useUser();
+  
+  return useQuery({
+    queryKey: ['user-profile', userId],
+    queryFn: async (): Promise<Profile | null> => {
+      if (!user?.id) return null;
+      
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user?.id && !!userId,
+  });
+}
+
 export function useUpdateUserProfile() {
   const queryClient = useQueryClient();
   const showToast = useShowToast();
@@ -257,21 +279,27 @@ export function useUpdateUserProfile() {
   const { user } = useUser();
   
   return useMutation({
-    mutationFn: async (updates: Partial<ProfileUpdate>) => {
+    mutationFn: async (updates: Partial<ProfileUpdate> & { id?: string }) => {
       if (!user?.id) throw new Error('User not authenticated');
+      
+      const targetId = updates.id || user.id;
+      const { id, ...updateData } = updates;
       
       const { data, error } = await supabase
         .from('profiles')
-        .update(updates)
-        .eq('id', user.id)
+        .update(updateData)
+        .eq('id', targetId)
         .select()
         .single();
       
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
+      const targetId = variables.id || user.id;
+      queryClient.invalidateQueries({ queryKey: ['user-profile', targetId] });
       queryClient.invalidateQueries({ queryKey: ['current-user-profile'] });
+      queryClient.invalidateQueries({ queryKey: ['church-users'] });
       showToast({ type: 'success', message: 'Perfil atualizado com sucesso!' });
     },
     onError: (error) => {
