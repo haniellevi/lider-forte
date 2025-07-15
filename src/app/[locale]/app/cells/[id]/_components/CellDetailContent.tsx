@@ -269,7 +269,7 @@ export function CellDetailContent({ cellId }: CellDetailContentProps) {
             </div>
 
             {/* Meeting Info */}
-            {(cell.meeting_day !== undefined && cell.meeting_time) && (
+            {(cell.meeting_day !== null && cell.meeting_day !== undefined && cell.meeting_time) && (
               <div className="bg-white dark:bg-boxdark rounded-lg border border-stroke dark:border-strokedark p-6">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   {t("detail.meetingInfo")}
@@ -279,7 +279,7 @@ export function CellDetailContent({ cellId }: CellDetailContentProps) {
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-5 w-5 text-gray-400" />
                     <span className="text-gray-900 dark:text-white">
-                      {getDayName(cell.meeting_day)}
+                      {cell.meeting_day !== null ? getDayName(cell.meeting_day) : ''}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">

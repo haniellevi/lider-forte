@@ -190,6 +190,59 @@ export const formatPhone = (phone: string): string => {
   return phone;
 };
 
+// Utilitários para validação
+export const validateCPF = (cpf: string): boolean => {
+  const cleanCpf = cpf.replace(/[.-]/g, '');
+  
+  if (cleanCpf.length !== 11) return false;
+  if (/^(\d)\1{10}$/.test(cleanCpf)) return false;
+  
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(cleanCpf[i]) * (10 - i);
+  }
+  let remainder = sum % 11;
+  let firstDigit = remainder < 2 ? 0 : 11 - remainder;
+  
+  if (parseInt(cleanCpf[9]) !== firstDigit) return false;
+  
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += parseInt(cleanCpf[i]) * (11 - i);
+  }
+  remainder = sum % 11;
+  let secondDigit = remainder < 2 ? 0 : 11 - remainder;
+  
+  return parseInt(cleanCpf[10]) === secondDigit;
+};
+
+export const validateCNPJ = (cnpj: string): boolean => {
+  const cleanCnpj = cnpj.replace(/[./-]/g, '');
+  
+  if (cleanCnpj.length !== 14) return false;
+  if (/^(\d)\1{13}$/.test(cleanCnpj)) return false;
+  
+  let sum = 0;
+  const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  for (let i = 0; i < 12; i++) {
+    sum += parseInt(cleanCnpj[i]) * weights1[i];
+  }
+  let remainder = sum % 11;
+  let firstDigit = remainder < 2 ? 0 : 11 - remainder;
+  
+  if (parseInt(cleanCnpj[12]) !== firstDigit) return false;
+  
+  sum = 0;
+  const weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  for (let i = 0; i < 13; i++) {
+    sum += parseInt(cleanCnpj[i]) * weights2[i];
+  }
+  remainder = sum % 11;
+  let secondDigit = remainder < 2 ? 0 : 11 - remainder;
+  
+  return parseInt(cleanCnpj[13]) === secondDigit;
+};
+
 // Utilitários para limpeza
 export const cleanCPF = (cpf: string): string => cpf.replace(/[.-]/g, '');
 export const cleanCNPJ = (cnpj: string): string => cnpj.replace(/[./-]/g, '');

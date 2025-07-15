@@ -24,5 +24,25 @@ export function useNavigation(): NavigationData {
         },
       ],
     },
+    {
+      label: t('management'),
+      items: [
+        {
+          title: t('churches'),
+          icon: Icons.ChurchIcon,
+          url: '/app/churches',
+        },
+        {
+          title: t('cells'),
+          icon: Icons.CellsIcon,
+          url: '/app/cells',
+        },
+        {
+          title: t('reports'),
+          icon: Icons.ReportsIcon,
+          url: '/app/reports',
+        },
+      ],
+    },
   ], [t]);
 }

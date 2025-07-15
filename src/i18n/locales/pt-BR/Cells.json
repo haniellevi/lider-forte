@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "title": "Células - LIDER FORTE",
+    "description": "Gerencie as células da igreja, membros e hierarquia organizacional."
+  },
+  "title": "Células",
+  "subtitle": "Gerencie a estrutura hierárquica de células da sua igreja",
+  "leader": "Líder",
+  "supervisor": "Supervisor",
+  "member": "Membro",
+  "members": "Membros",
+  "parentCell": "Célula Pai",
+  "childCell": "Célula Filha",
+  "childCells": "Células Filhas",
+  "created": "Criada",
+  "confirmDelete": "Tem certeza que deseja excluir esta célula?",
+  
+  "days": {
+    "sunday": "Domingo",
+    "monday": "Segunda-feira",
+    "tuesday": "Terça-feira",
+    "wednesday": "Quarta-feira",
+    "thursday": "Quinta-feira",
+    "friday": "Sexta-feira",
+    "saturday": "Sábado"
+  },
+  
+  "roles": {
+    "pastor": "Pastor",
+    "supervisor": "Supervisor", 
+    "leader": "Líder",
+    "timoteo": "Timóteo",
+    "member": "Membro"
+  },
+  
+  "actions": {
+    "view": "Visualizar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "addMember": "Adicionar Membro",
+    "createCell": "Criar Célula",
+    "createSubCell": "Criar Sub-célula",
+    "createFirstCell": "Criar Primeira Célula"
+  },
+  
+  "viewMode": {
+    "tree": "Visualização em Árvore",
+    "grid": "Visualização em Grade"
+  },
+  
+  "filters": {
+    "searchPlaceholder": "Buscar células...",
+    "leader": "Líder",
+    "selectLeader": "Selecionar líder",
+    "allLeaders": "Todos os líderes",
+    "supervisor": "Supervisor",
+    "selectSupervisor": "Selecionar supervisor",
+    "allSupervisors": "Todos os supervisores"
+  },
+  
+  "hierarchy": {
+    "title": "Hierarquia de Células",
+    "noCells": "Nenhuma célula encontrada",
+    "noCellsDescription": "Comece criando sua primeira célula para organizar a estrutura da igreja."
+  },
+  
+  "form": {
+    "createTitle": "Criar Nova Célula",
+    "editTitle": "Editar Célula",
+    "basicInfo": "Informações Básicas",
+    "meetingInfo": "Informações de Reunião",
+    "address": "Endereço",
+    "name": "Nome da Célula",
+    "namePlaceholder": "Digite o nome da célula...",
+    "leader": "Líder",
+    "selectLeader": "Selecionar líder",
+    "supervisor": "Supervisor",
+    "selectSupervisor": "Selecionar supervisor",
+    "parentCell": "Célula Pai",
+    "selectParentCell": "Selecionar célula pai",
+    "meetingDay": "Dia da Reunião",
+    "selectMeetingDay": "Selecionar dia",
+    "meetingTime": "Horário da Reunião",
+    "cancel": "Cancelar",
+    "create": "Criar Célula",
+    "update": "Atualizar Célula",
+    "save": "Salvar",
+    "saving": "Salvando...",
+    "selectRole": "Selecionar papel"
+  },
+  
+  "members": {
+    "title": "Membros",
+    "addMember": "Adicionar Membro",
+    "addMemberTitle": "Adicionar Membro à Célula",
+    "addFirstMember": "Adicionar Primeiro Membro",
+    "noMembers": "Nenhum membro nesta célula",
+    "noMembersDescription": "Comece adicionando membros para formar sua célula.",
+    "noAvailableUsers": "Não há usuários disponíveis para adicionar",
+    "selectMember": "Selecionar Membro",
+    "selectMemberPlaceholder": "Escolha um membro...",
+    "member": "Membro",
+    "role": "Papel",
+    "joinedAt": "Entrou em",
+    "actions": "Ações",
+    "removeMember": "Remover Membro",
+    "confirmRemove": "Tem certeza que deseja remover este membro da célula?",
+    "adding": "Adicionando...",
+    "addSuccess": "Membro adicionado com sucesso!",
+    "successLadder": "Escada do Sucesso",
+    "successLadderScore": "Pontuação da Escada do Sucesso",
+    "successLadderDescription": "Pontuação de 0 a 100 baseada no desenvolvimento do membro",
+    "timoteo": "Timóteo",
+    "timoteoStatus": "Status Timóteo",
+    "timoteoDescription": "Marcar como líder em formação",
+    "importantNote": "Informações Importantes",
+    "notePoint1": "Apenas membros da mesma igreja podem ser adicionados",
+    "notePoint2": "O líder da célula não pode ser removido",
+    "notePoint3": "A pontuação da Escada do Sucesso ajuda no acompanhamento do crescimento",
+    "successLadder": {
+      "excellent": "Excelente",
+      "good": "Bom", 
+      "regular": "Regular",
+      "beginner": "Iniciante"
+    }
+  },
+  
+  "detail": {
+    "meta": {
+      "title": "Detalhes da Célula - LIDER FORTE",
+      "description": "Visualize e gerencie os detalhes, membros e atividades da célula."
+    },
+    "title": "Detalhes da Célula",
+    "breadcrumb": "Detalhes",
+    "parentCell": "Célula Pai",
+    "addMember": "Adicionar Membro",
+    "editCell": "Editar Célula",
+    "backToCells": "Voltar às Células",
+    "cellNotFound": "Célula não encontrada",
+    "cellNotFoundDescription": "A célula que você está procurando não existe ou foi removida.",
+    "leadership": "Liderança",
+    "leader": "Líder",
+    "supervisor": "Supervisor",
+    "meetingInfo": "Informações de Reunião",
+    "statistics": "Estatísticas",
+    "totalMembers": "Total de Membros",
+    "childCells": "Células Filhas",
+    "tabs": {
+      "overview": "Visão Geral",
+      "members": "Membros",
+      "meetings": "Reuniões"
+    },
+    "meetings": {
+      "comingSoon": "Em Breve",
+      "comingSoonDescription": "O sistema de reuniões estará disponível em breve para registrar frequência e atividades."
+    }
+  },
+  
+  "noCells": "Nenhuma célula encontrada",
+  "noCellsDescription": "Comece criando sua primeira célula para organizar a estrutura da igreja.",
+  "noResultsFound": "Nenhum resultado encontrado",
+  "tryDifferentFilters": "Tente usar filtros diferentes para encontrar células."
+}

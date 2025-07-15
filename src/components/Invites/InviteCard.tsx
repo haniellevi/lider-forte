@@ -217,7 +217,7 @@ export function InviteCard({ invite, isOwner = false, onAction }: InviteCardProp
         {invite.message && (
           <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-3">
             <p className="text-sm text-gray-700 dark:text-gray-300">
-              "{invite.message}"
+              &ldquo;{invite.message}&rdquo;
             </p>
           </div>
         )}

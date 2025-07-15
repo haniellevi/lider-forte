@@ -28,10 +28,6 @@ export default async function CellDetailPage({
     <>
       <Breadcrumb 
         pageName={t("detail.title")} 
-        items={[
-          { name: t("title"), href: "/app/cells" },
-          { name: t("detail.breadcrumb") }
-        ]}
       />
       <div className="mx-auto max-w-7xl">
         <CellDetailContent cellId={id} />

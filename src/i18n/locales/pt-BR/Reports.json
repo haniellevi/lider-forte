@@ -1,0 +1,180 @@
+{
+  "meta": {
+    "title": "Relatórios - LIDER FORTE",
+    "description": "Relatórios e analytics da igreja para acompanhar crescimento e performance."
+  },
+  "title": "Relatórios",
+  "subtitle": "Acompanhe o crescimento e performance da sua igreja",
+  
+  "dashboard": {
+    "title": "Dashboard",
+    "overview": "Visão Geral",
+    "metrics": "Métricas Principais",
+    "growth": "Crescimento",
+    "performance": "Performance"
+  },
+  
+  "types": {
+    "church_overview": "Visão Geral da Igreja",
+    "cell_performance": "Performance de Células", 
+    "member_growth": "Crescimento de Membros",
+    "leadership_development": "Desenvolvimento de Liderança",
+    "financial_summary": "Resumo Financeiro",
+    "attendance_tracking": "Controle de Frequência",
+    "event_statistics": "Estatísticas de Eventos"
+  },
+  
+  "metrics": {
+    "member_count": "Total de Membros",
+    "cell_count": "Total de Células",
+    "conversion_rate": "Taxa de Conversão",
+    "attendance_rate": "Taxa de Frequência",
+    "growth_rate": "Taxa de Crescimento",
+    "retention_rate": "Taxa de Retenção",
+    "engagement_score": "Pontuação de Engajamento",
+    "leadership_ratio": "Proporção de Liderança",
+    "total_leaders": "Líderes Ativos",
+    "total_supervisors": "Supervisores",
+    "new_members_30d": "Novos Membros (30 dias)",
+    "new_cells_30d": "Novas Células (30 dias)",
+    "avg_members_per_cell": "Média por Célula"
+  },
+  
+  "periods": {
+    "daily": "Diário",
+    "weekly": "Semanal", 
+    "monthly": "Mensal",
+    "quarterly": "Trimestral",
+    "yearly": "Anual"
+  },
+  
+  "charts": {
+    "memberGrowth": "Crescimento de Membros",
+    "roleDistribution": "Distribuição de Papéis",
+    "topCells": "Células com Melhor Performance", 
+    "recentActivity": "Atividades Recentes",
+    "growthTrend": "Tendência de Crescimento",
+    "cellPerformance": "Performance de Células"
+  },
+  
+  "actions": {
+    "create": "Criar Relatório",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "generate": "Gerar",
+    "export": "Exportar",
+    "share": "Compartilhar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "view": "Visualizar",
+    "download": "Baixar"
+  },
+  
+  "form": {
+    "createTitle": "Criar Novo Relatório",
+    "editTitle": "Editar Relatório",
+    "name": "Nome do Relatório",
+    "namePlaceholder": "Digite o nome do relatório...",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Descreva o objetivo deste relatório...",
+    "type": "Tipo de Relatório",
+    "selectType": "Selecione o tipo",
+    "parameters": "Parâmetros",
+    "filters": "Filtros",
+    "isPublic": "Relatório Público",
+    "isPublicDescription": "Permitir que outros usuários vejam este relatório",
+    "scheduledFrequency": "Frequência de Atualização",
+    "selectFrequency": "Selecionar frequência",
+    "noSchedule": "Sem agendamento automático",
+    "startDate": "Data Inicial",
+    "endDate": "Data Final",
+    "cellIds": "Células Específicas",
+    "selectCells": "Selecionar células",
+    "allCells": "Todas as células",
+    "metricTypes": "Tipos de Métricas",
+    "selectMetrics": "Selecionar métricas",
+    "periodType": "Período"
+  },
+  
+  "list": {
+    "title": "Meus Relatórios",
+    "subtitle": "Gerencie seus relatórios salvos",
+    "noReports": "Nenhum relatório encontrado",
+    "noReportsDescription": "Comece criando seu primeiro relatório para acompanhar métricas importantes.",
+    "createFirst": "Criar Primeiro Relatório",
+    "searchPlaceholder": "Buscar relatórios...",
+    "filterByType": "Filtrar por tipo",
+    "allTypes": "Todos os tipos",
+    "showPublic": "Mostrar públicos",
+    "showPrivate": "Mostrar privados",
+    "createdBy": "Criado por",
+    "createdAt": "Criado em",
+    "lastGenerated": "Última geração",
+    "never": "Nunca",
+    "public": "Público",
+    "private": "Privado"
+  },
+  
+  "generate": {
+    "title": "Gerar Relatório",
+    "subtitle": "Configure os parâmetros para gerar um relatório customizado",
+    "selectReportType": "Selecione o tipo de relatório",
+    "configureFilters": "Configure os filtros",
+    "selectFormat": "Formato de saída",
+    "formats": {
+      "json": "JSON",
+      "pdf": "PDF",
+      "excel": "Excel"
+    },
+    "generating": "Gerando relatório...",
+    "success": "Relatório gerado com sucesso!",
+    "error": "Erro ao gerar relatório",
+    "downloadReady": "Seu relatório está pronto para download"
+  },
+  
+  "messages": {
+    "createSuccess": "Relatório criado com sucesso!",
+    "updateSuccess": "Relatório atualizado com sucesso!",
+    "deleteSuccess": "Relatório excluído com sucesso!",
+    "generateSuccess": "Relatório gerado com sucesso!",
+    "createError": "Erro ao criar relatório",
+    "updateError": "Erro ao atualizar relatório",
+    "deleteError": "Erro ao excluir relatório",
+    "generateError": "Erro ao gerar relatório",
+    "loadError": "Erro ao carregar relatórios",
+    "confirmDelete": "Tem certeza que deseja excluir este relatório?",
+    "deleteWarning": "Esta ação não pode ser desfeita.",
+    "noPermission": "Você não tem permissão para realizar esta ação",
+    "onlyPublicPastors": "Apenas pastores e supervisores podem criar relatórios públicos"
+  },
+  
+  "events": {
+    "member_created": "Novo membro adicionado",
+    "cell_created": "Nova célula criada",
+    "member_role_changed": "Papel de membro alterado",
+    "cell_leader_changed": "Líder de célula alterado",
+    "member_added_to_cell": "Membro adicionado à célula",
+    "member_removed_from_cell": "Membro removido da célula"
+  },
+  
+  "loading": "Carregando...",
+  "noData": "Nenhum dado disponível",
+  "error": "Erro",
+  "retry": "Tentar novamente",
+  "refresh": "Atualizar",
+  
+  "empty": {
+    "title": "Sem dados",
+    "description": "Não há dados suficientes para gerar este relatório.",
+    "suggestion": "Tente ajustar os filtros ou aguarde mais atividade na igreja."
+  },
+  
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Próximo",
+    "page": "Página",
+    "of": "de",
+    "showing": "Mostrando",
+    "results": "resultados"
+  }
+}

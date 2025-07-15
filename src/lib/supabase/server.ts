@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 // Cache para instâncias do cliente por token
 const clientCache = new Map<string, SupabaseClient>();
 
-export const createServerClient = async () => {
+export const createClient = async () => {
   const { getToken } = await auth();
   
   const clerkToken = await getToken({
@@ -45,6 +45,8 @@ export const createServerClient = async () => {
   
   return client;
 };
+
+export const createServerClient = createClient;
 
 export const createAdminClient = () => {
   return createClient(

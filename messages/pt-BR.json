@@ -1,7 +1,7 @@
 {
   "Navigation": {
     "dashboard": "Painel",
-    "ecommerce": "E-commerce",
+    "ecommerce": "Principal",
     "calendar": "Calendário",
     "profile": "Perfil",
     "forms": "Formulários",
@@ -32,7 +32,13 @@
     "analyticsDemo": "Demo Analytics",
     "mainMenu": "MENU PRINCIPAL",
     "others": "OUTROS",
-    "backend": "BACKEND"
+    "backend": "Gestão",
+    "churches": "Igrejas",
+    "cells": "Células",
+    "members": "Membros",
+    "reports": "Relatórios",
+    "management": "Administração",
+    "ministry": "Ministério"
   },
   "Header": {
     "notifications": "Notificações",

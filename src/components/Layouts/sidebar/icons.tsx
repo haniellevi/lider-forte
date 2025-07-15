@@ -13,4 +13,8 @@ export {
   ArrowLeft as ArrowLeftIcon,
   ChevronsLeft as ChevronDoubleLeft,
   ChevronsRight as ChevronDoubleRight,
+  Building as ChurchIcon,
+  Users as CellsIcon,
+  BarChart as ReportsIcon,
+  Settings as SettingsIcon,
 } from 'lucide-react';
