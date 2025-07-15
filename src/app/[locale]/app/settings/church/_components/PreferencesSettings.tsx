@@ -118,9 +118,7 @@ export function PreferencesSettings() {
             label={t("preferences.language")}
             placeholder={t("preferences.selectLanguage")}
             items={languageOptions}
-            defaultValue={formContext.watch("language")}
-            onChange={(value) => formContext.setValue("language", value)}
-            icon={<Globe className="h-4 w-4" />}
+            defaultValue={"pt"}
           />
           
           <Select

@@ -57,7 +57,7 @@ export function ReportsList() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Spinner size="large" />
+        <Spinner size="lg" />
       </div>
     );
   }
@@ -172,7 +172,7 @@ export function ReportsList() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reports.map((report) => (
+          {reports.map((report: any) => (
             <div
               key={report.id}
               className="bg-white dark:bg-boxdark rounded-lg border border-stroke dark:border-strokedark p-6 hover:shadow-lg transition-shadow"
@@ -183,7 +183,7 @@ export function ReportsList() {
                   <h3 className="font-medium text-gray-900 dark:text-white mb-1">
                     {report.name}
                   </h3>
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="default" className="text-xs">
                     {getReportTypeLabel(report.report_type)}
                   </Badge>
                 </div>

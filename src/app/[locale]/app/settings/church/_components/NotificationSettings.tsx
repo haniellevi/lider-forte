@@ -137,10 +137,7 @@ export function NotificationSettings() {
                   </p>
                 </div>
               </div>
-              <Switch
-                checked={preferences[channel.key]}
-                onCheckedChange={(checked) => handlePreferenceChange(channel.key, checked)}
-              />
+              <Switch />
             </div>
           ))}
         </div>
@@ -167,10 +164,7 @@ export function NotificationSettings() {
                   </p>
                 </div>
               </div>
-              <Switch
-                checked={preferences[type.key]}
-                onCheckedChange={(checked) => handlePreferenceChange(type.key, checked)}
-              />
+              <Switch />
             </div>
           ))}
         </div>

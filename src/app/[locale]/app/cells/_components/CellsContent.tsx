@@ -48,14 +48,14 @@ export function CellsContent() {
     .filter(user => ['leader', 'supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.name || user.email,
+      label: user.full_name || user.id,
     }));
 
   const supervisorOptions = users
     .filter(user => ['supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.name || user.email,
+      label: user.full_name || user.id,
     }));
 
   const handleCreateCell = () => {
@@ -161,9 +161,11 @@ export function CellsContent() {
         <div className="flex flex-1 items-center space-x-2">
           <div className="relative flex-1 max-w-sm">
             <InputGroup
+              label=""
+              type="text"
               placeholder={t("filters.searchPlaceholder")}
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              handleChange={(e) => setSearchTerm(e.target.value)}
               icon={<Search className="h-4 w-4" />}
               iconPosition="left"
             />
@@ -177,7 +179,6 @@ export function CellsContent() {
               ...leaderOptions
             ]}
             defaultValue={leaderFilter}
-            onChange={(value) => setLeaderFilter(value)}
           />
           
           <Select
@@ -188,7 +189,6 @@ export function CellsContent() {
               ...supervisorOptions
             ]}
             defaultValue={supervisorFilter}
-            onChange={(value) => setSupervisorFilter(value)}
           />
         </div>
       </div>
@@ -236,7 +236,11 @@ export function CellsContent() {
               {cells.map((cell) => (
                 <CellCard
                   key={cell.id}
-                  cell={cell}
+                  cell={{
+                    ...cell,
+                    meeting_day: cell.meeting_day ?? undefined,
+                    meeting_time: cell.meeting_time ?? undefined,
+                  }}
                   onEdit={handleEditCell}
                 />
               ))}

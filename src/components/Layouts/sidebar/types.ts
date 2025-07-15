@@ -12,7 +12,7 @@ export interface NavigationItem {
   title: string;
   icon: IconComponent;
   url?: string;
-  items: NavigationSubItem[];
+  items?: NavigationSubItem[];
   localizedUrl?: Record<string, string>;
 }
 

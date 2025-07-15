@@ -47,7 +47,7 @@ export function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProp
     reset,
     watch,
     formState: { errors, isSubmitting }
-  } = useForm<GenerateFormData>({
+  } = useForm({
     resolver: zodResolver(generateReportSchema),
     defaultValues: {
       report_type: 'church_overview',
@@ -257,7 +257,6 @@ export function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProp
                 <Button
                   type="submit"
                   variant="primary"
-                  loading={isSubmitting}
                   disabled={isSubmitting}
                   icon={<Zap className="h-4 w-4" />}
                 >

@@ -105,6 +105,10 @@ export interface ReportFilters {
   leader_ids?: string[];
   metric_types?: MetricType[];
   period_type?: PeriodType;
+  report_type?: ReportType;
+  search?: string;
+  is_public?: boolean;
+  page?: number;
 }
 
 export interface CreateReportRequest {

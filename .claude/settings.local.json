@@ -6,7 +6,14 @@
       "Bash(npm run build:*)",
       "Bash(find:*)",
       "Bash(ls:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(where pnpm)",
+      "Bash(npm config:*)",
+      "Bash(where:*)",
+      "Bash(cat:*)",
+      "Bash(timeout 10 npm run dev)",
+      "Bash(rm:*)",
+      "Bash(git config:*)"
     ],
     "deny": []
   }

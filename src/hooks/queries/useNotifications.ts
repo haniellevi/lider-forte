@@ -1,9 +1,17 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { useUser } from '@clerk/nextjs'
 import { useClerkSupabaseClient } from '@/lib/supabase/client'
 import { useEffect, useMemo } from 'react'
 import { notificationsApi, type Notification } from '../api/notifications'
 import { useShowToast, useAddNotification } from '@/store'
+import { 
+  NotificationFilters, 
+  CreateNotificationRequest,
+  UpdateNotificationRequest,
+  MassCommunication,
+  CreateMassCommunicationRequest,
+  MassCommunicationFilters
+} from '@/types/notifications'
 
 /**
  * Query key factory for notifications
@@ -139,4 +147,237 @@ export function useUnreadNotificationsCount() {
     staleTime: 10 * 1000, // 10 seconds for count queries
     refetchInterval: 30 * 1000, // Refetch every 30 seconds
   })
+}
+
+// Hook para listar notificações com filtros
+export function useNotifications(filters?: NotificationFilters) {
+  return useQuery({
+    queryKey: ['notifications', 'filtered', filters],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      
+      if (filters?.read !== undefined) {
+        params.set('read', filters.read.toString());
+      }
+      if (filters?.priority) {
+        params.set('priority', filters.priority);
+      }
+      if (filters?.type) {
+        params.set('type', filters.type);
+      }
+      if (filters?.page) {
+        params.set('page', filters.page.toString());
+      }
+      if (filters?.limit) {
+        params.set('limit', filters.limit.toString());
+      }
+      if (filters?.start_date) {
+        params.set('start_date', filters.start_date);
+      }
+      if (filters?.end_date) {
+        params.set('end_date', filters.end_date);
+      }
+
+      const response = await fetch(`/api/protected/notifications?${params}`);
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao carregar notificações');
+      }
+      
+      return response.json();
+    },
+  });
+}
+
+// Hook para criar notificação
+export function useCreateNotification() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (data: CreateNotificationRequest) => {
+      const response = await fetch('/api/protected/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao criar notificação');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
+}
+
+// Hook para atualizar notificação
+export function useUpdateNotification() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, ...data }: UpdateNotificationRequest) => {
+      const response = await fetch(`/api/protected/notifications/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao atualizar notificação');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
+}
+
+// Hook para deletar notificação
+export function useDeleteNotification() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/protected/notifications/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao deletar notificação');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
+}
+
+// Hook para marcar todas as notificações como lidas
+export function useMarkAllNotificationsRead() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async () => {
+      const response = await fetch('/api/protected/notifications/mark-all-read', {
+        method: 'POST',
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao marcar notificações como lidas');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
+}
+
+// Hook para listar comunicações em massa
+export function useMassCommunications(filters?: MassCommunicationFilters) {
+  return useQuery({
+    queryKey: ['mass-communications', filters],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      
+      if (filters?.status) {
+        params.set('status', filters.status);
+      }
+      if (filters?.sender_id) {
+        params.set('sender_id', filters.sender_id);
+      }
+      if (filters?.target_type) {
+        params.set('target_type', filters.target_type);
+      }
+      if (filters?.page) {
+        params.set('page', filters.page.toString());
+      }
+      if (filters?.limit) {
+        params.set('limit', filters.limit.toString());
+      }
+      if (filters?.start_date) {
+        params.set('start_date', filters.start_date);
+      }
+      if (filters?.end_date) {
+        params.set('end_date', filters.end_date);
+      }
+
+      const response = await fetch(`/api/protected/communications?${params}`);
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao carregar comunicações');
+      }
+      
+      return response.json();
+    },
+  });
+}
+
+// Hook para criar comunicação em massa
+export function useCreateMassCommunication() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (data: CreateMassCommunicationRequest) => {
+      const response = await fetch('/api/protected/communications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao criar comunicação');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mass-communications'] });
+    },
+  });
+}
+
+// Hook para enviar comunicação em massa
+export function useSendMassCommunication() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/protected/communications/${id}/send`, {
+        method: 'POST',
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Erro ao enviar comunicação');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mass-communications'] });
+      queryClient.invalidateQueries({ queryKey: notificationKeys.all });
+    },
+  });
 }

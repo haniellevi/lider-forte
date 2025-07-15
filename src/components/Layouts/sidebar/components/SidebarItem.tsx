@@ -21,10 +21,10 @@ export const SidebarItem = memo(function SidebarItem({
   const { getLocalizedRoute, isRouteActive } = useInternationalizedRoutes();
 
   const isExpanded = expandedItems.includes(item.title);
-  const hasSubItems = item.items.length > 0;
+  const hasSubItems = item.items && item.items.length > 0;
 
   // Check if any subitem is active
-  const isParentActive = hasSubItems && item.items.some(
+  const isParentActive = hasSubItems && item.items?.some(
     ({ url }) => isRouteActive(currentPath, url)
   );
 
@@ -55,7 +55,7 @@ export const SidebarItem = memo(function SidebarItem({
             role="menu"
             aria-label={`${item.title} submenu`}
           >
-            {item.items.map((subItem) => {
+            {item.items?.map((subItem) => {
               const localizedUrl = getLocalizedRoute(subItem.url);
               const isSubItemActive = isRouteActive(currentPath, subItem.url);
 

@@ -116,7 +116,11 @@
     "usedDevices": "Dispositivos Utilizados",
     "topChannels": "Principais Canais",
     "topProducts": "Principais Produtos",
-    "recentMessages": "Mensagens Recentes"
+    "recentMessages": "Mensagens Recentes",
+    "meta": {
+      "title": "Painel de Controle",
+      "description": "Bem-vindo ao painel de controle do sistema. Aqui você pode visualizar estatísticas, relatórios e informações importantes."
+    }
   },
   "Notifications": {
     "title": "Notificações",

@@ -51,7 +51,7 @@ export function CreateReportModal({ isOpen, onClose, reportId }: CreateReportMod
     watch,
     setValue,
     formState: { errors, isSubmitting }
-  } = useForm<ReportFormData>({
+  } = useForm({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       name: '',
@@ -237,7 +237,6 @@ export function CreateReportModal({ isOpen, onClose, reportId }: CreateReportMod
             <Button
               type="submit"
               variant="primary"
-              loading={isSubmitting}
               disabled={isSubmitting}
             >
               {isEditing ? t('actions.save') : t('actions.create')}
