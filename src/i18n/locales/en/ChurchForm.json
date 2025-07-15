@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "createTitle": "New Church - LIDER FORTE",
+    "createDescription": "Register a new church in the system to manage members and cells.",
+    "editTitle": "Edit Church - LIDER FORTE",
+    "editDescription": "Edit church information and keep data updated."
+  },
+  "createTitle": "New Church",
+  "editTitle": "Edit Church",
+  "createDescription": "Fill in the information below to register a new church in the system.",
+  "editDescription": "Edit church information to keep data always updated.",
+  "breadcrumb": {
+    "churches": "Churches"
+  },
+  "sections": {
+    "basicInfo": "Basic Information",
+    "address": "Address",
+    "contact": "Contact",
+    "institutional": "Institutional Information"
+  },
+  "fields": {
+    "name": "Church Name",
+    "cnpj": "CNPJ",
+    "foundedDate": "Founded Date",
+    "zipCode": "ZIP Code",
+    "state": "State",
+    "city": "City",
+    "street": "Street/Avenue",
+    "number": "Number",
+    "neighborhood": "Neighborhood",
+    "complement": "Complement",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "description": "Description",
+    "vision": "Vision",
+    "mission": "Mission",
+    "values": "Values"
+  },
+  "placeholders": {
+    "name": "Enter church name...",
+    "cnpj": "00.000.000/0000-00",
+    "zipCode": "00000-000",
+    "state": "SP",
+    "city": "São Paulo",
+    "street": "Flores Street",
+    "number": "123",
+    "neighborhood": "Downtown",
+    "complement": "Room 101",
+    "phone": "(11) 99999-9999",
+    "email": "contact@church.com",
+    "website": "https://www.church.com",
+    "description": "Briefly describe the church and its activities...",
+    "vision": "What is the church's vision for the future?",
+    "mission": "What is the church's mission and purpose?",
+    "values": "Love, Faith, Hope, Fellowship"
+  },
+  "helpers": {
+    "values": "Separate values with commas (ex: Love, Faith, Hope)"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "create": "Create Church",
+    "update": "Update",
+    "saving": "Saving..."
+  },
+  "messages": {
+    "createSuccess": "Church created successfully!",
+    "updateSuccess": "Church updated successfully!",
+    "submitError": "Error saving church. Please try again.",
+    "loading": "Loading church data..."
+  },
+  "loading": "Loading...",
+  "createSuccess": "Church created successfully!",
+  "updateSuccess": "Church updated successfully!",
+  "submitError": "Error saving church. Please try again."
+}

@@ -11,7 +11,7 @@ import { ValidatedInput, FormInput } from "@/components/FormElements/enhanced";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/TextArea";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import { cnpjSchema, addressSchema } from "@/lib/validations/brazilian";
-import { useUpdateChurch, useCurrentChurch } from "@/hooks/queries/useChurches";
+import { useCreateChurch } from "@/hooks/queries/useChurches";
 
 const ChurchSetupSchema = z.object({
   name: z.string().min(2, "Nome da igreja deve ter pelo menos 2 caracteres"),
@@ -33,8 +33,7 @@ export function ChurchSetupForm() {
   const t = useTranslations("ChurchSettings");
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const { data: currentChurch, isLoading } = useCurrentChurch();
-  const updateChurch = useUpdateChurch();
+  const createChurch = useCreateChurch();
 
   const formContext = useFormValidation({
     schema: ChurchSetupSchema,

@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Gerenciamento de Igrejas - LIDER FORTE",
+    "description": "Gerencie igrejas, visualize estatísticas e administre dados institucionais."
+  },
+  "title": "Igrejas",
+  "description": "Gerencie as igrejas, visualize estatísticas e administre dados institucionais.",
+  "buttons": {
+    "export": "Exportar",
+    "addChurch": "Nova Igreja"
+  },
+  "table": {
+    "name": "Igreja",
+    "location": "Localização",
+    "contact": "Contato",
+    "stats": "Estatísticas",
+    "pastor": "Pastor",
+    "actions": "Ações"
+  },
+  "actions": {
+    "view": "Visualizar",
+    "edit": "Editar",
+    "delete": "Excluir"
+  },
+  "filters": {
+    "searchPlaceholder": "Buscar por nome da igreja...",
+    "advanced": "Filtros Avançados",
+    "clear": "Limpar",
+    "city": "Cidade",
+    "cityPlaceholder": "Digite a cidade...",
+    "state": "Estado",
+    "allStates": "Todos os estados",
+    "active": "Filtros ativos",
+    "searchLabel": "Busca",
+    "cityLabel": "Cidade",
+    "stateLabel": "Estado"
+  },
+  "pagination": {
+    "showing": "Mostrando {start} a {end} de {total} igrejas",
+    "previous": "Anterior",
+    "next": "Próximo"
+  },
+  "emptyState": {
+    "title": "Nenhuma igreja encontrada",
+    "description": "Comece criando sua primeira igreja para gerenciar membros e células.",
+    "action": "Criar Primeira Igreja"
+  },
+  "members": "membros",
+  "cells": "células",
+  "confirmDelete": "Tem certeza que deseja excluir a igreja \"{name}\"? Esta ação não pode ser desfeita.",
+  "deleteSuccess": "Igreja \"{name}\" excluída com sucesso.",
+  "deleteError": "Erro ao excluir igreja. Tente novamente.",
+  "errorLoading": "Erro ao carregar igrejas. Tente recarregar a página."
+}

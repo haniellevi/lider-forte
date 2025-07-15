@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "createTitle": "Nova Igreja - LIDER FORTE",
+    "createDescription": "Cadastre uma nova igreja no sistema para gerenciar membros e células.",
+    "editTitle": "Editar Igreja - LIDER FORTE",
+    "editDescription": "Edite as informações da igreja e mantenha os dados atualizados."
+  },
+  "createTitle": "Nova Igreja",
+  "editTitle": "Editar Igreja",
+  "createDescription": "Preencha as informações abaixo para cadastrar uma nova igreja no sistema.",
+  "editDescription": "Edite as informações da igreja para manter os dados sempre atualizados.",
+  "breadcrumb": {
+    "churches": "Igrejas"
+  },
+  "sections": {
+    "basicInfo": "Informações Básicas",
+    "address": "Endereço",
+    "contact": "Contato",
+    "institutional": "Informações Institucionais"
+  },
+  "fields": {
+    "name": "Nome da Igreja",
+    "cnpj": "CNPJ",
+    "foundedDate": "Data de Fundação",
+    "zipCode": "CEP",
+    "state": "Estado",
+    "city": "Cidade",
+    "street": "Rua/Avenida",
+    "number": "Número",
+    "neighborhood": "Bairro",
+    "complement": "Complemento",
+    "phone": "Telefone",
+    "email": "Email",
+    "website": "Website",
+    "description": "Descrição",
+    "vision": "Visão",
+    "mission": "Missão",
+    "values": "Valores"
+  },
+  "placeholders": {
+    "name": "Digite o nome da igreja...",
+    "cnpj": "00.000.000/0000-00",
+    "zipCode": "00000-000",
+    "state": "SP",
+    "city": "São Paulo",
+    "street": "Rua das Flores",
+    "number": "123",
+    "neighborhood": "Centro",
+    "complement": "Sala 101",
+    "phone": "(11) 99999-9999",
+    "email": "contato@igreja.com.br",
+    "website": "https://www.igreja.com.br",
+    "description": "Descreva brevemente a igreja e suas atividades...",
+    "vision": "Qual é a visão da igreja para o futuro?",
+    "mission": "Qual é a missão e propósito da igreja?",
+    "values": "Amor, Fé, Esperança, Comunhão"
+  },
+  "helpers": {
+    "values": "Separe os valores por vírgulas (ex: Amor, Fé, Esperança)"
+  },
+  "buttons": {
+    "cancel": "Cancelar",
+    "create": "Criar Igreja",
+    "update": "Atualizar",
+    "saving": "Salvando..."
+  },
+  "messages": {
+    "createSuccess": "Igreja criada com sucesso!",
+    "updateSuccess": "Igreja atualizada com sucesso!",
+    "submitError": "Erro ao salvar igreja. Tente novamente.",
+    "loading": "Carregando dados da igreja..."
+  },
+  "loading": "Carregando...",
+  "createSuccess": "Igreja criada com sucesso!",
+  "updateSuccess": "Igreja atualizada com sucesso!",
+  "submitError": "Erro ao salvar igreja. Tente novamente."
+}

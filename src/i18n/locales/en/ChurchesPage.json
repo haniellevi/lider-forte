@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Church Management - LIDER FORTE",
+    "description": "Manage churches, view statistics and administer institutional data."
+  },
+  "title": "Churches",
+  "description": "Manage churches, view statistics and administer institutional data.",
+  "buttons": {
+    "export": "Export",
+    "addChurch": "New Church"
+  },
+  "table": {
+    "name": "Church",
+    "location": "Location",
+    "contact": "Contact",
+    "stats": "Statistics",
+    "pastor": "Pastor",
+    "actions": "Actions"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "filters": {
+    "searchPlaceholder": "Search by church name...",
+    "advanced": "Advanced Filters",
+    "clear": "Clear",
+    "city": "City",
+    "cityPlaceholder": "Enter city...",
+    "state": "State",
+    "allStates": "All states",
+    "active": "Active filters",
+    "searchLabel": "Search",
+    "cityLabel": "City",
+    "stateLabel": "State"
+  },
+  "pagination": {
+    "showing": "Showing {start} to {end} of {total} churches",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "emptyState": {
+    "title": "No churches found",
+    "description": "Start by creating your first church to manage members and cells.",
+    "action": "Create First Church"
+  },
+  "members": "members",
+  "cells": "cells",
+  "confirmDelete": "Are you sure you want to delete church \"{name}\"? This action cannot be undone.",
+  "deleteSuccess": "Church \"{name}\" deleted successfully.",
+  "deleteError": "Error deleting church. Please try again.",
+  "errorLoading": "Error loading churches. Please refresh the page."
+}

@@ -1,166 +1,203 @@
+"use client";
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSupabase } from '@/hooks/useSupabase';
-import { useUser } from '@clerk/nextjs';
-import { useShowToast } from '@/store';
-import { Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/types';
+import { useAuth } from '@clerk/nextjs';
 
-type Church = Tables<'churches'>;
-type ChurchInsert = TablesInsert<'churches'>;
-type ChurchUpdate = TablesUpdate<'churches'>;
+// Types
+export interface Church {
+  id: string;
+  name: string;
+  cnpj: string | null;
+  address: {
+    street?: string;
+    number?: string;
+    complement?: string;
+    neighborhood?: string;
+    city?: string;
+    state?: string;
+    zipCode?: string;
+  } | null;
+  phone: string | null;
+  email: string | null;
+  website: string | null;
+  description: string | null;
+  founded_date: string | null;
+  vision: string | null;
+  mission: string | null;
+  values: string[] | null;
+  created_at: string;
+  updated_at: string;
+  // Campos calculados
+  profiles_count?: number;
+  cells_count?: number;
+  pastors?: Array<{
+    id: string;
+    full_name: string;
+    avatar_url: string | null;
+  }>;
+}
 
-export function useCurrentChurch() {
-  const supabase = useSupabase();
-  const { user } = useUser();
+export interface ChurchFilters {
+  page?: number;
+  limit?: number;
+  search?: string;
+  city?: string;
+  state?: string;
+}
+
+export interface ChurchesResponse {
+  data: Church[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+// API functions
+async function fetchChurches(filters: ChurchFilters = {}): Promise<ChurchesResponse> {
+  const queryParams = new URLSearchParams();
+  
+  if (filters.page) queryParams.append('page', filters.page.toString());
+  if (filters.limit) queryParams.append('limit', filters.limit.toString());
+  if (filters.search) queryParams.append('search', filters.search);
+  if (filters.city) queryParams.append('city', filters.city);
+  if (filters.state) queryParams.append('state', filters.state);
+
+  const response = await fetch(`/api/protected/churches?${queryParams.toString()}`);
+  
+  if (!response.ok) {
+    throw new Error('Erro ao buscar igrejas');
+  }
+  
+  return response.json();
+}
+
+async function fetchChurch(id: string): Promise<Church> {
+  const response = await fetch(`/api/protected/churches/${id}`);
+  
+  if (!response.ok) {
+    throw new Error('Erro ao buscar igreja');
+  }
+  
+  const result = await response.json();
+  return result.data;
+}
+
+async function createChurch(data: Partial<Church>): Promise<Church> {
+  const response = await fetch('/api/protected/churches', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Erro ao criar igreja');
+  }
+  
+  const result = await response.json();
+  return result.data;
+}
+
+async function updateChurch(id: string, data: Partial<Church>): Promise<Church> {
+  const response = await fetch(`/api/protected/churches/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Erro ao atualizar igreja');
+  }
+  
+  const result = await response.json();
+  return result.data;
+}
+
+async function deleteChurch(id: string): Promise<void> {
+  const response = await fetch(`/api/protected/churches/${id}`, {
+    method: 'DELETE',
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Erro ao excluir igreja');
+  }
+}
+
+// Query hooks
+export function useChurches(filters: ChurchFilters = {}) {
+  const { isSignedIn } = useAuth();
   
   return useQuery({
-    queryKey: ['current-church', user?.id],
-    queryFn: async (): Promise<Church | null> => {
-      if (!user?.id) return null;
+    queryKey: ['churches', filters],
+    queryFn: () => fetchChurches(filters),
+    enabled: isSignedIn,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+}
+
+export function useChurch(id: string) {
+  const { isSignedIn } = useAuth();
+  
+  return useQuery({
+    queryKey: ['church', id],
+    queryFn: () => fetchChurch(id),
+    enabled: isSignedIn && !!id,
+  });
+}
+
+// Mutation hooks
+export function useCreateChurch() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: createChurch,
+    onSuccess: (newChurch) => {
+      // Invalidate churches list
+      queryClient.invalidateQueries({ queryKey: ['churches'] });
       
-      // Buscar o perfil do usuário para obter o church_id
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('church_id')
-        .eq('id', user.id)
-        .single();
-      
-      if (profileError || !profile?.church_id) {
-        return null;
-      }
-      
-      // Buscar os dados da igreja
-      const { data: church, error: churchError } = await supabase
-        .from('churches')
-        .select('*')
-        .eq('id', profile.church_id)
-        .single();
-      
-      if (churchError) throw churchError;
-      return church;
+      // Add to cache
+      queryClient.setQueryData(['church', newChurch.id], newChurch);
     },
-    enabled: !!user?.id,
   });
 }
 
 export function useUpdateChurch() {
   const queryClient = useQueryClient();
-  const showToast = useShowToast();
-  const supabase = useSupabase();
-  const { user } = useUser();
   
   return useMutation({
-    mutationFn: async (updates: Partial<ChurchUpdate>) => {
-      if (!user?.id) throw new Error('User not authenticated');
-      
-      // Buscar o perfil do usuário para obter o church_id
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('church_id')
-        .eq('id', user.id)
-        .single();
-      
-      if (profileError || !profile?.church_id) {
-        throw new Error('Church not found');
-      }
-      
-      const { data, error } = await supabase
-        .from('churches')
-        .update(updates)
-        .eq('id', profile.church_id)
-        .select()
-        .single();
-      
-      if (error) throw error;
-      return data;
-    },
+    mutationFn: ({ id, data }: { id: string; data: Partial<Church> }) => 
+      updateChurch(id, data),
     onSuccess: (updatedChurch) => {
-      queryClient.invalidateQueries({ queryKey: ['current-church'] });
-      showToast({ type: 'success', message: 'Configurações da igreja atualizadas com sucesso!' });
-    },
-    onError: (error) => {
-      console.error('Error updating church:', error);
-      showToast({ type: 'error', message: 'Erro ao atualizar configurações da igreja' });
+      // Update specific church in cache
+      queryClient.setQueryData(['church', updatedChurch.id], updatedChurch);
+      
+      // Invalidate churches list
+      queryClient.invalidateQueries({ queryKey: ['churches'] });
     },
   });
 }
 
-export function useCreateChurch() {
+export function useDeleteChurch() {
   const queryClient = useQueryClient();
-  const showToast = useShowToast();
-  const supabase = useSupabase();
-  const { user } = useUser();
   
   return useMutation({
-    mutationFn: async (newChurch: Omit<ChurchInsert, 'id' | 'created_at' | 'updated_at'>) => {
-      if (!user?.id) throw new Error('User not authenticated');
+    mutationFn: deleteChurch,
+    onSuccess: (_, deletedId) => {
+      // Remove from cache
+      queryClient.removeQueries({ queryKey: ['church', deletedId] });
       
-      const { data, error } = await supabase
-        .from('churches')
-        .insert(newChurch)
-        .select()
-        .single();
-      
-      if (error) throw error;
-      
-      // Atualizar o perfil do usuário com o church_id
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({ church_id: data.id })
-        .eq('id', user.id);
-      
-      if (profileError) throw profileError;
-      
-      return data;
-    },
-    onSuccess: (createdChurch) => {
-      queryClient.invalidateQueries({ queryKey: ['current-church'] });
-      showToast({ type: 'success', message: 'Igreja criada com sucesso!' });
-    },
-    onError: (error) => {
-      console.error('Error creating church:', error);
-      showToast({ type: 'error', message: 'Erro ao criar igreja' });
+      // Invalidate churches list
+      queryClient.invalidateQueries({ queryKey: ['churches'] });
     },
   });
 }
 
-export function useSearchChurches() {
-  const supabase = useSupabase();
-  
-  return useMutation({
-    mutationFn: async (params: {
-      search?: string;
-      city?: string;
-      state?: string;
-      page?: number;
-      limit?: number;
-    }) => {
-      let query = supabase
-        .from('churches')
-        .select('*');
-      
-      if (params.search) {
-        query = query.or(`name.ilike.%${params.search}%,description.ilike.%${params.search}%`);
-      }
-      
-      if (params.city) {
-        query = query.eq('address->city', params.city);
-      }
-      
-      if (params.state) {
-        query = query.eq('address->state', params.state);
-      }
-      
-      const limit = params.limit || 10;
-      const offset = ((params.page || 1) - 1) * limit;
-      
-      query = query
-        .order('created_at', { ascending: false })
-        .range(offset, offset + limit - 1);
-      
-      const { data, error } = await query;
-      
-      if (error) throw error;
-      return data || [];
-    },
-  });
-}
