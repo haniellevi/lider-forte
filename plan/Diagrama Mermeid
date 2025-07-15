@@ -1,0 +1,880 @@
+# Diagramas de Fluxo - Plataforma de Gestão G12
+
+**Versão:** 1.0  
+**Data:** 15 de Julho de 2025  
+
+
+---
+
+## ÍNDICE DE DIAGRAMAS
+
+1. [Hierarquia Organizacional G12](#hierarquia-organizacional)
+2. [Fluxo de Onboarding de Usuários](#fluxo-onboarding)
+3. [Processo de Multiplicação de Células](#processo-multiplicacao)
+4. [Pipeline de Futuros Líderes](#pipeline-lideres)
+5. [Escada do Sucesso Gamificada](#escada-sucesso)
+6. [Fluxo de Gestão de Reuniões](#gestao-reunioes)
+7. [Sistema de Notificações](#sistema-notificacoes)
+8. [Arquitetura Técnica](#arquitetura-tecnica)
+9. [Fluxo de Dados em Tempo Real](#dados-tempo-real)
+10. [Processo de Relatórios](#processo-relatorios)
+
+---
+
+## 1. HIERARQUIA ORGANIZACIONAL G12 {#hierarquia-organizacional}
+
+### Estrutura Hierárquica Completa
+
+```mermaid
+graph TD
+    A[Pastor Principal] --> B1[G12 Pastoral 1]
+    A --> B2[G12 Pastoral 2]
+    A --> B3[G12 Pastoral 3]
+    A --> B4[...]
+    A --> B12[G12 Pastoral 12]
+    
+    B1 --> C1[Líder Célula 1.1]
+    B1 --> C2[Líder Célula 1.2]
+    B1 --> C3[...]
+    B1 --> C12[Líder Célula 1.12]
+    
+    B2 --> D1[Líder Célula 2.1]
+    B2 --> D2[Líder Célula 2.2]
+    B2 --> D3[...]
+    
+    C1 --> E1[Timóteo 1.1.1]
+    C1 --> E2[Membro 1.1.2]
+    C1 --> E3[Membro 1.1.3]
+    C1 --> E4[...]
+    C1 --> E15[Membro 1.1.15]
+    
+    C2 --> F1[Timóteo 2.1.1]
+    C2 --> F2[Membro 2.1.2]
+    C2 --> F3[...]
+    
+    style A fill:#ff6b6b,stroke:#333,stroke-width:3px,color:#fff
+    style B1 fill:#4ecdc4,stroke:#333,stroke-width:2px,color:#fff
+    style B2 fill:#4ecdc4,stroke:#333,stroke-width:2px,color:#fff
+    style C1 fill:#45b7d1,stroke:#333,stroke-width:2px,color:#fff
+    style C2 fill:#45b7d1,stroke:#333,stroke-width:2px,color:#fff
+    style E1 fill:#96ceb4,stroke:#333,stroke-width:1px
+    style F1 fill:#96ceb4,stroke:#333,stroke-width:1px
+```
+
+### Fluxo de Permissões por Nível
+
+```mermaid
+graph LR
+    subgraph "Níveis de Acesso"
+        A[Pastor Principal<br/>🔴 Acesso Total] --> B[Líder Central<br/>🟡 Gestão Operacional]
+        B --> C[G12 Pastoral<br/>🔵 Supervisão de Rede]
+        C --> D[Líder de Célula<br/>🟢 Gestão de Célula]
+        D --> E[Timóteo<br/>🟣 Acesso Limitado]
+        E --> F[Membro<br/>⚪ Visualização]
+    end
+    
+    subgraph "Permissões Específicas"
+        A --> A1[Configurar Igreja<br/>Aprovar Multiplicações<br/>Relatórios Executivos]
+        B --> B1[Distribuir Conteúdo<br/>Comunicação Global<br/>Relatórios Operacionais]
+        C --> C1[Acompanhar Rede<br/>Aprovar Transferências<br/>Mentoria de Líderes]
+        D --> D1[Gerenciar Membros<br/>Agendar Reuniões<br/>Relatórios de Célula]
+        E --> E1[Auxiliar Líder<br/>Aprender Sistema<br/>Preparar Liderança]
+        F --> F1[Ver Informações<br/>Participar Reuniões<br/>Acompanhar Progresso]
+    end
+    
+    style A fill:#ff6b6b,color:#fff
+    style B fill:#ffd93d,color:#333
+    style C fill:#6bcf7f,color:#fff
+    style D fill:#4ecdc4,color:#fff
+    style E fill:#a8e6cf,color:#333
+    style F fill:#dcedc1,color:#333
+```
+
+---
+
+## 2. FLUXO DE ONBOARDING DE USUÁRIOS {#fluxo-onboarding}
+
+### Processo Completo de Cadastro
+
+```mermaid
+flowchart TD
+    A[Usuário Acessa Plataforma] --> B{Já tem conta?}
+    B -->|Não| C[Tela de Registro]
+    B -->|Sim| D[Login com Clerk]
+    
+    C --> E[Escolher Método]
+    E --> F[Email/Senha]
+    E --> G[Google OAuth]
+    E --> H[Facebook OAuth]
+    
+    F --> I[Preencher Dados Básicos]
+    G --> I
+    H --> I
+    
+    I --> J[Validar Email]
+    J --> K[Webhook Clerk → Supabase]
+    K --> L[Criar Registro User]
+    
+    L --> M{Tem Convite?}
+    M -->|Sim| N[Associar à Igreja]
+    M -->|Não| O[Criar Nova Igreja]
+    
+    N --> P[Definir Role Inicial]
+    O --> Q[Setup Igreja]
+    Q --> R[Tornar-se Pastor Principal]
+    
+    P --> S[Onboarding Guiado]
+    R --> S
+    
+    S --> T[Tutorial Interativo]
+    T --> U[Configurar Perfil]
+    U --> V[Primeira Ação no Sistema]
+    
+    V --> W[Dashboard Personalizado]
+    
+    style A fill:#e1f5fe
+    style W fill:#c8e6c9
+    style K fill:#fff3e0
+    style S fill:#f3e5f5
+```
+
+### Fluxo de Convite para Nova Igreja
+
+```mermaid
+sequenceDiagram
+    participant P as Pastor Principal
+    participant S as Sistema
+    participant E as Email Service
+    participant N as Novo Usuário
+    participant C as Clerk
+    participant DB as Supabase
+    
+    P->>S: Enviar Convite
+    S->>DB: Criar Registro de Convite
+    S->>E: Enviar Email de Convite
+    E->>N: Email com Link Único
+    
+    N->>S: Clicar Link de Convite
+    S->>DB: Validar Token de Convite
+    
+    alt Token Válido
+        S->>N: Tela de Registro
+        N->>C: Completar Registro
+        C->>DB: Webhook - Criar Usuário
+        DB->>S: Associar à Igreja
+        S->>N: Onboarding Específico
+    else Token Inválido
+        S->>N: Erro - Convite Expirado
+    end
+    
+    S->>P: Notificar Novo Membro
+```
+
+---
+
+## 3. PROCESSO DE MULTIPLICAÇÃO DE CÉLULAS {#processo-multiplicacao}
+
+### Fluxo Completo de Multiplicação
+
+```mermaid
+flowchart TD
+    A[Célula com 12+ Membros] --> B[Líder Identifica Potencial]
+    B --> C[Sistema Analisa Métricas]
+    
+    C --> D{Critérios Atendidos?}
+    D -->|Não| E[Sugestões de Melhoria]
+    E --> F[Aguardar Crescimento]
+    F --> C
+    
+    D -->|Sim| G[Iniciar Processo de Multiplicação]
+    G --> H[Assistente de Multiplicação]
+    
+    H --> I[Passo 1: Seleção de Membros]
+    I --> J[Distribuir Membros<br/>Célula Original vs Nova]
+    
+    J --> K[Passo 2: Escolher Novo Líder]
+    K --> L[Pipeline de Líderes<br/>Sugere Candidatos]
+    
+    L --> M[Passo 3: Definir Nova Célula]
+    M --> N[Nome, Local, Horário<br/>Metas Iniciais]
+    
+    N --> O[Passo 4: Solicitar Aprovação]
+    O --> P[Enviar para Supervisor]
+    
+    P --> Q{Supervisor Aprova?}
+    Q -->|Não| R[Feedback e Ajustes]
+    R --> O
+    
+    Q -->|Sim| S[Executar Multiplicação]
+    S --> T[Criar Nova Célula]
+    T --> U[Transferir Membros]
+    U --> V[Notificar Envolvidos]
+    
+    V --> W[Acompanhamento Pós-Multiplicação]
+    W --> X[Métricas de Sucesso]
+    
+    style A fill:#ffcdd2
+    style G fill:#c8e6c9
+    style S fill:#dcedc8
+    style X fill:#e8f5e8
+```
+
+### Algoritmo de Distribuição de Membros
+
+```mermaid
+graph TD
+    A[Lista de Membros da Célula] --> B[Analisar Perfil de Cada Membro]
+    
+    B --> C{Tipo de Membro}
+    C -->|Líder Atual| D[Permanece na Célula Original]
+    C -->|Novo Líder| E[Vai para Nova Célula]
+    C -->|Timóteo| F[Análise de Afinidade]
+    C -->|Membro Regular| G[Distribuição Equilibrada]
+    
+    F --> H{Afinidade com Qual Líder?}
+    H -->|Líder Atual| I[Célula Original]
+    H -->|Novo Líder| J[Nova Célula]
+    
+    G --> K[Considerar Fatores]
+    K --> L[Localização Geográfica]
+    K --> M[Relacionamentos Existentes]
+    K --> N[Nível de Maturidade]
+    K --> O[Disponibilidade de Horário]
+    
+    L --> P[Algoritmo de Otimização]
+    M --> P
+    N --> P
+    O --> P
+    
+    P --> Q[Distribuição Final]
+    Q --> R[6-8 Membros por Célula]
+    
+    style A fill:#e3f2fd
+    style Q fill:#c8e6c9
+    style R fill:#a5d6a7
+```
+
+---
+
+## 4. PIPELINE DE FUTUROS LÍDERES {#pipeline-lideres}
+
+### Algoritmo de Identificação de Líderes
+
+```mermaid
+flowchart TD
+    A[Todos os Membros da Igreja] --> B[Filtrar: Role = MEMBRO]
+    B --> C[Coletar Dados de Atividade]
+    
+    C --> D[Calcular Pontuação]
+    
+    subgraph "Fatores de Pontuação"
+        E[Presença em Células<br/>+20 pontos máx]
+        F[Participação no Encontro<br/>+50 pontos]
+        G[Módulos UV Concluídos<br/>+20 pontos cada]
+        H[Capacitação Destino<br/>+100 pontos]
+        I[Participação em Serviços<br/>+15 pontos cada]
+        J[Resultados Evangelísticos<br/>+25 pontos cada]
+    end
+    
+    D --> E
+    D --> F
+    D --> G
+    D --> H
+    D --> I
+    D --> J
+    
+    E --> K[Somar Pontuação Total]
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+    
+    K --> L{Classificar Potencial}
+    L -->|0-50 pontos| M[Baixo Potencial]
+    L -->|51-100 pontos| N[Potencial Médio]
+    L -->|101-150 pontos| O[Alto Potencial]
+    L -->|151+ pontos| P[Potencial Excepcional]
+    
+    M --> Q[Recomendações de Desenvolvimento]
+    N --> Q
+    O --> Q
+    P --> Q
+    
+    Q --> R[Dashboard de Pipeline]
+    
+    style A fill:#e8f5e8
+    style K fill:#fff3e0
+    style R fill:#c8e6c9
+```
+
+### Fluxo de Desenvolvimento de Líderes
+
+```mermaid
+stateDiagram-v2
+    [*] --> Membro_Regular
+    
+    Membro_Regular --> Engajado : Presença consistente + Participação
+    Engajado --> Encontro_Concluido : Participar do Encontro
+    Encontro_Concluido --> UV_Iniciada : Matricular na UV
+    UV_Iniciada --> UV_Progresso : Concluir módulos
+    UV_Progresso --> Servico_Ativo : Participar de serviços
+    Servico_Ativo --> Lider_Potencial : Demonstrar liderança
+    Lider_Potencial --> Timoteo : Ser escolhido como auxiliar
+    Timoteo --> CD_Matriculado : Matricular na Capacitação Destino
+    CD_Matriculado --> CD_Concluida : Concluir CD
+    CD_Concluida --> Lider_Celula : Multiplicação ou nova célula
+    
+    note right of Lider_Potencial : Pipeline identifica<br/>automaticamente
+    note right of Timoteo : Período de treinamento<br/>prático
+    note right of Lider_Celula : Meta alcançada!
+```
+
+---
+
+## 5. ESCADA DO SUCESSO GAMIFICADA {#escada-sucesso}
+
+### Jornada Completa do Membro
+
+```mermaid
+journey
+    title Jornada na Escada do Sucesso
+    section Início
+      Primeira Visita à Célula    : 1: Visitante
+      Aceitar Jesus               : 3: Novo Convertido
+      Integrar à Célula          : 4: Novo Convertido
+    section Consolidação
+      Frequência Regular         : 5: Membro
+      Participar do Encontro     : 8: Membro
+      Batismo nas Águas         : 7: Membro
+    section Discipulado
+      Matricular na UV          : 6: Discípulo
+      Concluir Módulos UV       : 8: Discípulo
+      Aplicar Conhecimento      : 7: Discípulo
+    section Liderança
+      Servir na Igreja          : 8: Servo
+      Capacitação Destino       : 9: Líder em Formação
+      Tornar-se Timóteo         : 8: Timóteo
+    section Multiplicação
+      Liderar Própria Célula    : 10: Líder
+      Multiplicar Célula        : 10: Multiplicador
+      Formar Novos Líderes      : 10: Mentor
+```
+
+### Sistema de Pontuação e Badges
+
+```mermaid
+graph TD
+    A[Ações do Membro] --> B[Sistema de Pontuação]
+    
+    subgraph "Categorias de Ações"
+        C[Presença em Reuniões]
+        D[Participação em Eventos]
+        E[Conclusão de Cursos]
+        F[Atividades de Serviço]
+        G[Evangelismo]
+    end
+    
+    B --> C
+    B --> D
+    B --> E
+    B --> F
+    B --> G
+    
+    C --> H[+5 pontos por reunião]
+    D --> I[+25 pontos por evento]
+    E --> J[+50 pontos por curso]
+    F --> K[+15 pontos por serviço]
+    G --> L[+30 pontos por conversão]
+    
+    H --> M[Calcular Total]
+    I --> M
+    J --> M
+    K --> M
+    L --> M
+    
+    M --> N{Nível Atingido?}
+    N -->|0-100| O[🥉 Bronze - Novo na Fé]
+    N -->|101-300| P[🥈 Prata - Discípulo]
+    N -->|301-600| Q[🥇 Ouro - Servo]
+    N -->|601-1000| R[💎 Diamante - Líder]
+    N -->|1000+| S[👑 Coroa - Multiplicador]
+    
+    O --> T[Desbloquear Funcionalidades]
+    P --> T
+    Q --> T
+    R --> T
+    S --> T
+    
+    style M fill:#fff3e0
+    style T fill:#c8e6c9
+```
+
+---
+
+## 6. FLUXO DE GESTÃO DE REUNIÕES {#gestao-reunioes}
+
+### Ciclo Completo de Reunião
+
+```mermaid
+flowchart TD
+    A[Líder Planeja Reunião] --> B[Escolher Conteúdo]
+    B --> C[Agendar no Calendário]
+    C --> D[Enviar Convites Automáticos]
+    
+    D --> E[WhatsApp/Email para Membros]
+    E --> F[Lembrete 24h Antes]
+    F --> G[Lembrete 2h Antes]
+    
+    G --> H[Dia da Reunião]
+    H --> I[Check-in de Presença]
+    
+    subgraph "Durante a Reunião"
+        J[QR Code para Presença]
+        K[Registrar Visitantes]
+        L[Anotar Observações]
+        M[Coletar Ofertas]
+    end
+    
+    I --> J
+    I --> K
+    I --> L
+    I --> M
+    
+    J --> N[Atualizar Lista de Presença]
+    K --> O[Follow-up Automático Visitantes]
+    L --> P[Salvar Notas da Reunião]
+    M --> Q[Registrar Valor de Ofertas]
+    
+    N --> R[Gerar Relatório Automático]
+    O --> R
+    P --> R
+    Q --> R
+    
+    R --> S[Enviar para Supervisor]
+    S --> T[Atualizar Métricas da Célula]
+    
+    T --> U[Próxima Reunião]
+    U --> A
+    
+    style H fill:#e8f5e8
+    style R fill:#fff3e0
+    style T fill:#c8e6c9
+```
+
+### Sistema de Check-in Mobile
+
+```mermaid
+sequenceDiagram
+    participant L as Líder
+    participant A as App Mobile
+    participant S as Sistema
+    participant M as Membro
+    participant W as WhatsApp
+    
+    L->>A: Iniciar Reunião
+    A->>S: Gerar QR Code Único
+    S->>A: Retornar QR Code
+    A->>L: Exibir QR Code
+    
+    M->>A: Escanear QR Code
+    A->>S: Validar Presença
+    S->>A: Confirmar Check-in
+    A->>M: Sucesso - Presença Confirmada
+    
+    alt Visitante
+        M->>A: Marcar como Visitante
+        A->>S: Registrar Visitante
+        S->>W: Agendar Follow-up
+    end
+    
+    L->>A: Finalizar Reunião
+    A->>S: Processar Dados
+    S->>S: Gerar Relatório
+    S->>L: Enviar Relatório
+```
+
+---
+
+## 7. SISTEMA DE NOTIFICAÇÕES {#sistema-notificacoes}
+
+### Fluxo de Notificações em Tempo Real
+
+```mermaid
+flowchart TD
+    A[Evento no Sistema] --> B{Tipo de Evento}
+    
+    B -->|Nova Célula| C[Notificar Supervisor]
+    B -->|Multiplicação| D[Notificar Pastor]
+    B -->|Novo Membro| E[Notificar Líder]
+    B -->|Reunião Agendada| F[Notificar Membros]
+    B -->|Meta Atingida| G[Notificar Hierarquia]
+    
+    C --> H[Determinar Destinatários]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Criar Notificação]
+    I --> J[Salvar no Banco]
+    
+    J --> K{Canal de Envio}
+    K -->|In-App| L[Push Notification]
+    K -->|Email| M[Enviar Email]
+    K -->|WhatsApp| N[WhatsApp Business API]
+    K -->|SMS| O[SMS Gateway]
+    
+    L --> P[Atualizar Badge Count]
+    M --> Q[Template Personalizado]
+    N --> R[Mensagem Formatada]
+    O --> S[Texto Simples]
+    
+    P --> T[Usuário Visualiza]
+    Q --> T
+    R --> T
+    S --> T
+    
+    T --> U[Marcar como Lida]
+    U --> V[Atualizar Status]
+    
+    style A fill:#e8f5e8
+    style I fill:#fff3e0
+    style T fill:#c8e6c9
+```
+
+### Matriz de Notificações por Role
+
+```mermaid
+graph TD
+    subgraph "Pastor Principal"
+        A1[Nova Igreja Criada]
+        A2[Multiplicação Aprovada]
+        A3[Metas Mensais]
+        A4[Relatórios Executivos]
+    end
+    
+    subgraph "Líder Central"
+        B1[Conteúdo Distribuído]
+        B2[Células Inativas]
+        B3[Solicitações Pendentes]
+    end
+    
+    subgraph "G12 Pastoral"
+        C1[Nova Célula na Rede]
+        C2[Líder Precisa Suporte]
+        C3[Meta de Rede Atingida]
+    end
+    
+    subgraph "Líder de Célula"
+        D1[Novo Membro]
+        D2[Reunião Agendada]
+        D3[Visitante Registrado]
+        D4[Meta de Célula]
+    end
+    
+    subgraph "Timóteo"
+        E1[Tarefa Atribuída]
+        E2[Progresso Reconhecido]
+        E3[Treinamento Disponível]
+    end
+    
+    subgraph "Membro"
+        F1[Reunião Marcada]
+        F2[Evento da Igreja]
+        F3[Progresso na Escada]
+    end
+    
+    style A1 fill:#ff6b6b,color:#fff
+    style B1 fill:#ffd93d,color:#333
+    style C1 fill:#6bcf7f,color:#fff
+    style D1 fill:#4ecdc4,color:#fff
+    style E1 fill:#a8e6cf,color:#333
+    style F1 fill:#dcedc1,color:#333
+```
+
+---
+
+## 8. ARQUITETURA TÉCNICA {#arquitetura-tecnica}
+
+### Arquitetura de Sistema Completa
+
+```mermaid
+graph TB
+    subgraph "Frontend - Next.js 15"
+        A[React Components]
+        B[App Router]
+        C[Middleware]
+        D[API Routes]
+    end
+    
+    subgraph "Autenticação"
+        E[Clerk Auth]
+        F[JWT Tokens]
+        G[Role-Based Access]
+    end
+    
+    subgraph "Estado Global"
+        H[Zustand Stores]
+        I[React Query Cache]
+        J[Local Storage]
+    end
+    
+    subgraph "Backend Services"
+        K[Supabase]
+        L[PostgreSQL]
+        M[Edge Functions]
+        N[Real-time Subscriptions]
+    end
+    
+    subgraph "Integrações Externas"
+        O[WhatsApp Business API]
+        P[Email Service]
+        Q[ViaCEP API]
+        R[Google Calendar]
+    end
+    
+    subgraph "Monitoramento"
+        S[Vercel Analytics]
+        T[Error Tracking]
+        U[Performance Monitoring]
+    end
+    
+    A --> E
+    B --> C
+    C --> D
+    D --> K
+    
+    E --> F
+    F --> G
+    G --> H
+    
+    H --> I
+    I --> J
+    
+    K --> L
+    K --> M
+    K --> N
+    
+    M --> O
+    M --> P
+    D --> Q
+    D --> R
+    
+    A --> S
+    K --> T
+    N --> U
+    
+    style K fill:#4ecdc4,color:#fff
+    style E fill:#ff6b6b,color:#fff
+    style H fill:#ffd93d,color:#333
+```
+
+### Fluxo de Dados em Tempo Real
+
+```mermaid
+sequenceDiagram
+    participant U as User Action
+    participant F as Frontend
+    participant A as API Route
+    participant S as Supabase
+    participant R as Real-time
+    participant O as Other Users
+    
+    U->>F: Ação do Usuário
+    F->>A: HTTP Request
+    A->>S: Database Update
+    S->>R: Trigger Real-time Event
+    R->>O: Push Update
+    O->>O: Update UI
+    S->>A: Confirm Update
+    A->>F: Response
+    F->>U: Update UI
+    
+    Note over R,O: Outros usuários recebem<br/>atualizações instantâneas
+```
+
+---
+
+## 9. FLUXO DE DADOS EM TEMPO REAL {#dados-tempo-real}
+
+### Sistema de Subscriptions
+
+```mermaid
+flowchart TD
+    A[Usuário Conecta] --> B[Estabelecer WebSocket]
+    B --> C[Autenticar Conexão]
+    C --> D[Determinar Subscriptions]
+    
+    D --> E{Tipo de Usuário}
+    E -->|Pastor| F[Subscribe: Toda Igreja]
+    E -->|Supervisor| G[Subscribe: Sua Rede]
+    E -->|Líder| H[Subscribe: Sua Célula]
+    E -->|Membro| I[Subscribe: Suas Informações]
+    
+    F --> J[Supabase Real-time]
+    G --> J
+    H --> J
+    I --> J
+    
+    J --> K[Filtrar por RLS]
+    K --> L[Enviar Update]
+    
+    L --> M{Tipo de Update}
+    M -->|Novo Membro| N[Atualizar Lista]
+    M -->|Reunião| O[Atualizar Calendário]
+    M -->|Notificação| P[Mostrar Badge]
+    M -->|Métrica| Q[Atualizar Dashboard]
+    
+    N --> R[Update UI]
+    O --> R
+    P --> R
+    Q --> R
+    
+    R --> S[Usuário Vê Mudança]
+    
+    style J fill:#4ecdc4,color:#fff
+    style K fill:#ff6b6b,color:#fff
+    style R fill:#c8e6c9
+```
+
+### Otimização de Performance
+
+```mermaid
+graph TD
+    A[Real-time Event] --> B[Rate Limiting]
+    B --> C[Debounce Similar Events]
+    C --> D[Batch Updates]
+    
+    D --> E{Connection Status}
+    E -->|Online| F[Send Immediately]
+    E -->|Offline| G[Queue for Later]
+    
+    F --> H[Client Receives]
+    G --> I[Store in Local Queue]
+    
+    H --> J[Update UI]
+    I --> K[Wait for Reconnection]
+    K --> L[Sync Queued Updates]
+    L --> J
+    
+    J --> M[Optimistic Updates]
+    M --> N{Server Confirms?}
+    N -->|Yes| O[Keep Changes]
+    N -->|No| P[Rollback Changes]
+    
+    style B fill:#fff3e0
+    style M fill:#e8f5e8
+    style O fill:#c8e6c9
+    style P fill:#ffcdd2
+```
+
+---
+
+## 10. PROCESSO DE RELATÓRIOS {#processo-relatorios}
+
+### Geração de Relatórios Automáticos
+
+```mermaid
+flowchart TD
+    A[Trigger de Relatório] --> B{Tipo de Trigger}
+    B -->|Agendado| C[Cron Job Diário/Semanal]
+    B -->|Manual| D[Solicitação do Usuário]
+    B -->|Evento| E[Multiplicação/Meta Atingida]
+    
+    C --> F[Coletar Dados]
+    D --> F
+    E --> F
+    
+    F --> G[Consultas Otimizadas]
+    G --> H[Agregar Métricas]
+    H --> I[Aplicar Filtros]
+    
+    I --> J{Tipo de Relatório}
+    J -->|Crescimento| K[Análise Temporal]
+    J -->|Saúde| L[Indicadores de Performance]
+    J -->|Pipeline| M[Ranking de Líderes]
+    J -->|Financeiro| N[Ofertas e Dízimos]
+    
+    K --> O[Gerar Visualizações]
+    L --> O
+    M --> O
+    N --> O
+    
+    O --> P[Criar PDF/Excel]
+    P --> Q[Salvar no Storage]
+    Q --> R[Enviar Notificação]
+    
+    R --> S[Usuário Acessa Relatório]
+    
+    style F fill:#e8f5e8
+    style O fill:#fff3e0
+    style S fill:#c8e6c9
+```
+
+### Dashboard de Métricas em Tempo Real
+
+```mermaid
+graph TD
+    subgraph "Fontes de Dados"
+        A[Células Ativas]
+        B[Membros Ativos]
+        C[Reuniões Realizadas]
+        D[Multiplicações]
+        E[Pipeline de Líderes]
+    end
+    
+    subgraph "Processamento"
+        F[Agregação de Dados]
+        G[Cálculo de KPIs]
+        H[Análise de Tendências]
+    end
+    
+    subgraph "Visualização"
+        I[Gráficos Interativos]
+        J[Cards de Métricas]
+        K[Mapas de Calor]
+        L[Rankings]
+    end
+    
+    A --> F
+    B --> F
+    C --> F
+    D --> F
+    E --> F
+    
+    F --> G
+    G --> H
+    
+    H --> I
+    H --> J
+    H --> K
+    H --> L
+    
+    I --> M[Dashboard Executivo]
+    J --> M
+    K --> M
+    L --> M
+    
+    style F fill:#fff3e0
+    style M fill:#c8e6c9
+```
+
+---
+
+## CONCLUSÃO
+
+Estes diagramas Mermaid fornecem uma visão completa e detalhada de todos os fluxos principais da Plataforma de Gestão G12, desde a hierarquia organizacional até os processos técnicos de implementação. Cada diagrama pode ser usado para:
+
+**Desenvolvimento:** Orientar a implementação técnica de cada funcionalidade
+
+**Documentação:** Servir como referência visual para a equipe
+
+**Treinamento:** Explicar processos complexos para novos usuários
+
+**Manutenção:** Facilitar debugging e otimizações futuras
+
+**Stakeholders:** Comunicar funcionalidades para investidores e parceiros
+
+Os diagramas estão prontos para serem renderizados em qualquer ferramenta que suporte Mermaid, incluindo GitHub, GitLab, Notion, e ferramentas de documentação técnica.
+

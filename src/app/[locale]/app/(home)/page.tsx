@@ -27,8 +27,6 @@ export default async function HomeAppPage({
       <Breadcrumb pageName={t("title")} />
       <div className="mx-auto max-w-7xl">
         <h1 className="mb-6 text-3xl font-bold dark:text-white">{t("title")}</h1>
-          {t("title")}
-        </h1>
         <p className="text-gray-700 dark:text-gray-300">
           {t("pageDescription")}
         </p>

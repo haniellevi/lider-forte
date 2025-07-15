@@ -34,6 +34,190 @@ export type Database = {
   }
   public: {
     Tables: {
+      churches: {
+        Row: {
+          id: string
+          name: string
+          cnpj: string | null
+          address: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          cnpj?: string | null
+          address?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          cnpj?: string | null
+          address?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          id: string
+          church_id: string | null
+          full_name: string | null
+          role: Database["public"]["Enums"]["user_role"]
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          church_id?: string | null
+          full_name?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          church_id?: string | null
+          full_name?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      cells: {
+        Row: {
+          id: string
+          church_id: string
+          leader_id: string
+          supervisor_id: string | null
+          parent_id: string | null
+          name: string
+          address: Json | null
+          meeting_day: number | null
+          meeting_time: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          church_id: string
+          leader_id: string
+          supervisor_id?: string | null
+          parent_id?: string | null
+          name: string
+          address?: Json | null
+          meeting_day?: number | null
+          meeting_time?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          church_id?: string
+          leader_id?: string
+          supervisor_id?: string | null
+          parent_id?: string | null
+          name?: string
+          address?: Json | null
+          meeting_day?: number | null
+          meeting_time?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cells_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cells_leader_id_fkey"
+            columns: ["leader_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cells_supervisor_id_fkey"
+            columns: ["supervisor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cells_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "cells"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      cell_members: {
+        Row: {
+          id: string
+          profile_id: string
+          cell_id: string
+          joined_at: string
+          success_ladder_score: number
+          is_timoteo: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          profile_id: string
+          cell_id: string
+          joined_at?: string
+          success_ladder_score?: number
+          is_timoteo?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          profile_id?: string
+          cell_id?: string
+          joined_at?: string
+          success_ladder_score?: number
+          is_timoteo?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cell_members_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cell_members_cell_id_fkey"
+            columns: ["cell_id"]
+            isOneToOne: false
+            referencedRelation: "cells"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       comments: {
         Row: {
           content: string
@@ -144,36 +328,6 @@ export type Database = {
         }
         Relationships: []
       }
-      profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          created_at: string
-          full_name: string | null
-          id: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
@@ -183,9 +337,17 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_my_church_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_my_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
     }
     Enums: {
-      [_ in never]: never
+      user_role: "pastor" | "supervisor" | "leader" | "timoteo" | "member"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -303,7 +465,9 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["pastor", "supervisor", "leader", "timoteo", "member"],
+    },
   },
 } as const
 

@@ -95,11 +95,13 @@ async function handleUserCreated(supabase: any, event: ClerkWebhookEvent) {
   const { error } = await supabase
     .from('profiles')
     .insert({
-      user_id: event.data.id,
+      id: event.data.id, // Use Clerk ID as primary key
       full_name: [event.data.first_name, event.data.last_name]
         .filter(Boolean)
         .join(' ') || null,
       avatar_url: event.data.image_url || null,
+      role: 'member', // Default role
+      church_id: null, // Will be set later when user joins a church
     });
 
   if (error) {
@@ -120,7 +122,7 @@ async function handleUserUpdated(supabase: any, event: ClerkWebhookEvent) {
       avatar_url: event.data.image_url || null,
       updated_at: new Date().toISOString(),
     })
-    .eq('user_id', event.data.id);
+    .eq('id', event.data.id);
 
   if (error) {
     console.error('Error updating user profile:', error);
@@ -134,7 +136,7 @@ async function handleUserDeleted(supabase: any, event: ClerkWebhookEvent) {
   const { error } = await supabase
     .from('profiles')
     .delete()
-    .eq('user_id', event.data.id);
+    .eq('id', event.data.id);
 
   if (error) {
     console.error('Error deleting user profile:', error);
