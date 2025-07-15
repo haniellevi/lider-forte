@@ -29,7 +29,7 @@ const UserUpdateSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -39,6 +39,7 @@ export async function GET(
     }
 
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Verificar se o usuário atual tem permissão para ver este usuário
     const { data: currentUser, error: currentUserError } = await supabase
@@ -77,7 +78,7 @@ export async function GET(
           joined_at
         )
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (error) {
@@ -92,10 +93,10 @@ export async function GET(
 
     // Verificar permissões de acesso
     const canAccess = 
-      userId === params.id || // Próprio usuário
+      userId === resolvedParams.id || // Próprio usuário
       currentUser.role === 'pastor' && user.church_id === currentUser.church_id || // Pastor da mesma igreja
       currentUser.role === 'supervisor' && user.church_id === currentUser.church_id || // Supervisor da mesma igreja
-      (currentUser.role === 'leader' && user.cell_memberships?.some(membership => 
+      (currentUser.role === 'leader' && user.cell_memberships?.some((membership: any) => 
         membership.cell && 
         (membership.cell as any).leader_id === userId
       )); // Líder da célula do usuário
@@ -113,7 +114,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -124,6 +125,7 @@ export async function PUT(
 
     const supabase = await createServerClient();
     const body = await request.json();
+    const resolvedParams = await params;
     
     // Validar dados de entrada
     const validatedData = UserUpdateSchema.parse(body);
@@ -143,7 +145,7 @@ export async function PUT(
     const { data: targetUser, error: targetUserError } = await supabase
       .from('profiles')
       .select('id, church_id, role')
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (targetUserError) {
@@ -158,7 +160,7 @@ export async function PUT(
 
     // Verificar permissões de atualização
     const canUpdate = 
-      userId === params.id || // Próprio usuário (limitado)
+      userId === resolvedParams.id || // Próprio usuário (limitado)
       currentUser.role === 'pastor' && targetUser.church_id === currentUser.church_id || // Pastor da mesma igreja
       currentUser.role === 'supervisor' && targetUser.church_id === currentUser.church_id; // Supervisor da mesma igreja
 
@@ -168,7 +170,7 @@ export async function PUT(
 
     // Verificar se está tentando alterar o role sem permissão
     if (validatedData.role && validatedData.role !== targetUser.role) {
-      if (userId === params.id) {
+      if (userId === resolvedParams.id) {
         return NextResponse.json({ error: 'Não é possível alterar seu próprio role' }, { status: 403 });
       }
       
@@ -196,7 +198,7 @@ export async function PUT(
     const { data: updatedUser, error: updateError } = await supabase
       .from('profiles')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .select(`
         *,
         church:churches(id, name),
@@ -239,7 +241,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -249,6 +251,7 @@ export async function DELETE(
     }
 
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Verificar se o usuário atual tem permissão para deletar este usuário
     const { data: currentUser, error: currentUserError } = await supabase
@@ -265,7 +268,7 @@ export async function DELETE(
     const { data: targetUser, error: targetUserError } = await supabase
       .from('profiles')
       .select('id, church_id, role')
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (targetUserError) {
@@ -287,7 +290,7 @@ export async function DELETE(
     }
 
     // Não permitir que o pastor delete a si mesmo
-    if (userId === params.id) {
+    if (userId === resolvedParams.id) {
       return NextResponse.json({ error: 'Não é possível deletar seu próprio usuário' }, { status: 403 });
     }
 
@@ -295,7 +298,7 @@ export async function DELETE(
     const { data: ledCells, error: ledCellsError } = await supabase
       .from('cells')
       .select('id')
-      .eq('leader_id', params.id)
+      .eq('leader_id', resolvedParams.id)
       .limit(1);
 
     if (ledCellsError) {
@@ -313,7 +316,7 @@ export async function DELETE(
     const { data: supervisedCells, error: supervisedCellsError } = await supabase
       .from('cells')
       .select('id')
-      .eq('supervisor_id', params.id)
+      .eq('supervisor_id', resolvedParams.id)
       .limit(1);
 
     if (supervisedCellsError) {
@@ -331,7 +334,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('profiles')
       .delete()
-      .eq('id', params.id);
+      .eq('id', resolvedParams.id);
 
     if (deleteError) {
       console.error('Supabase error:', deleteError);

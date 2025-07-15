@@ -171,7 +171,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function to get cell network for a specific leader (all cells under their supervision)
 CREATE OR REPLACE FUNCTION public.get_leader_network(
-  leader_id UUID DEFAULT NULL
+  target_leader_id UUID DEFAULT NULL
 )
 RETURNS TABLE (
   id UUID,
@@ -188,10 +188,10 @@ RETURNS TABLE (
   created_at TIMESTAMPTZ
 ) AS $$
 DECLARE
-  target_leader_id UUID;
+  final_leader_id UUID;
 BEGIN
-  -- Use provided leader_id or current user
-  target_leader_id := COALESCE(get_leader_network.leader_id, auth.uid());
+  -- Use provided target_leader_id or current user
+  final_leader_id := COALESCE(target_leader_id, auth.uid());
   
   RETURN QUERY
   WITH RECURSIVE network_tree AS (
@@ -209,7 +209,7 @@ BEGIN
     FROM public.cells c
     LEFT JOIN public.profiles lp ON c.leader_id = lp.id
     LEFT JOIN public.profiles sp ON c.supervisor_id = sp.id
-    WHERE (c.leader_id = target_leader_id OR c.supervisor_id = target_leader_id)
+    WHERE (c.leader_id = final_leader_id OR c.supervisor_id = final_leader_id)
     AND c.church_id = public.get_my_church_id()
     
     UNION ALL

@@ -3,11 +3,12 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
     const { searchParams } = new URL(request.url);
+    const resolvedParams = await params;
     
     const direction = searchParams.get('direction') || 'descendants'; // descendants | ancestors
     const maxDepth = parseInt(searchParams.get('maxDepth') || '5');
@@ -15,7 +16,7 @@ export async function GET(
     if (direction === 'descendants') {
       // Buscar células descendentes (filhas, netas, etc.)
       const { data, error } = await supabase.rpc('get_cell_descendants', {
-        cell_id: params.id,
+        cell_id: resolvedParams.id,
         max_depth: maxDepth
       });
 
@@ -28,7 +29,7 @@ export async function GET(
     } else {
       // Buscar células ancestrais (pai, avô, etc.)
       const { data, error } = await supabase.rpc('get_cell_ancestors', {
-        cell_id: params.id,
+        cell_id: resolvedParams.id,
         max_depth: maxDepth
       });
 

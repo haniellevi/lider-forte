@@ -17,8 +17,17 @@ declare global {
 const USE_JWT_TEMPLATE = Boolean(process.env.NEXT_PUBLIC_CLERK_JWT_TEMPLATE_NAME);
 const JWT_TEMPLATE_NAME = process.env.NEXT_PUBLIC_CLERK_JWT_TEMPLATE_NAME || 'supabase';
 
+// Singleton instance for browser client
+let browserClientInstance: ReturnType<typeof createClient> | null = null;
+
 export const createBrowserClient = () => {
-  return createClient(
+  // Retornar instância singleton se já existir
+  if (browserClientInstance) {
+    return browserClientInstance;
+  }
+  
+  // Criar nova instância
+  browserClientInstance = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -45,6 +54,8 @@ export const createBrowserClient = () => {
       },
     }
   );
+  
+  return browserClientInstance;
 };
 
 export const useClerkSupabaseClient = () => {

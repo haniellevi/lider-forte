@@ -23,10 +23,11 @@ const CellUpdateSchema = z.object({
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     const { data, error } = await supabase
       .from('cells')
@@ -44,7 +45,7 @@ export async function GET(
         ),
         child_cells:cells!cells_parent_id_fkey(id, name, created_at)
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (error) {
@@ -66,11 +67,12 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
     const body = await request.json();
+    const resolvedParams = await params;
     
     const validatedData = CellUpdateSchema.parse(body);
     
@@ -115,7 +117,7 @@ export async function PUT(
     const { data, error } = await supabase
       .from('cells')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .select(`
         *,
         leader:profiles!cells_leader_id_fkey(id, full_name, avatar_url),
@@ -155,16 +157,17 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Verificar se a célula tem células filhas
     const { data: childCells, error: childError } = await supabase
       .from('cells')
       .select('id')
-      .eq('parent_id', params.id)
+      .eq('parent_id', resolvedParams.id)
       .limit(1);
 
     if (childError) {
@@ -182,7 +185,7 @@ export async function DELETE(
     const { data: members, error: membersError } = await supabase
       .from('cell_members')
       .select('id')
-      .eq('cell_id', params.id)
+      .eq('cell_id', resolvedParams.id)
       .limit(1);
 
     if (membersError) {
@@ -199,7 +202,7 @@ export async function DELETE(
     const { error } = await supabase
       .from('cells')
       .delete()
-      .eq('id', params.id);
+      .eq('id', resolvedParams.id);
 
     if (error) {
       console.error('Supabase error:', error);

@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function SignInPage() {
   const t = useTranslations('Auth');
   const locale = useLocale();

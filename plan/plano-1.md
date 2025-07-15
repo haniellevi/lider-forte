@@ -24,23 +24,4 @@ users/route.ts: Endpoint para CRUD de Usuários.
 invites/route.ts: Endpoint para criar e gerenciar convites.
 Validação: Implementar a validação dos dados de entrada usando Zod, especialmente para os campos com formatos brasileiros.
 
-Você disse que os Próximos passos recomendados são:
 
-  1. Testes de Integração - Validar APIs e RLS
-  2. Frontend Components - Criar interfaces para as APIs
-  3. Gamificação - Implementar Escada do Sucesso
-  4. Relatórios - Dashboard executivo
-  5. Multiplicação - Algoritmos automáticos
-
-Compare com esses passos abaixo e verifique se seu plano pode ser melhorado. Verifica isso lendo o arquivo @README.md e o @agents/README.md
-
-2. Frontend (Páginas e Componentes)
-Guia do Agente: Usar agents/frontend-page.md e agents/frontend-form.md.
-Tarefa: Criar as páginas na pasta /src/app/[locale]/app/:
-settings/church/page.tsx: Página com o formulário de configuração da igreja (ChurchSetupForm).
-users/page.tsx: Página para listar e gerenciar usuários, utilizando um componente UserManagementTable.
-Componentes:
-Desenvolver o ChurchSetupForm com validação em tempo real.
-Desenvolver a UserManagementTable com busca e filtros.
-Criar um InviteUserModal para o envio de convites.
-Estado do Servidor: Utilizar o TanStack Query (conforme agents/tanstack-query-integration.md) para buscar e atualizar os dados das igrejas e usuários, garantindo cache e sincronização automática

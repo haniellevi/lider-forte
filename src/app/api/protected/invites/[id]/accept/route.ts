@@ -9,7 +9,7 @@ const AcceptInviteSchema = z.object({
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -20,6 +20,7 @@ export async function POST(
 
     const supabase = await createServerClient();
     const body = await request.json();
+    const resolvedParams = await params;
     
     // Validar dados de entrada
     const validatedData = AcceptInviteSchema.parse(body);
@@ -31,7 +32,7 @@ export async function POST(
         *,
         church:churches(id, name)
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .eq('token', validatedData.token)
       .single();
 
@@ -58,7 +59,7 @@ export async function POST(
       await supabase
         .from('invites')
         .update({ status: 'expired' })
-        .eq('id', params.id);
+        .eq('id', resolvedParams.id);
       
       return NextResponse.json({ error: 'Convite expirado' }, { status: 410 });
     }
@@ -119,7 +120,7 @@ export async function POST(
         accepted_by: userId,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .select(`
         *,
         created_by_profile:profiles!invites_created_by_fkey(id, full_name, role),
@@ -161,7 +162,7 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { searchParams } = new URL(request.url);
@@ -172,6 +173,7 @@ export async function GET(
     }
 
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Buscar convite público (sem autenticação)
     const { data: invite, error } = await supabase
@@ -186,7 +188,7 @@ export async function GET(
         message,
         church:churches(id, name)
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .eq('token', token)
       .single();
 

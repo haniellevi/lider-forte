@@ -12,7 +12,7 @@ const InviteUpdateSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -22,6 +22,7 @@ export async function GET(
     }
 
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Verificar se o usuário atual tem permissão para ver convites
     const { data: currentUser, error: currentUserError } = await supabase
@@ -47,7 +48,7 @@ export async function GET(
         created_by_profile:profiles!invites_created_by_fkey(id, full_name, role),
         church:churches(id, name)
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .eq('church_id', currentUser.church_id)
       .single();
 
@@ -70,7 +71,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -81,6 +82,7 @@ export async function PUT(
 
     const supabase = await createServerClient();
     const body = await request.json();
+    const resolvedParams = await params;
     
     // Validar dados de entrada
     const validatedData = InviteUpdateSchema.parse(body);
@@ -105,7 +107,7 @@ export async function PUT(
     const { data: existingInvite, error: existingInviteError } = await supabase
       .from('invites')
       .select('id, status, church_id, created_by')
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (existingInviteError) {
@@ -154,7 +156,7 @@ export async function PUT(
     const { data: updatedInvite, error: updateError } = await supabase
       .from('invites')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .select(`
         *,
         created_by_profile:profiles!invites_created_by_fkey(id, full_name, role),
@@ -185,7 +187,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -195,6 +197,7 @@ export async function DELETE(
     }
 
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     // Verificar se o usuário atual tem permissão para deletar convites
     const { data: currentUser, error: currentUserError } = await supabase
@@ -216,7 +219,7 @@ export async function DELETE(
     const { data: existingInvite, error: existingInviteError } = await supabase
       .from('invites')
       .select('id, church_id, status')
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (existingInviteError) {
@@ -243,7 +246,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('invites')
       .delete()
-      .eq('id', params.id);
+      .eq('id', resolvedParams.id);
 
     if (deleteError) {
       console.error('Supabase error:', deleteError);

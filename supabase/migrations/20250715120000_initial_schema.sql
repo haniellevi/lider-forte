@@ -27,15 +27,19 @@ comment on table public.churches is 'Represents a single church organization (te
 
 -- Table for User Profiles
 -- This table links to auth.users and stores app-specific user data.
-create table public.profiles (
-  id uuid not null primary key references auth.users(id) on delete cascade,
-  church_id uuid references public.churches(id) on delete set null,
-  full_name text,
-  role public.user_role not null default 'member'::public.user_role,
-  avatar_url text,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
+-- Add columns to existing profiles table if they don't exist
+do $$ 
+begin
+  -- Add church_id column if not exists
+  if not exists (select 1 from information_schema.columns where table_name = 'profiles' and column_name = 'church_id') then
+    alter table public.profiles add column church_id uuid references public.churches(id) on delete set null;
+  end if;
+  
+  -- Add role column if not exists
+  if not exists (select 1 from information_schema.columns where table_name = 'profiles' and column_name = 'role') then
+    alter table public.profiles add column role public.user_role not null default 'member'::public.user_role;
+  end if;
+end $$;
 comment on table public.profiles is 'User profiles, linked to authentication and churches.';
 
 -- Table for G12 Cells

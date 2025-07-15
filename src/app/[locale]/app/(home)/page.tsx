@@ -3,11 +3,12 @@ import { getTranslations } from "next-intl/server";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 export async function generateMetadata({
-  params: { locale }
+  params
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "HomeApp" });
+  const { locale } = await params;
+  const t = await getTranslations({ locale: locale as "pt-BR" | "en", namespace: "HomeApp" });
   
   return {
     title: t("meta.title"),
@@ -16,11 +17,12 @@ export async function generateMetadata({
 }
 
 export default async function HomeAppPage({
-  params: { locale }
+  params
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const t = await getTranslations({ locale, namespace: "HomeApp" });
+  const { locale } = await params;
+  const t = await getTranslations({ locale: locale as "pt-BR" | "en", namespace: "HomeApp" });
   
   return (
     <>

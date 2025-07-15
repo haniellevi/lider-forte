@@ -9,10 +9,11 @@ const MemberUpdateSchema = z.object({
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     const { data, error } = await supabase
       .from('cell_members')
@@ -26,7 +27,7 @@ export async function GET(
           leader:profiles!cells_leader_id_fkey(id, full_name, avatar_url)
         )
       `)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .single();
 
     if (error) {
@@ -48,11 +49,12 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
     const body = await request.json();
+    const resolvedParams = await params;
     
     const validatedData = MemberUpdateSchema.parse(body);
     
@@ -69,7 +71,7 @@ export async function PUT(
     const { data, error } = await supabase
       .from('cell_members')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', resolvedParams.id)
       .select(`
         *,
         profile:profiles(id, full_name, avatar_url, role),
@@ -109,15 +111,16 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
+    const resolvedParams = await params;
     
     const { error } = await supabase
       .from('cell_members')
       .delete()
-      .eq('id', params.id);
+      .eq('id', resolvedParams.id);
 
     if (error) {
       console.error('Supabase error:', error);

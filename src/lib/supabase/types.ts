@@ -36,30 +36,48 @@ export type Database = {
     Tables: {
       churches: {
         Row: {
-          id: string
-          name: string
-          cnpj: string | null
-          address: Json | null
-          created_at: string
+          id: string,
+          admin_user_id: string,
+          name: string,
+          cnpj: string | null,
+          address: Json | null,
+          contact: Json | null,
+          settings: Json | null,
+          created_at: string,
           updated_at: string
         }
         Insert: {
-          id?: string
-          name: string
-          cnpj?: string | null
-          address?: Json | null
-          created_at?: string
-          updated_at?: string
+          id?: string,
+          admin_user_id: string,
+          name: string,
+          cnpj?: string | null,
+          address?: Json | null,
+          contact?: Json | null,
+          settings?: Json | null
         }
         Update: {
-          id?: string
-          name?: string
-          cnpj?: string | null
-          address?: Json | null
-          created_at?: string
-          updated_at?: string
+          name?: string,
+          cnpj?: string | null,
+          address?: Json | null,
+          contact?: Json | null,
+          settings?: Json | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "churches_admin_user_id_fkey",
+            columns: ["admin_user_id"],
+            isOneToOne: false,
+            referencedRelation: "users",
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "churches_admin_user_id_fkey",
+            columns: ["admin_user_id"],
+            isOneToOne: false,
+            referencedRelation: "profiles",
+            referencedColumns: ["id"]
+          }
+        ]
       }
       profiles: {
         Row: {
@@ -470,4 +488,3 @@ export const Constants = {
     },
   },
 } as const
-

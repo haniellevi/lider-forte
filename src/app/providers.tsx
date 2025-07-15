@@ -18,8 +18,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ClerkProvider
       signInUrl={`/${locale}/auth/sign-in`}
       signUpUrl={`/${locale}/auth/sign-up`}
-      afterSignInUrl={`/${locale}`}
-      afterSignUpUrl={`/${locale}`}
+      afterSignInUrl={`/${locale}/app`}
+      afterSignUpUrl={`/${locale}/app`}
       signInFallbackRedirectUrl={`/${locale}`}
       signUpFallbackRedirectUrl={`/${locale}`}
     >
