@@ -1186,5 +1186,13 @@
       "title": "Demonstração de Analytics",
       "subtitle": "Teste as funcionalidades de tracking e analytics"
     }
+  },
+  "HomeApp": {
+    "meta": {
+      "title": "Página Inicial | LIDER-FORTE",
+      "description": "Página inicial do painel de administração LIDER-FORTE."
+    },
+    "title": "Página Inicial",
+    "pageDescription": "Este é um componente básico para a página inicial da aplicação."
   }
 }
