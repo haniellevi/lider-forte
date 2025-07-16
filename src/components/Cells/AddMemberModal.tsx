@@ -24,8 +24,8 @@ import { toast } from "sonner";
 
 const AddMemberSchema = z.object({
   profile_id: z.string().min(1, "Selecione um membro"),
-  success_ladder_score: z.number().int().min(0).max(100).default(0),
-  is_timoteo: z.boolean().default(false),
+  success_ladder_score: z.number().int().min(0).max(100),
+  is_timoteo: z.boolean(),
 });
 
 type AddMemberData = z.infer<typeof AddMemberSchema>;
@@ -77,7 +77,7 @@ export function AddMemberModal({
   });
 
   const handleClose = () => {
-    formContext.reset();
+    formContext.resetForm();
     onClose();
   };
 
@@ -86,7 +86,7 @@ export function AddMemberModal({
     .filter(user => !existingMemberIds.includes(user.id))
     .map(user => ({
       value: user.id,
-      label: `${user.full_name || user.email} - ${t(`roles.${user.role || "member"}`)}`,
+      label: `${user.full_name} - ${t(`roles.${user.role || "member"}`)}`,
     }));
 
   return (
@@ -106,14 +106,9 @@ export function AddMemberModal({
               label={t("members.selectMember")}
               placeholder={t("members.selectMemberPlaceholder")}
               items={availableUsers}
-              defaultValue={formContext.watch("profile_id")}
-              onChange={(value) => formContext.setValue("profile_id", value)}
-              icon={<User className="h-4 w-4" />}
-              required
+              defaultValue={formContext.values.profile_id}
+              prefixIcon={<User className="h-4 w-4" />}
             />
-            {formContext.errors.profile_id && (
-              <p className="text-sm text-red-600">{formContext.errors.profile_id.message}</p>
-            )}
           </div>
 
           {/* Success Ladder Score */}
@@ -122,8 +117,6 @@ export function AddMemberModal({
               name="success_ladder_score"
               label={t("members.successLadderScore")}
               type="number"
-              min={0}
-              max={100}
               placeholder="0"
               icon={<Award className="h-4 w-4" />}
               formContext={formContext}
@@ -146,9 +139,10 @@ export function AddMemberModal({
                 </p>
               </div>
             </div>
-            <Switch
-              checked={formContext.watch("is_timoteo")}
-              onCheckedChange={(checked) => formContext.setValue("is_timoteo", checked)}
+            <input
+              type="checkbox"
+              checked={formContext.values.is_timoteo}
+              onChange={(e) => formContext.setValue("is_timoteo", e.target.checked)}
             />
           </div>
 
@@ -170,16 +164,16 @@ export function AddMemberModal({
               type="button"
               variant="outlineDark"
               onClick={handleClose}
-              disabled={formContext.isSubmitting}
+              disabled={false}
             >
               {t("form.cancel")}
             </Button>
             <Button
               type="submit"
-              disabled={formContext.isSubmitting || availableUsers.length === 0}
+              disabled={availableUsers.length === 0}
               icon={<UserPlus className="h-4 w-4" />}
             >
-              {formContext.isSubmitting ? t("members.adding") : t("members.addMember")}
+              {t("members.addMember")}
             </Button>
           </div>
 
