@@ -86,7 +86,7 @@ export function AddMemberModal({
     .filter(user => !existingMemberIds.includes(user.id))
     .map(user => ({
       value: user.id,
-      label: `${user.full_name} - ${t(`roles.${user.role || "member"}`)}`,
+      label: `${user.full_name || user.id} - ${t(`roles.${user.role || "member"}`)}`,
     }));
 
   return (
@@ -106,9 +106,11 @@ export function AddMemberModal({
               label={t("members.selectMember")}
               placeholder={t("members.selectMemberPlaceholder")}
               items={availableUsers}
-              defaultValue={formContext.values.profile_id}
-              prefixIcon={<User className="h-4 w-4" />}
+              {...formContext.getFieldProps("profile_id")}
             />
+            {formContext.formState.errors.profile_id && (
+              <p className="text-sm text-red-600">{formContext.formState.errors.profile_id}</p>
+            )}
           </div>
 
           {/* Success Ladder Score */}
@@ -118,7 +120,6 @@ export function AddMemberModal({
               label={t("members.successLadderScore")}
               type="number"
               placeholder="0"
-              icon={<Award className="h-4 w-4" />}
               formContext={formContext}
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -139,10 +140,8 @@ export function AddMemberModal({
                 </p>
               </div>
             </div>
-            <input
-              type="checkbox"
-              checked={formContext.values.is_timoteo}
-              onChange={(e) => formContext.setValue("is_timoteo", e.target.checked)}
+            <Switch
+              {...formContext.getFieldProps("is_timoteo")}
             />
           </div>
 
@@ -164,16 +163,16 @@ export function AddMemberModal({
               type="button"
               variant="outlineDark"
               onClick={handleClose}
-              disabled={false}
+              disabled={formContext.formState.isSubmitting}
             >
               {t("form.cancel")}
             </Button>
             <Button
               type="submit"
-              disabled={availableUsers.length === 0}
+              disabled={formContext.formState.isSubmitting || availableUsers.length === 0}
               icon={<UserPlus className="h-4 w-4" />}
             >
-              {t("members.addMember")}
+              {formContext.formState.isSubmitting ? t("members.adding") : t("members.addMember")}
             </Button>
           </div>
 

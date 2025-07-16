@@ -88,9 +88,9 @@ export function GrowthChart() {
         colors: '#6B7280',
       },
       markers: {
-        width: 8,
-        height: 8,
-        radius: 4,
+        size: 8,
+        offsetX: 0,
+        offsetY: 0,
       },
     },
     tooltip: {

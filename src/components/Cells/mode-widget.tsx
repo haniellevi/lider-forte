@@ -39,7 +39,7 @@ export function ModeWidget({
             <ModeSelector
               cellId={cellId}
               churchId={churchId}
-              onModeActivated={onModeChanged}
+              onModeActivated={onModeChanged || (() => {})}
             />
           </div>
         </CardContent>
@@ -65,7 +65,7 @@ export function ModeWidget({
           <ModeSelector
             cellId={cellId}
             churchId={churchId}
-            onModeActivated={onModeChanged}
+            onModeActivated={onModeChanged || (() => {})}
             trigger={
               <Badge variant="outline" className="cursor-pointer hover:bg-gray-50">
                 Alterar

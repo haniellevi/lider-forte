@@ -27,7 +27,7 @@ const CellFormSchema = z.object({
   leader_id: z.string().min(1, "Líder é obrigatório"),
   supervisor_id: z.string().optional(),
   parent_id: z.string().optional(),
-  meeting_day: z.number().int().min(0).max(6).optional(),
+  meeting_day: z.string().optional(),
   meeting_time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Horário deve estar no formato HH:MM").optional(),
   
   // Address fields
@@ -78,7 +78,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
         leader_id: data.leader_id,
         supervisor_id: data.supervisor_id || null,
         parent_id: data.parent_id || parentCellId || null,
-        meeting_day: data.meeting_day,
+        meeting_day: data.meeting_day ? parseInt(data.meeting_day) : undefined,
         meeting_time: data.meeting_time,
         address: Object.values(address).some(Boolean) ? address : null,
       };
@@ -96,7 +96,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
       leader_id: "",
       supervisor_id: "",
       parent_id: parentCellId || "",
-      meeting_day: undefined,
+      meeting_day: "",
       meeting_time: "",
       street: "",
       number: "",
@@ -111,21 +111,19 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
   // Populate form when editing
   useEffect(() => {
     if (cell && isEditing) {
-      formContext.reset({
-        name: cell.name,
-        leader_id: cell.leader_id,
-        supervisor_id: cell.supervisor_id || "",
-        parent_id: cell.parent_id || "",
-        meeting_day: cell.meeting_day,
-        meeting_time: cell.meeting_time || "",
-        street: cell.address?.street || "",
-        number: cell.address?.number || "",
-        complement: cell.address?.complement || "",
-        neighborhood: cell.address?.neighborhood || "",
-        city: cell.address?.city || "",
-        state: cell.address?.state || "",
-        zipCode: cell.address?.zipCode || "",
-      });
+      formContext.setValue("name", cell.name);
+      formContext.setValue("leader_id", cell.leader_id);
+      formContext.setValue("supervisor_id", cell.supervisor_id || "");
+      formContext.setValue("parent_id", cell.parent_id || "");
+      formContext.setValue("meeting_day", cell.meeting_day?.toString() || "");
+      formContext.setValue("meeting_time", cell.meeting_time || "");
+      formContext.setValue("street", (cell.address as any)?.street || "");
+      formContext.setValue("number", (cell.address as any)?.number || "");
+      formContext.setValue("complement", (cell.address as any)?.complement || "");
+      formContext.setValue("neighborhood", (cell.address as any)?.neighborhood || "");
+      formContext.setValue("city", (cell.address as any)?.city || "");
+      formContext.setValue("state", (cell.address as any)?.state || "");
+      formContext.setValue("zipCode", (cell.address as any)?.zipCode || "");
     }
   }, [cell, isEditing, formContext]);
 
@@ -137,7 +135,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
     .filter(user => ['leader', 'supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.full_name || user.email,
+      label: user.full_name || user.id,
     }));
 
   // Filter users that can be supervisors
@@ -145,7 +143,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
     .filter(user => ['supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.full_name || user.email,
+      label: user.full_name || user.id,
     }));
 
   // Filter cells that can be parents (exclude current cell and its descendants)
@@ -157,13 +155,13 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
     }));
 
   const dayOptions = [
-    { value: 0, label: t("days.sunday") },
-    { value: 1, label: t("days.monday") },
-    { value: 2, label: t("days.tuesday") },
-    { value: 3, label: t("days.wednesday") },
-    { value: 4, label: t("days.thursday") },
-    { value: 5, label: t("days.friday") },
-    { value: 6, label: t("days.saturday") },
+    { value: "0", label: t("days.sunday") },
+    { value: "1", label: t("days.monday") },
+    { value: "2", label: t("days.tuesday") },
+    { value: "3", label: t("days.wednesday") },
+    { value: "4", label: t("days.thursday") },
+    { value: "5", label: t("days.friday") },
+    { value: "6", label: t("days.saturday") },
   ];
 
   return (
@@ -200,8 +198,6 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
               name="name"
               label={t("form.name")}
               placeholder={t("form.namePlaceholder")}
-              icon={<Building className="h-4 w-4" />}
-              required
               formContext={formContext}
             />
 
@@ -209,28 +205,21 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
               label={t("form.leader")}
               placeholder={t("form.selectLeader")}
               items={leaderOptions}
-              defaultValue={formContext.watch("leader_id")}
-              onChange={(value) => formContext.setValue("leader_id", value)}
-              icon={<User className="h-4 w-4" />}
-              required
+              {...formContext.getFieldProps("leader_id")}
             />
 
             <Select
               label={t("form.supervisor")}
               placeholder={t("form.selectSupervisor")}
               items={supervisorOptions}
-              defaultValue={formContext.watch("supervisor_id")}
-              onChange={(value) => formContext.setValue("supervisor_id", value)}
-              icon={<User className="h-4 w-4" />}
+              {...formContext.getFieldProps("supervisor_id")}
             />
 
             <Select
               label={t("form.parentCell")}
               placeholder={t("form.selectParentCell")}
               items={parentCellOptions}
-              defaultValue={formContext.watch("parent_id")}
-              onChange={(value) => formContext.setValue("parent_id", value)}
-              icon={<Building className="h-4 w-4" />}
+              {...formContext.getFieldProps("parent_id")}
             />
           </div>
         </div>
@@ -246,9 +235,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
               label={t("form.meetingDay")}
               placeholder={t("form.selectMeetingDay")}
               items={dayOptions}
-              defaultValue={formContext.watch("meeting_day")}
-              onChange={(value) => formContext.setValue("meeting_day", parseInt(value))}
-              icon={<Calendar className="h-4 w-4" />}
+              {...formContext.getFieldProps("meeting_day")}
             />
 
             <FormInput
@@ -256,7 +243,6 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
               label={t("form.meetingTime")}
               type="time"
               placeholder="19:30"
-              icon={<Clock className="h-4 w-4" />}
               formContext={formContext}
             />
           </div>
@@ -269,7 +255,60 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
             <span>{t("form.address")}</span>
           </h3>
           
-          <AddressForm formContext={formContext} />
+          <div className="grid grid-cols-1 gap-4">
+            <FormInput
+              name="street"
+              label={t("form.street")}
+              placeholder={t("form.streetPlaceholder")}
+              formContext={formContext}
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormInput
+                name="number"
+                label={t("form.number")}
+                placeholder={t("form.numberPlaceholder")}
+                formContext={formContext}
+              />
+              
+              <FormInput
+                name="complement"
+                label={t("form.complement")}
+                placeholder={t("form.complementPlaceholder")}
+                formContext={formContext}
+              />
+            </div>
+            
+            <FormInput
+              name="neighborhood"
+              label={t("form.neighborhood")}
+              placeholder={t("form.neighborhoodPlaceholder")}
+              formContext={formContext}
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormInput
+                name="city"
+                label={t("form.city")}
+                placeholder={t("form.cityPlaceholder")}
+                formContext={formContext}
+              />
+              
+              <FormInput
+                name="state"
+                label={t("form.state")}
+                placeholder={t("form.statePlaceholder")}
+                formContext={formContext}
+              />
+            </div>
+            
+            <FormInput
+              name="zipCode"
+              label={t("form.zipCode")}
+              placeholder={t("form.zipCodePlaceholder")}
+              formContext={formContext}
+            />
+          </div>
         </div>
 
         {/* Form Actions */}
@@ -284,10 +323,10 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
           
           <Button
             type="submit"
-            disabled={formContext.isSubmitting}
+            disabled={formContext.formState.isSubmitting}
             icon={<Save className="h-4 w-4" />}
           >
-            {formContext.isSubmitting 
+            {formContext.formState.isSubmitting 
               ? t("form.saving") 
               : isEditing 
                 ? t("form.update") 

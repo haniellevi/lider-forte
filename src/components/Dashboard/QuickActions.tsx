@@ -100,7 +100,7 @@ export function QuickActions({ className = "" }: QuickActionsProps) {
   const router = useRouter();
   const { data: profile } = useCurrentUserProfile();
 
-  const isAdmin = profile?.role === 'admin';
+  const isAdmin = profile?.role === 'pastor';
   const isLeader = profile?.role === 'leader' || isAdmin;
   const hasChurch = !!profile?.church_id;
 

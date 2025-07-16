@@ -42,7 +42,7 @@ export function useUpdateProfile() {
         const { data, error } = await supabase
           .from('profiles')
           .update(cleanUpdates)
-          .eq('user_id', user.id)
+          .eq('id', user.id)
           .select()
           .single();
         
@@ -64,8 +64,8 @@ export function useUpdateProfile() {
     onSuccess: (updatedProfile) => {
       try {
         // Update profile cache with null safety
-        if (updatedProfile?.user_id) {
-          queryClient.setQueryData(['user', 'profile', updatedProfile.user_id], updatedProfile);
+        if (updatedProfile?.id) {
+          queryClient.setQueryData(['user', 'profile', updatedProfile.id], updatedProfile);
         }
         
         if (user?.id) {

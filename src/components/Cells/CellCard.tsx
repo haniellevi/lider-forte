@@ -57,6 +57,7 @@ export function CellCard({ cell, onEdit, onAddMember, className = "" }: CellCard
   const t = useTranslations("Cells");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const deleteCell = useDeleteCell();
 
@@ -133,7 +134,7 @@ export function CellCard({ cell, onEdit, onAddMember, className = "" }: CellCard
           )}
         </div>
         
-        <Dropdown>
+        <Dropdown isOpen={isDropdownOpen} setIsOpen={setIsDropdownOpen}>
           <DropdownTrigger>
             <Button variant="outlineDark" size="small">
               <MoreVertical className="h-4 w-4" />

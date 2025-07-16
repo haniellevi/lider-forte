@@ -28,11 +28,27 @@ export function CellMembersTable({ cellId, onAddMember, className = "" }: CellMe
   const t = useTranslations("Cells");
   const { data: members = [], isLoading, refetch } = useCellMembers(cellId);
   const removeMember = useRemoveCellMember();
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+
+  const toggleDropdown = (memberId: string) => {
+    setOpenDropdowns(prev => ({
+      ...prev,
+      [memberId]: !prev[memberId]
+    }));
+  };
+
+  const closeDropdown = (memberId: string) => {
+    setOpenDropdowns(prev => ({
+      ...prev,
+      [memberId]: false
+    }));
+  };
 
   const handleRemoveMember = async (profileId: string) => {
     if (window.confirm(t("members.confirmRemove"))) {
       try {
         await removeMember.mutateAsync({ cellId, profileId });
+        closeDropdown(profileId);
         refetch();
       } catch (error) {
         // Error handling is done in the mutation
@@ -195,7 +211,10 @@ export function CellMembersTable({ cellId, onAddMember, className = "" }: CellMe
                       )}
                     </TableCell>
                     <TableCell>
-                      <Dropdown>
+                      <Dropdown 
+                        isOpen={openDropdowns[member.profile_id] || false}
+                        setIsOpen={() => toggleDropdown(member.profile_id)}
+                      >
                         <DropdownTrigger>
                           <Button variant="outlineDark" size="small">
                             <MoreVertical className="h-4 w-4" />
