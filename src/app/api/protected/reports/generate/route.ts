@@ -178,12 +178,12 @@ async function generateCellPerformance(supabase: any, churchId: string, filters:
   data.top_cells_by_members = cellsPerformance?.slice(0, 10) || [];
 
   // Células com mais crescimento recente
-  data.fastest_growing_cells = cellsPerformance?.filter(cell => 
+  data.fastest_growing_cells = cellsPerformance?.filter((cell: any) => 
     cell.new_members_30d > 0
-  ).sort((a, b) => b.new_members_30d - a.new_members_30d).slice(0, 10) || [];
+  ).sort((a: any, b: any) => b.new_members_30d - a.new_members_30d).slice(0, 10) || [];
 
   // Estatísticas de liderança
-  const leaderStats = cellsPerformance?.reduce((acc, cell) => {
+  const leaderStats = cellsPerformance?.reduce((acc: any, cell: any) => {
     if (!acc[cell.leader_role]) {
       acc[cell.leader_role] = { count: 0, total_members: 0 };
     }
@@ -253,7 +253,7 @@ async function generateLeadershipDevelopment(supabase: any, churchId: string, fi
     .select('role')
     .eq('church_id', churchId);
 
-  const roleDistribution = leadershipStats?.reduce((acc, profile) => {
+  const roleDistribution = leadershipStats?.reduce((acc: any, profile: any) => {
     acc[profile.role] = (acc[profile.role] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -272,10 +272,10 @@ async function generateLeadershipDevelopment(supabase: any, churchId: string, fi
 
   data.timoteo_development = {
     total_timoteos: timoteoStats?.length || 0,
-    avg_success_score: timoteoStats?.reduce((sum, member) => 
+    avg_success_score: timoteoStats?.reduce((sum: any, member: any) => 
       sum + (member.success_ladder_score || 0), 0
     ) / (timoteoStats?.length || 1),
-    timoteos_by_cell: timoteoStats?.reduce((acc, member) => {
+    timoteos_by_cell: timoteoStats?.reduce((acc: any, member: any) => {
       const cellName = member.cell?.name || 'Célula sem nome';
       acc[cellName] = (acc[cellName] || 0) + 1;
       return acc;

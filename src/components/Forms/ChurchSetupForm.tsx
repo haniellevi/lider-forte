@@ -40,7 +40,7 @@ export function ChurchSetupForm() {
     onSubmit: async (data: ChurchSetupData) => {
       setIsSubmitting(true);
       try {
-        await updateChurch.mutateAsync(data);
+        await createChurch.mutateAsync(data);
         toast.success(t("form.success"));
       } catch (error) {
         toast.error(t("form.error"));
@@ -49,21 +49,21 @@ export function ChurchSetupForm() {
       }
     },
     defaultValues: {
-      name: currentChurch?.name || "",
-      cnpj: currentChurch?.cnpj || "",
-      phone: currentChurch?.phone || "",
-      email: currentChurch?.email || "",
-      website: currentChurch?.website || "",
-      description: currentChurch?.description || "",
-      founded_date: currentChurch?.founded_date || "",
-      vision: currentChurch?.vision || "",
-      mission: currentChurch?.mission || "",
-      values: currentChurch?.values || [],
+      name: "",
+      cnpj: "",
+      phone: "",
+      email: "",
+      website: "",
+      description: "",
+      founded_date: "",
+      vision: "",
+      mission: "",
+      values: [],
     },
   });
 
 
-  if (isLoading) {
+  if (isSubmitting) {
     return (
       <div className="animate-pulse space-y-4">
         <div className="h-4 bg-gray-200 rounded dark:bg-gray-700"></div>

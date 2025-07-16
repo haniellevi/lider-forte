@@ -24,8 +24,8 @@ import { toast } from "sonner";
 
 const AddMemberSchema = z.object({
   profile_id: z.string().min(1, "Selecione um membro"),
-  success_ladder_score: z.number().int().min(0).max(100).default(0),
-  is_timoteo: z.boolean().default(false),
+  success_ladder_score: z.number().int().min(0).max(100),
+  is_timoteo: z.boolean(),
 });
 
 type AddMemberData = z.infer<typeof AddMemberSchema>;
@@ -77,7 +77,7 @@ export function AddMemberModal({
   });
 
   const handleClose = () => {
-    formContext.reset();
+    formContext.resetForm();
     onClose();
   };
 
@@ -86,7 +86,7 @@ export function AddMemberModal({
     .filter(user => !existingMemberIds.includes(user.id))
     .map(user => ({
       value: user.id,
-      label: `${user.full_name || user.email} - ${t(`roles.${user.role || "member"}`)}`,
+      label: `${user.full_name || user.id} - ${t(`roles.${user.role || "member"}`)}`,
     }));
 
   return (
@@ -106,13 +106,10 @@ export function AddMemberModal({
               label={t("members.selectMember")}
               placeholder={t("members.selectMemberPlaceholder")}
               items={availableUsers}
-              defaultValue={formContext.watch("profile_id")}
-              onChange={(value) => formContext.setValue("profile_id", value)}
-              icon={<User className="h-4 w-4" />}
-              required
+              {...formContext.getFieldProps("profile_id")}
             />
-            {formContext.errors.profile_id && (
-              <p className="text-sm text-red-600">{formContext.errors.profile_id.message}</p>
+            {formContext.formState.errors.profile_id && (
+              <p className="text-sm text-red-600">{formContext.formState.errors.profile_id}</p>
             )}
           </div>
 
@@ -122,10 +119,7 @@ export function AddMemberModal({
               name="success_ladder_score"
               label={t("members.successLadderScore")}
               type="number"
-              min={0}
-              max={100}
               placeholder="0"
-              icon={<Award className="h-4 w-4" />}
               formContext={formContext}
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -147,8 +141,7 @@ export function AddMemberModal({
               </div>
             </div>
             <Switch
-              checked={formContext.watch("is_timoteo")}
-              onCheckedChange={(checked) => formContext.setValue("is_timoteo", checked)}
+              {...formContext.getFieldProps("is_timoteo")}
             />
           </div>
 
@@ -170,16 +163,16 @@ export function AddMemberModal({
               type="button"
               variant="outlineDark"
               onClick={handleClose}
-              disabled={formContext.isSubmitting}
+              disabled={formContext.formState.isSubmitting}
             >
               {t("form.cancel")}
             </Button>
             <Button
               type="submit"
-              disabled={formContext.isSubmitting || availableUsers.length === 0}
+              disabled={formContext.formState.isSubmitting || availableUsers.length === 0}
               icon={<UserPlus className="h-4 w-4" />}
             >
-              {formContext.isSubmitting ? t("members.adding") : t("members.addMember")}
+              {formContext.formState.isSubmitting ? t("members.adding") : t("members.addMember")}
             </Button>
           </div>
 
