@@ -178,7 +178,7 @@ export function ChurchSetupForm() {
         <Button
           type="submit"
           disabled={formContext.isSubmitting}
-          variant="primary"
+          variant="default"
         >
           {formContext.isSubmitting ? t("form.saving") : t("form.save")}
         </Button>

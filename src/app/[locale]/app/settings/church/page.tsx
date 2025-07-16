@@ -29,8 +29,8 @@ export default async function ChurchSettingsPage({
       <Breadcrumb 
         pageName={t("title")} 
         items={[
-          { name: t("breadcrumb.settings"), href: "/app/settings" },
-          { name: t("breadcrumb.church") }
+          { label: t("breadcrumb.settings"), href: "/app/settings" },
+          { label: t("breadcrumb.church"), href: "" }
         ]}
       />
       <div className="mx-auto max-w-7xl">

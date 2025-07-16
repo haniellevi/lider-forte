@@ -55,7 +55,7 @@ export function ReportsContent() {
           </Button>
           <Button
             onClick={() => setShowCreateModal(true)}
-            variant="primary"
+            variant="default"
             icon={<Plus className="h-4 w-4" />}
           >
             {t('actions.create')}

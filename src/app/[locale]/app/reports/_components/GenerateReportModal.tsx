@@ -256,7 +256,7 @@ export function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProp
                 </Button>
                 <Button
                   type="submit"
-                  variant="primary"
+                  variant="default"
                   disabled={isSubmitting}
                   icon={<Zap className="h-4 w-4" />}
                 >
@@ -309,7 +309,7 @@ export function GenerateReportModal({ isOpen, onClose }: GenerateReportModalProp
                 </Button>
                 <Button
                   onClick={handleDownload}
-                  variant="primary"
+                  variant="default"
                   icon={<Download className="h-4 w-4" />}
                 >
                   {t('actions.download')}

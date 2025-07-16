@@ -50,9 +50,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Get additional member data (avatars, etc.)
-    const memberIds = leaderboard?.map(member => member.profile_id) || [];
+    const memberIds = leaderboard?.map((member: any) => member.profile_id) || [];
     
-    let profiles = [];
+    let profiles: any[] = [];
     if (memberIds.length > 0) {
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Merge profile data with leaderboard
-    const enrichedLeaderboard = leaderboard?.map(member => {
+    const enrichedLeaderboard = leaderboard?.map((member: any) => {
       const profile = profiles.find(p => p.id === member.profile_id);
       return {
         ...member,

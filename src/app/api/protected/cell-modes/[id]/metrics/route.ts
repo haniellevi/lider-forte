@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const modeId = params.id
+    const supabase = await createClient()
+    const { id: modeId } = await params
 
     // Verificar autenticação
     const {
@@ -57,7 +57,7 @@ export async function PUT(
       .from('profiles')
       .select('role, church_id')
       .eq('id', user.id)
-      .eq('church_id', mode.cells.church_id)
+      .eq('church_id', (mode.cells as any).church_id)
       .single()
 
     if (profileError || !userProfile) {
@@ -68,8 +68,8 @@ export async function PUT(
     }
 
     const allowedRoles = ['pastor', 'supervisor', 'leader']
-    const isLeaderOfCell = mode.cells.leader_id === user.id
-    const isSupervisorOfCell = mode.cells.supervisor_id === user.id
+    const isLeaderOfCell = (mode.cells as any).leader_id === user.id
+    const isSupervisorOfCell = (mode.cells as any).supervisor_id === user.id
 
     if (!allowedRoles.includes(userProfile.role) && !isLeaderOfCell && !isSupervisorOfCell) {
       return NextResponse.json(
@@ -136,11 +136,11 @@ export async function PUT(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const modeId = params.id
+    const supabase = await createClient()
+    const { id: modeId } = await params
 
     // Verificar autenticação
     const {
@@ -184,7 +184,7 @@ export async function GET(
       .from('profiles')
       .select('church_id')
       .eq('id', user.id)
-      .eq('church_id', mode.cells.church_id)
+      .eq('church_id', (mode.cells as any).church_id)
       .single()
 
     if (profileError || !userProfile) {

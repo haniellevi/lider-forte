@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
@@ -25,7 +25,7 @@ export async function GET(
       return NextResponse.json({ error: 'Church not found' }, { status: 404 });
     }
 
-    const memberId = params.id;
+    const { id: memberId } = await params;
 
     // Check if user has permission to view this member's data
     // Leaders can view their cell members, supervisors and pastors can view all
@@ -45,7 +45,7 @@ export async function GET(
         .eq('profile_id', memberId)
         .single();
 
-      hasPermission = cellMember?.cells?.leader_id === user.id;
+      hasPermission = (cellMember?.cells as any)?.leader_id === user.id;
     } else if (user.id === memberId) {
       // Users can view their own data
       hasPermission = true;
@@ -212,7 +212,7 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
@@ -239,7 +239,7 @@ export async function POST(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const memberId = params.id;
+    const { id: memberId } = await params;
 
     // Calculate leadership score for the specific member
     const { data: calculatedData, error: calcError } = await supabase

@@ -1,29 +1,29 @@
-# AI Coders - Starter Kit
+# Líder Forte - Sistema G12
 
-**AI Coders Starter Kit** é um template moderno e rico em recursos para dashboard admin em Next.js com autenticação Clerk, internacionalização (i18n) e componentes de UI elegantes. Construído para desenvolvedores que desejam prototipagem rápida e construção de aplicações web sofisticadas com as melhores práticas prontas para uso.
+**Líder Forte** é uma plataforma completa de gestão para igrejas que seguem a Visão G12. Sistema operacional especializado que acelera o crescimento, multiplica células e desenvolve líderes através de tecnologia de ponta projetada especificamente para o contexto eclesiástico G12.
 
-## Funcionalidades
+## Funcionalidades G12
 
-- 🔐 **Autenticação**: Integração completa com Clerk incluindo suporte OAuth
-- 🌍 **Internacionalização**: Suporte multilíngue (Português e Inglês)
-- 🎨 **UI Moderna**: Componentes de dashboard elegantes e responsivos
-- 📝 **Validação Avançada**: Sistema completo com Zod + React Hook Form
-- 🇧🇷 **Validações Brasileiras**: CPF, CNPJ, CEP, telefone brasileiro
-- 📍 **Consulta CEP**: Preenchimento automático via API ViaCEP
-- 📱 **WhatsApp Widget**: Widget flutuante para captura de leads com integração webhook
-- 📊 **Analytics**: Integração com GA4, GTM, Meta Pixel e LogRocket
-- 🔄 **Real-time**: Notificações em tempo real com Supabase
-- 🚀 **Next.js 15**: Recursos mais recentes do Next.js com SSR e SSG
-- 📱 **Mobile-First**: Design totalmente responsivo
-- 🛡️ **TypeScript**: Segurança de tipos de ponta a ponta
-- ⚙️ **Configuração Central**: Sistema de configuração unificado para fácil manutenção
-- 🎯 **Pronto para Produção**: Otimizado para performance e escalabilidade
+- ⛪ **Gestão de Células**: CRUD completo de células com hierarquia G12
+- 👥 **Pipeline de Líderes**: IA para identificação e desenvolvimento de liderança
+- 🏆 **Escada do Sucesso**: Sistema gamificado de crescimento espiritual
+- 📊 **Modos de Célula**: Estratégias direcionadas (Ganhar, Consolidar, Discipular, Enviar)
+- 🔄 **Multiplicação Automatizada**: Sistema inteligente de multiplicação celular
+- 📈 **Relatórios G12**: Analytics específicos para crescimento eclesiástico
+- 🎯 **Hierarquia Dinâmica**: Visualização em tempo real da estrutura organizacional
+- 🔐 **Autenticação Eclesiástica**: Sistema multi-tenant para múltiplas igrejas
+- 🌍 **Internacionalização**: Suporte multilíngue com terminologias G12
+- 📱 **Mobile-First**: Interface otimizada para líderes em movimento
+- 🇧🇷 **Validações Brasileiras**: CPF, CNPJ, CEP específicos para o contexto nacional
+- 🔄 **Real-time**: Notificações e atualizações em tempo real
+- 🚀 **Next.js 15**: Performance otimizada com SSR e SSG
+- 🛡️ **TypeScript**: Segurança de tipos completa
 
-**AI Coders Starter Kit** fornece tudo o que você precisa para construir dashboards admin modernos e aplicações web. Seja construindo uma plataforma SaaS, ferramentas internas ou aplicações web complexas, este starter kit acelera seu desenvolvimento com padrões comprovados e integrações.
+**Líder Forte** fornece tudo que sua igreja precisa para implementar a Visão G12 com excelência tecnológica. Acelere o crescimento, multiplique células e desenvolva líderes com ferramentas especializadas no contexto eclesiástico.
 
 ## Instalação
 
-> **⚠️ IMPORTANTE:** Este projeto agora usa Clerk para autenticação. Você **deve** configurar o Clerk antes de executar a aplicação. Veja a [documentação de autenticação](./docs/02-configuration/autenticacao.md) para instruções detalhadas.
+> **⚠️ IMPORTANTE:** Este projeto usa Clerk para autenticação multi-tenant e Supabase para banco de dados. Configure ambos antes de executar a aplicação. Veja a [documentação de configuração](./docs/02-configuration/) para instruções detalhadas.
 
 1. Faça o download/fork/clone do repositório e, uma vez no diretório correto, é hora de instalar todas as dependências necessárias. Você pode fazer isso digitando o seguinte comando:
 
@@ -36,7 +36,10 @@ Se você estiver usando **Yarn** como gerenciador de pacotes, o comando será:
 yarn install
 ```
 
-2. **Configure a autenticação Clerk** - Siga as instruções na [documentação de autenticação](./docs/02-configuration/autenticacao.md) e [integração Clerk-Supabase](./docs/02-configuration/clerk-supabase-integracao.md).
+2. **Configure a autenticação e banco de dados**:
+   - [Configuração do Clerk (autenticação)](./docs/02-configuration/autenticacao.md)
+   - [Configuração do Supabase (banco de dados)](./docs/02-configuration/supabase.md)
+   - [Configuração específica G12](./docs/02-configuration/configuracao-g12.md)
 
 3. Pronto, você está quase lá. Agora tudo que você precisa fazer é iniciar o servidor de desenvolvimento. Se você estiver usando **npm**, o comando é:
 
@@ -49,51 +52,37 @@ E se você estiver usando **Yarn**, é:
 yarn dev
 ```
 
-E voilà! Agora você está pronto para começar a desenvolver. **Bom código**!
+E voilà! Agora você está pronto para começar a usar o sistema G12. **Transforme sua igreja!** ⛪
 
-## 📝 Sistema de Validação de Formulários
+## 🎓 Primeiros Passos com G12
 
-Este starter kit inclui um sistema robusto de validação de formulários construído com **Zod** e **React Hook Form**:
+Após a instalação, siga estes passos para configurar sua igreja:
 
-### Funcionalidades de Validação:
-- ✅ **Type-Safe**: Validação em tempo de compilação com TypeScript
-- ✅ **Tempo Real**: Validação onChange/onBlur com debounce
-- ✅ **Validações Brasileiras**: CPF, CNPJ, CEP, telefone brasileiro
-- ✅ **Consulta CEP**: Preenchimento automático via API ViaCEP
-- ✅ **Feedback Visual**: Estados de erro/sucesso/loading
-- ✅ **Acessibilidade**: Suporte completo a ARIA
-- ✅ **Dark Mode**: Totalmente compatível com modo escuro
+1. **Acesse o sistema**: `http://localhost:3000`
+2. **Faça login** com sua conta Clerk
+3. **Configure sua igreja**: Use o [guia de configuração G12](./docs/02-configuration/configuracao-g12.md)
+4. **Importe dados existentes**: Células, líderes e membros atuais
+5. **Defina metas**: Estabeleça objetivos de crescimento
+6. **Treine sua equipe**: Use a [documentação G12](./docs/01-getting-started/README-G12.md)
 
-### Como Usar:
-```typescript
-// Hook de validação
-const form = useFormValidation({
-  schema: userRegistrationSchema,
-  onSubmit: async (data) => { /* ... */ }
-});
+## 📝 Formulários Especializados G12
 
-// Componente validado
-<FormInput
-  name="email"
-  label="Email"
-  formContext={form}
-  helpText="Digite um email válido"
-/>
+O sistema inclui formulários específicos para o contexto eclesiástico com validações brasileiras:
 
-// Formulário de endereço com CEP automático
-<AddressForm
-  onSubmit={async (data) => { /* ... */ }}
-  autoFillFromCep={true}
-/>
-```
+### Funcionalidades dos Formulários:
+- ✅ **Validações Eclesiásticas**: Campos específicos para líderes, células e membros
+- ✅ **Validações Brasileiras**: CPF, CNPJ, CEP, telefone brasileiro  
+- ✅ **Consulta CEP**: Preenchimento automático de endereços
+- ✅ **Hierarquia G12**: Formulários que respeitam a estrutura G12
+- ✅ **Tempo Real**: Validação em tempo real com feedback visual
+- ✅ **TypeScript**: Segurança de tipos completa
 
-### Exemplo Completo:
-Acesse `/forms/validated-forms` para ver todos os exemplos funcionando, incluindo:
-- Formulário de login
-- Cadastro de usuário completo
-- Formulário de contato
-- Perfil de usuário
-- **Endereço com consulta automática de CEP**
+### Formulários Disponíveis:
+- **Cadastro de Igreja**: Informações completas da organização
+- **Gestão de Células**: Criação e edição de células
+- **Cadastro de Líderes**: Perfis de liderança com hierarquia
+- **Gestão de Membros**: Informações de membros com Escada do Sucesso
+- **Configuração G12**: Metas, modos e configurações específicas
 
 ## 🏪 Gerenciamento de Estado Global com Zustand
 

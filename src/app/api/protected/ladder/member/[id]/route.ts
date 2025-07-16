@@ -11,7 +11,7 @@ const querySchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
@@ -25,7 +25,7 @@ export async function GET(
       );
     }
 
-    const memberId = params.id;
+    const { id: memberId } = await params;
 
     // Validar UUID
     if (!z.string().uuid().safeParse(memberId).success) {
@@ -105,9 +105,9 @@ export async function GET(
         stored_score: cellInfo?.success_ladder_score || 0,
         is_timoteo: cellInfo?.is_timoteo || false,
         cell: cellInfo?.cells ? {
-          id: cellInfo.cells.id,
-          name: cellInfo.cells.name,
-          leader_name: cellInfo.cells.profiles?.full_name
+          id: (cellInfo.cells as any).id,
+          name: (cellInfo.cells as any).name,
+          leader_name: (cellInfo.cells as any).profiles?.full_name
         } : null
       }
     };
@@ -144,7 +144,7 @@ export async function GET(
 
       // Agrupar por categoria e calcular estatísticas
       const categoryStats = activityHistory?.reduce((acc, activity) => {
-        const category = activity.success_ladder_activities?.category;
+        const category = (activity.success_ladder_activities as any)?.category;
         if (!category) return acc;
         
         if (!acc[category]) {
@@ -172,11 +172,11 @@ export async function GET(
     }
 
     // Obter ranking na célula se o membro pertence a uma célula
-    if (cellInfo?.cells?.id) {
+    if ((cellInfo?.cells as any)?.id) {
       const { data: cellRanking } = await supabase
-        .rpc('get_cell_ladder_ranking', { cell_id: cellInfo.cells.id });
+        .rpc('get_cell_ladder_ranking', { cell_id: (cellInfo?.cells as any)?.id });
 
-      const memberRank = cellRanking?.findIndex(member => member.profile_id === memberId) + 1;
+      const memberRank = cellRanking?.findIndex((member: any) => member.profile_id === memberId) + 1;
       response.member.cell_ranking = {
         position: memberRank || null,
         total_members: cellRanking?.length || 0

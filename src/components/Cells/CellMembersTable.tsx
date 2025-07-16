@@ -93,7 +93,7 @@ export function CellMembersTable({ cellId, onAddMember, className = "" }: CellMe
         
         <Button
           onClick={onAddMember}
-          variant="primary"
+          variant="default"
           size="small"
           icon={<UserPlus className="h-4 w-4" />}
         >
@@ -114,7 +114,7 @@ export function CellMembersTable({ cellId, onAddMember, className = "" }: CellMe
             </p>
             <Button
               onClick={onAddMember}
-              variant="primary"
+              variant="default"
               icon={<UserPlus className="h-4 w-4" />}
             >
               {t("members.addFirstMember")}

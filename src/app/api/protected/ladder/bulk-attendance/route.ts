@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
     const skippedRegistrations = alreadyRegisteredIds.length;
 
     const memberNames = cellMembers?.reduce((acc, member) => {
-      acc[member.profile_id] = member.profiles?.full_name;
+      acc[member.profile_id] = (member.profiles as any)?.full_name;
       return acc;
     }, {} as Record<string, string>);
 

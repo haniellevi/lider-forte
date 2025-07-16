@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox } from '@/components/FormElements/checkbox'
 import { Separator } from '@/components/ui/separator'
 import { 
   Users, 
@@ -200,14 +200,10 @@ export function PlanReviewStep({
           {/* 1. Informações Básicas */}
           <div className="flex items-start gap-3">
             <Checkbox
-              id="basic_info"
-              checked={checkedItems.basic_info || false}
-              onCheckedChange={(checked) => handleCheckItem('basic_info', checked as boolean)}
+              label="Informações Básicas da Nova Célula"
+              onChange={(e) => handleCheckItem('basic_info', e.target.checked)}
             />
             <div className="flex-1">
-              <label htmlFor="basic_info" className="font-medium cursor-pointer">
-                Informações Básicas da Nova Célula
-              </label>
               <div className="mt-2 text-sm text-muted-foreground">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div>Nome: <strong>{basicInfo.new_cell_name}</strong></div>
@@ -231,14 +227,10 @@ export function PlanReviewStep({
           {/* 2. Template Selecionado */}
           <div className="flex items-start gap-3">
             <Checkbox
-              id="template"
-              checked={checkedItems.template || false}
-              onCheckedChange={(checked) => handleCheckItem('template', checked as boolean)}
+              label="Estratégia de Multiplicação"
+              onChange={(e) => handleCheckItem('template', e.target.checked)}
             />
             <div className="flex-1">
-              <label htmlFor="template" className="font-medium cursor-pointer">
-                Estratégia de Multiplicação
-              </label>
               <div className="mt-2 text-sm text-muted-foreground">
                 {template ? (
                   <div>
@@ -259,14 +251,10 @@ export function PlanReviewStep({
           {/* 3. Distribuição de Membros */}
           <div className="flex items-start gap-3">
             <Checkbox
-              id="member_distribution"
-              checked={checkedItems.member_distribution || false}
-              onCheckedChange={(checked) => handleCheckItem('member_distribution', checked as boolean)}
+              label="Distribuição de Membros"
+              onChange={(e) => handleCheckItem('member_distribution', e.target.checked)}
             />
             <div className="flex-1">
-              <label htmlFor="member_distribution" className="font-medium cursor-pointer">
-                Distribuição de Membros
-              </label>
               <div className="mt-2 text-sm text-muted-foreground">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   <div>Permanecem: <strong>{summary.stays_source || 0}</strong></div>
@@ -283,14 +271,10 @@ export function PlanReviewStep({
           {/* 4. Seleção do Líder */}
           <div className="flex items-start gap-3">
             <Checkbox
-              id="leader_selection"
-              checked={checkedItems.leader_selection || false}
-              onCheckedChange={(checked) => handleCheckItem('leader_selection', checked as boolean)}
+              label="Novo Líder Selecionado"
+              onChange={(e) => handleCheckItem('leader_selection', e.target.checked)}
             />
             <div className="flex-1">
-              <label htmlFor="leader_selection" className="font-medium cursor-pointer">
-                Novo Líder Selecionado
-              </label>
               <div className="mt-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Crown className="h-4 w-4 text-purple-600" />
@@ -305,14 +289,10 @@ export function PlanReviewStep({
           {/* 5. Confirmação Final */}
           <div className="flex items-start gap-3">
             <Checkbox
-              id="final_confirmation"
-              checked={checkedItems.final_confirmation || false}
-              onCheckedChange={(checked) => handleCheckItem('final_confirmation', checked as boolean)}
+              label="Confirmação Final"
+              onChange={(e) => handleCheckItem('final_confirmation', e.target.checked)}
             />
             <div className="flex-1">
-              <label htmlFor="final_confirmation" className="font-medium cursor-pointer">
-                Confirmação Final
-              </label>
               <div className="mt-2 text-sm text-muted-foreground">
                 Confirmo que revisei todas as informações e estou pronto para submeter 
                 este plano para aprovação hierárquica.

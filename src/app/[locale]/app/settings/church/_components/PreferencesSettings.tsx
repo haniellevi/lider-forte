@@ -125,26 +125,18 @@ export function PreferencesSettings() {
             label={t("preferences.timezone")}
             placeholder={t("preferences.selectTimezone")}
             items={timezoneOptions}
-            defaultValue={formContext.watch("timezone")}
-            onChange={(value) => formContext.setValue("timezone", value)}
-            icon={<Clock className="h-4 w-4" />}
           />
           
           <Select
             label={t("preferences.dateFormat")}
             placeholder={t("preferences.selectDateFormat")}
             items={dateFormatOptions}
-            defaultValue={formContext.watch("dateFormat")}
-            onChange={(value) => formContext.setValue("dateFormat", value)}
-            icon={<Calendar className="h-4 w-4" />}
           />
           
           <Select
             label={t("preferences.currency")}
             placeholder={t("preferences.selectCurrency")}
             items={currencyOptions}
-            defaultValue={formContext.watch("currency")}
-            onChange={(value) => formContext.setValue("currency", value)}
           />
         </div>
       </div>
@@ -161,16 +153,12 @@ export function PreferencesSettings() {
               label={t("preferences.weekStartsOn")}
               placeholder={t("preferences.selectWeekStart")}
               items={weekStartOptions}
-              defaultValue={formContext.watch("weekStartsOn")}
-              onChange={(value) => formContext.setValue("weekStartsOn", value)}
             />
             
             <Select
               label={t("preferences.defaultMemberRole")}
               placeholder={t("preferences.selectDefaultRole")}
               items={roleOptions}
-              defaultValue={formContext.watch("defaultMemberRole")}
-              onChange={(value) => formContext.setValue("defaultMemberRole", value)}
             />
           </div>
 
@@ -185,8 +173,7 @@ export function PreferencesSettings() {
                 </p>
               </div>
               <Switch
-                checked={formContext.watch("churchVisibility")}
-                onCheckedChange={(checked) => formContext.setValue("churchVisibility", checked)}
+                name="churchVisibility"
               />
             </div>
 
@@ -200,8 +187,7 @@ export function PreferencesSettings() {
                 </p>
               </div>
               <Switch
-                checked={formContext.watch("allowPublicRegistration")}
-                onCheckedChange={(checked) => formContext.setValue("allowPublicRegistration", checked)}
+                name="allowPublicRegistration"
               />
             </div>
 
@@ -215,8 +201,7 @@ export function PreferencesSettings() {
                 </p>
               </div>
               <Switch
-                checked={formContext.watch("requireApprovalForMembers")}
-                onCheckedChange={(checked) => formContext.setValue("requireApprovalForMembers", checked)}
+                name="requireApprovalForMembers"
               />
             </div>
           </div>
@@ -240,12 +225,11 @@ export function PreferencesSettings() {
               </p>
             </div>
             <Switch
-              checked={formContext.watch("enableCellGroups")}
-              onCheckedChange={(checked) => formContext.setValue("enableCellGroups", checked)}
+              name="enableCellGroups"
             />
           </div>
 
-          {formContext.watch("enableCellGroups") && (
+          {formContext.values.enableCellGroups && (
             <div className="ml-4 pl-4 border-l-2 border-blue-200 dark:border-blue-800">
               <FormInput
                 name="maxMembersPerCell"
@@ -267,8 +251,7 @@ export function PreferencesSettings() {
               </p>
             </div>
             <Switch
-              checked={formContext.watch("enableReports")}
-              onCheckedChange={(checked) => formContext.setValue("enableReports", checked)}
+              name="enableReports"
             />
           </div>
         </div>
@@ -278,10 +261,11 @@ export function PreferencesSettings() {
       <div className="flex justify-end pt-6 border-t border-gray-200 dark:border-gray-700">
         <Button
           type="submit"
-          disabled={formContext.isSubmitting}
-          icon={<Save className="h-4 w-4" />}
+          disabled={formContext.formState.isSubmitting}
+          className="flex items-center space-x-2"
         >
-          {formContext.isSubmitting ? t("preferences.saving") : t("preferences.save")}
+          <Save className="h-4 w-4" />
+          <span>{formContext.formState.isSubmitting ? t("preferences.saving") : t("preferences.save")}</span>
         </Button>
       </div>
     </form>

@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const activityId = params.id
+    const supabase = await createClient()
+    const { id: activityId } = await params
 
     // Verificar autenticação
     const {
@@ -58,7 +58,7 @@ export async function PUT(
     }
 
     // Verificar permissão do usuário
-    const cell = activity.cell_modes.cells
+    const cell = (activity.cell_modes as any).cells
     const { data: userProfile, error: profileError } = await supabase
       .from('profiles')
       .select('role, church_id')
@@ -132,11 +132,11 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const activityId = params.id
+    const supabase = await createClient()
+    const { id: activityId } = await params
 
     // Verificar autenticação
     const {
@@ -176,7 +176,7 @@ export async function DELETE(
     }
 
     // Verificar permissão do usuário
-    const cell = activity.cell_modes.cells
+    const cell = (activity.cell_modes as any).cells
     const { data: userProfile, error: profileError } = await supabase
       .from('profiles')
       .select('role, church_id')

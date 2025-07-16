@@ -28,7 +28,7 @@ const createCommunicationSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório').max(255),
   message: z.string().min(1, 'Mensagem é obrigatória'),
   target_type: z.enum(['all', 'role', 'cell', 'custom']),
-  target_criteria: z.record(z.any()).default({}),
+  target_criteria: z.record(z.any()).optional().default({}),
   delivery_method: z.array(z.enum(['in_app', 'email', 'sms', 'push'])).optional(),
   scheduled_for: z.string().optional(),
 });
@@ -52,7 +52,7 @@ export function CreateCommunicationModal({ isOpen, onClose }: CreateCommunicatio
     reset,
     formState: { errors, isSubmitting }
   } = useForm<CreateCommunicationForm>({
-    resolver: zodResolver(createCommunicationSchema),
+    resolver: zodResolver(createCommunicationSchema) as any,
     defaultValues: {
       target_type: 'all',
       target_criteria: {},
@@ -130,7 +130,7 @@ export function CreateCommunicationModal({ isOpen, onClose }: CreateCommunicatio
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} size="lg">
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -247,7 +247,7 @@ export function CreateCommunicationModal({ isOpen, onClose }: CreateCommunicatio
                 {t('form.selectCells')}
               </label>
               <div className="max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-md">
-                {cellsData?.cells?.map((cell: any) => (
+                {cellsData?.data?.map((cell: any) => (
                   <label key={cell.id} className="flex items-center space-x-2 p-2 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
                     <input
                       type="checkbox"
@@ -329,7 +329,7 @@ export function CreateCommunicationModal({ isOpen, onClose }: CreateCommunicatio
           
           <Button
             type="submit"
-            variant="primary"
+            variant="default"
             disabled={isSubmitting}
             icon={<Send className="h-4 w-4" />}
           >

@@ -148,7 +148,7 @@ export function CellsContent() {
 
           <Button
             onClick={handleCreateCell}
-            variant="primary"
+            variant="default"
             icon={<Plus className="h-4 w-4" />}
           >
             {t("actions.createCell")}
@@ -224,7 +224,7 @@ export function CellsContent() {
               {!searchTerm && !leaderFilter && !supervisorFilter && (
                 <Button
                   onClick={handleCreateCell}
-                  variant="primary"
+                  variant="default"
                   icon={<Plus className="h-4 w-4" />}
                 >
                   {t("actions.createFirstCell")}

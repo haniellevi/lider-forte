@@ -76,7 +76,7 @@ export function ReportsList() {
     );
   }
 
-  const reports = reportsData?.reports || [];
+  const reports = reportsData?.data || [];
 
   return (
     <div className="space-y-6">
@@ -166,7 +166,7 @@ export function ReportsList() {
           <p className="text-gray-500 dark:text-gray-400 mb-4">
             {t('list.noReportsDescription')}
           </p>
-          <Button onClick={() => setEditingReport('new')} variant="primary">
+          <Button onClick={() => setEditingReport('new')} variant="default">
             {t('list.createFirst')}
           </Button>
         </div>

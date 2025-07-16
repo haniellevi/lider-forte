@@ -68,25 +68,67 @@ export function useCells(filters: CellFilters = {}) {
   return useQuery({
     queryKey: ['cells', user?.id, filters],
     queryFn: async (): Promise<{ data: CellWithDetails[]; pagination: any }> => {
-      if (!user?.id) return { data: [], pagination: null };
-      
-      const params = new URLSearchParams();
-      if (filters.search) params.append('search', filters.search);
-      if (filters.leader_id) params.append('leader_id', filters.leader_id);
-      if (filters.supervisor_id) params.append('supervisor_id', filters.supervisor_id);
-      if (filters.parent_id) params.append('parent_id', filters.parent_id);
-      if (filters.page) params.append('page', filters.page.toString());
-      if (filters.limit) params.append('limit', filters.limit.toString());
-      
-      const response = await fetch(`/api/protected/cells?${params.toString()}`);
-      
-      if (!response.ok) {
-        throw new Error('Erro ao buscar células');
+      if (!user?.id) {
+        console.warn('useCells: No authenticated user');
+        return { data: [], pagination: null };
       }
       
-      return response.json();
+      try {
+        const params = new URLSearchParams();
+        
+        // Safe parameter handling with validation
+        if (filters?.search && typeof filters.search === 'string' && filters.search.trim()) {
+          params.append('search', filters.search.trim());
+        }
+        if (filters?.leader_id && typeof filters.leader_id === 'string') {
+          params.append('leader_id', filters.leader_id);
+        }
+        if (filters?.supervisor_id && typeof filters.supervisor_id === 'string') {
+          params.append('supervisor_id', filters.supervisor_id);
+        }
+        if (filters?.parent_id && typeof filters.parent_id === 'string') {
+          params.append('parent_id', filters.parent_id);
+        }
+        if (filters?.page && typeof filters.page === 'number' && filters.page > 0) {
+          params.append('page', Math.floor(filters.page).toString());
+        }
+        if (filters?.limit && typeof filters.limit === 'number' && filters.limit > 0) {
+          params.append('limit', Math.min(100, Math.floor(filters.limit)).toString());
+        }
+        
+        const response = await fetch(`/api/protected/cells?${params.toString()}`);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          const errorMessage = errorData?.error || `Erro ao buscar células (${response.status})`;
+          throw new Error(errorMessage);
+        }
+        
+        const result = await response.json();
+        
+        // Validate response structure
+        if (!result || typeof result !== 'object') {
+          throw new Error('Invalid response format');
+        }
+        
+        return {
+          data: Array.isArray(result.data) ? result.data : [],
+          pagination: result.pagination || null
+        };
+      } catch (error: any) {
+        console.error('useCells: Error fetching cells:', error);
+        throw error;
+      }
     },
     enabled: !!user?.id,
+    retry: (failureCount, error: any) => {
+      // Don't retry on permission errors
+      if (error?.message?.includes('permission') || error?.message?.includes('403')) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 
@@ -96,19 +138,60 @@ export function useCell(cellId: string) {
   
   return useQuery({
     queryKey: ['cell', cellId],
-    queryFn: async (): Promise<CellWithDetails> => {
-      if (!user?.id || !cellId) throw new Error('Usuário ou célula não especificado');
-      
-      const response = await fetch(`/api/protected/cells/${cellId}`);
-      
-      if (!response.ok) {
-        throw new Error('Erro ao buscar célula');
+    queryFn: async (): Promise<CellWithDetails | null> => {
+      if (!user?.id) {
+        console.warn('useCell: No authenticated user');
+        throw new Error('Usuário não autenticado');
       }
       
-      const result = await response.json();
-      return result.data;
+      if (!cellId || typeof cellId !== 'string' || cellId.trim() === '') {
+        console.warn('useCell: Invalid cellId provided:', cellId);
+        throw new Error('ID da célula inválido');
+      }
+      
+      try {
+        const response = await fetch(`/api/protected/cells/${encodeURIComponent(cellId)}`);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          const errorMessage = errorData?.error || `Erro ao buscar célula (${response.status})`;
+          
+          if (response.status === 404) {
+            throw new Error('Célula não encontrada');
+          }
+          
+          throw new Error(errorMessage);
+        }
+        
+        const result = await response.json();
+        
+        // Validate response structure
+        if (!result?.data || typeof result.data !== 'object') {
+          throw new Error('Formato de resposta inválido');
+        }
+        
+        // Ensure required fields have defaults
+        return {
+          ...result.data,
+          name: result.data.name || 'Célula sem nome',
+          created_at: result.data.created_at || new Date().toISOString(),
+          updated_at: result.data.updated_at || new Date().toISOString(),
+          members: Array.isArray(result.data.members) ? result.data.members : [],
+          child_cells: Array.isArray(result.data.child_cells) ? result.data.child_cells : [],
+        };
+      } catch (error: any) {
+        console.error('useCell: Error fetching cell:', error);
+        throw error;
+      }
     },
-    enabled: !!user?.id && !!cellId,
+    enabled: !!user?.id && !!cellId && typeof cellId === 'string',
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('404') || error?.message?.includes('não encontrada')) {
+        return false;
+      }
+      return failureCount < 2;
+    },
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 }
 
@@ -248,18 +331,58 @@ export function useCellMembers(cellId: string) {
   return useQuery({
     queryKey: ['cell-members', cellId],
     queryFn: async (): Promise<CellMemberWithProfile[]> => {
-      if (!user?.id || !cellId) throw new Error('Usuário ou célula não especificado');
-      
-      const response = await fetch(`/api/protected/cells/${cellId}/members`);
-      
-      if (!response.ok) {
-        throw new Error('Erro ao buscar membros da célula');
+      if (!user?.id) {
+        console.warn('useCellMembers: No authenticated user');
+        return [];
       }
       
-      const result = await response.json();
-      return result.data;
+      if (!cellId || typeof cellId !== 'string' || cellId.trim() === '') {
+        console.warn('useCellMembers: Invalid cellId provided:', cellId);
+        return [];
+      }
+      
+      try {
+        const response = await fetch(`/api/protected/cells/${encodeURIComponent(cellId)}/members`);
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          const errorMessage = errorData?.error || `Erro ao buscar membros da célula (${response.status})`;
+          throw new Error(errorMessage);
+        }
+        
+        const result = await response.json();
+        
+        // Validate response and ensure array
+        if (!result?.data || !Array.isArray(result.data)) {
+          console.warn('useCellMembers: Invalid response format');
+          return [];
+        }
+        
+        // Ensure each member has safe defaults
+        return result.data.map((member: any) => ({
+          ...member,
+          joined_at: member?.joined_at || new Date().toISOString(),
+          is_active: member?.is_active ?? true,
+          profile: member?.profile ? {
+            id: member.profile.id || '',
+            full_name: member.profile.full_name || 'Membro sem nome',
+            avatar_url: member.profile.avatar_url || null,
+            role: member.profile.role || 'member',
+          } : null,
+        }));
+      } catch (error: any) {
+        console.error('useCellMembers: Error fetching members:', error);
+        throw error;
+      }
     },
-    enabled: !!user?.id && !!cellId,
+    enabled: !!user?.id && !!cellId && typeof cellId === 'string',
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('permission') || error?.message?.includes('403')) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }
 

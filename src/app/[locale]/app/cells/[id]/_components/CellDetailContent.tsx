@@ -100,7 +100,7 @@ export function CellDetailContent({ cellId }: CellDetailContentProps) {
         </p>
         <Button
           onClick={() => router.push('/app/cells')}
-          variant="primary"
+          variant="default"
           icon={<ArrowLeft className="h-4 w-4" />}
         >
           {t("detail.backToCells")}
@@ -162,7 +162,7 @@ export function CellDetailContent({ cellId }: CellDetailContentProps) {
           </Button>
           <Button
             onClick={() => setIsEditing(true)}
-            variant="primary"
+            variant="default"
             icon={<Edit className="h-4 w-4" />}
           >
             {t("detail.editCell")}

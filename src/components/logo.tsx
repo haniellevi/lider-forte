@@ -1,5 +1,3 @@
-import darkLogo from "@/assets/logos/dark.svg";
-import logo from "@/assets/logos/main.svg";
 import Image from "next/image";
 import { getAppName, getLogoConfig } from "@/config";
 

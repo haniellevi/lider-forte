@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         .eq('profile_id', profile_id)
         .single();
 
-      hasPermission = cellMember?.cells?.leader_id === user.id;
+      hasPermission = (cellMember?.cells as any)?.leader_id === user.id;
     } else if (assessment_type === 'self_assessment' && profile_id === user.id) {
       // Users can perform self-assessments
       hasPermission = true;

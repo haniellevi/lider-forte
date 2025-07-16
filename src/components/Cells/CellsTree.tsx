@@ -227,7 +227,7 @@ export function CellsTree({
         
         <Button
           onClick={onCreateCell}
-          variant="primary"
+          variant="default"
           size="small"
           icon={<Plus className="h-4 w-4" />}
         >
@@ -248,7 +248,7 @@ export function CellsTree({
             </p>
             <Button
               onClick={onCreateCell}
-              variant="primary"
+              variant="default"
               icon={<Plus className="h-4 w-4" />}
             >
               {t("actions.createFirstCell")}

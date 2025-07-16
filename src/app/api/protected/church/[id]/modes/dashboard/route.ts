@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const churchId = params.id
+    const supabase = await createClient()
+    const { id: churchId } = await params
     const { searchParams } = new URL(request.url)
     const supervisorId = searchParams.get('supervisor_id')
     const mode = searchParams.get('mode')
@@ -125,7 +125,7 @@ export async function GET(
           recommendations.push({
             cell_id: cell.id,
             cell_name: cell.name,
-            leader_name: cell.profiles?.full_name,
+            leader_name: (cell.profiles as any)?.full_name,
             ...rec[0]
           })
         }

@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { ToastProvider } from "@/providers/toast-provider";
 import { ZustandProvider } from "@/providers/zustand-provider";
 import AnalyticsProvider from "@/providers/analytics-provider";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/lib/query-client';
 import { useParams } from "next/navigation";

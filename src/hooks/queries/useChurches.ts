@@ -295,24 +295,28 @@ export function useCreateChurch() {
       // Snapshot the previous value
       const previousChurches = queryClient.getQueriesData({ queryKey: ['churches'] });
 
-      // Optimistically update all church queries
+      // Optimistically update all church queries with null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
         
-        // Create optimistic church with temporary ID
+        // Ensure data array exists
+        const oldData = Array.isArray(old.data) ? old.data : [];
+        const oldPagination = old.pagination || { total: 0 };
+        
+        // Create optimistic church with temporary ID and safe defaults
         const optimisticChurch: Church = {
           id: `temp-${Date.now()}`,
-          name: newChurch.name || '',
-          cnpj: newChurch.cnpj || null,
-          address: newChurch.address || null,
-          phone: newChurch.phone || null,
-          email: newChurch.email || null,
-          website: newChurch.website || null,
-          description: newChurch.description || null,
-          founded_date: newChurch.founded_date || null,
-          vision: newChurch.vision || null,
-          mission: newChurch.mission || null,
-          values: newChurch.values || null,
+          name: newChurch?.name || 'Nova Igreja',
+          cnpj: newChurch?.cnpj || null,
+          address: newChurch?.address || null,
+          phone: newChurch?.phone || null,
+          email: newChurch?.email || null,
+          website: newChurch?.website || null,
+          description: newChurch?.description || null,
+          founded_date: newChurch?.founded_date || null,
+          vision: newChurch?.vision || null,
+          mission: newChurch?.mission || null,
+          values: Array.isArray(newChurch?.values) ? newChurch.values : null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           profiles_count: 0,
@@ -322,10 +326,10 @@ export function useCreateChurch() {
 
         return {
           ...old,
-          data: [optimisticChurch, ...old.data],
+          data: [optimisticChurch, ...oldData],
           pagination: {
-            ...old.pagination,
-            total: old.pagination.total + 1,
+            ...oldPagination,
+            total: (oldPagination.total || 0) + 1,
           },
         };
       });
@@ -344,14 +348,16 @@ export function useCreateChurch() {
       // Update cache with real church data
       queryClient.setQueryData(['church', newChurch.id], newChurch);
       
-      // Update all church queries with real data
+      // Update all church queries with real data and null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
+        
+        const oldData = Array.isArray(old.data) ? old.data : [];
         
         return {
           ...old,
-          data: old.data.map((church: Church) =>
-            church.id.startsWith('temp-') ? newChurch : church
+          data: oldData.map((church: Church) =>
+            church?.id?.startsWith('temp-') ? newChurch : church
           ),
         };
       });
@@ -387,14 +393,16 @@ export function useUpdateChurch() {
         return { ...old, ...data, updated_at: new Date().toISOString() };
       });
 
-      // Optimistically update churches in lists
+      // Optimistically update churches in lists with null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
+        
+        const oldData = Array.isArray(old.data) ? old.data : [];
         
         return {
           ...old,
-          data: old.data.map((church: Church) =>
-            church.id === id
+          data: oldData.map((church: Church) =>
+            church?.id === id
               ? { ...church, ...data, updated_at: new Date().toISOString() }
               : church
           ),
@@ -418,14 +426,16 @@ export function useUpdateChurch() {
       // Update with real data from server
       queryClient.setQueryData(['church', updatedChurch.id], updatedChurch);
       
-      // Update churches lists with real data
+      // Update churches lists with real data and null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
+        
+        const oldData = Array.isArray(old.data) ? old.data : [];
         
         return {
           ...old,
-          data: old.data.map((church: Church) =>
-            church.id === updatedChurch.id ? updatedChurch : church
+          data: oldData.map((church: Church) =>
+            church?.id === updatedChurch.id ? updatedChurch : church
           ),
         };
       });
@@ -452,16 +462,19 @@ export function useDeleteChurch() {
       const previousChurch = queryClient.getQueryData(['church', deletedId]);
       const previousChurches = queryClient.getQueriesData({ queryKey: ['churches'] });
 
-      // Optimistically remove the church from all queries
+      // Optimistically remove the church from all queries with null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
+        
+        const oldData = Array.isArray(old.data) ? old.data : [];
+        const oldPagination = old.pagination || { total: 0 };
         
         return {
           ...old,
-          data: old.data.filter((church: Church) => church.id !== deletedId),
+          data: oldData.filter((church: Church) => church?.id !== deletedId),
           pagination: {
-            ...old.pagination,
-            total: Math.max(0, old.pagination.total - 1),
+            ...oldPagination,
+            total: Math.max(0, (oldPagination.total || 0) - 1),
           },
         };
       });
@@ -486,13 +499,15 @@ export function useDeleteChurch() {
       // Ensure the church is removed from cache
       queryClient.removeQueries({ queryKey: ['church', deletedId] });
       
-      // Update all church queries to remove the deleted church
+      // Update all church queries to remove the deleted church with null safety
       queryClient.setQueriesData({ queryKey: ['churches'] }, (old: any) => {
-        if (!old) return old;
+        if (!old || typeof old !== 'object') return old;
+        
+        const oldData = Array.isArray(old.data) ? old.data : [];
         
         return {
           ...old,
-          data: old.data.filter((church: Church) => church.id !== deletedId),
+          data: oldData.filter((church: Church) => church?.id !== deletedId),
         };
       });
     },

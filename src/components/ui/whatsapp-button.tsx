@@ -220,7 +220,6 @@ export function WhatsAppButton({
         <Button
           onClick={() => setIsOpen(true)}
           variant="green"
-          shape="full"
           size="small"
           className="relative"
           icon={<WhatsAppIcon className="h-4 w-4" />}
@@ -308,7 +307,6 @@ export function WhatsAppButton({
                     <Button
                       onClick={handleNext}
                       variant="green"
-                      shape="rounded"
                       className="w-full"
                       label="Iniciar Conversa"
                     />
@@ -347,7 +345,6 @@ export function WhatsAppButton({
                         <Button
                           onClick={handleNext}
                           variant="green"
-                          shape="rounded"
                           size="small"
                           className="px-3"
                           disabled={isLoading}
@@ -371,7 +368,6 @@ export function WhatsAppButton({
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
-          shape="full"
           className="group relative h-14 w-14 bg-green-500 p-0 shadow-lg transition-all duration-300 hover:bg-green-600 hover:scale-110 hover:shadow-xl text-white border-none"
           aria-label="Abrir chat do WhatsApp"
           icon={<WhatsAppIcon className="h-6 w-6 text-white" />}

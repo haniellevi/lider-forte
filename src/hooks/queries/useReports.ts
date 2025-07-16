@@ -23,50 +23,109 @@ export const REPORTS_QUERY_KEYS = {
   metrics: (filters?: any) => [...REPORTS_QUERY_KEYS.analytics, 'metrics', filters] as const,
 };
 
-// Hook para buscar lista de relatórios
+// Hook para buscar lista de relatórios com null safety
 export function useReports(filters: ReportFilters = {}) {
   return useQuery({
     queryKey: REPORTS_QUERY_KEYS.list(filters),
     queryFn: async () => {
-      const searchParams = new URLSearchParams();
-      
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          if (Array.isArray(value)) {
-            searchParams.append(key, value.join(','));
-          } else {
-            searchParams.append(key, String(value));
-          }
+      try {
+        const searchParams = new URLSearchParams();
+        
+        // Safe parameter handling
+        if (filters && typeof filters === 'object') {
+          Object.entries(filters).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+              if (Array.isArray(value) && value.length > 0) {
+                searchParams.append(key, value.filter(v => v != null).join(','));
+              } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+                searchParams.append(key, String(value));
+              }
+            }
+          });
         }
-      });
 
-      const response = await fetch(`/api/protected/reports?${searchParams}`);
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao buscar relatórios');
+        const response = await fetch(`/api/protected/reports?${searchParams}`);
+        
+        if (!response.ok) {
+          const error = await response.json().catch(() => null);
+          throw new Error(error?.error || `Erro ao buscar relatórios (${response.status})`);
+        }
+        
+        const data = await response.json();
+        
+        // Ensure we return a valid structure
+        return {
+          data: Array.isArray(data?.data) ? data.data : [],
+          pagination: data?.pagination || null,
+        };
+      } catch (error: any) {
+        console.error('useReports: Error fetching reports:', error);
+        throw error;
       }
-      
-      return response.json();
     },
     staleTime: 5 * 60 * 1000, // 5 minutos
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('permission') || error?.message?.includes('403')) {
+        return false;
+      }
+      return failureCount < 2;
+    },
   });
 }
 
-// Hook para buscar um relatório específico
+// Hook para buscar um relatório específico com null safety
 export function useReport(reportId: string) {
   return useQuery({
     queryKey: REPORTS_QUERY_KEYS.detail(reportId),
-    queryFn: async () => {
-      const response = await fetch(`/api/protected/reports/${reportId}`);
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao buscar relatório');
+    queryFn: async (): Promise<Report | null> => {
+      if (!reportId || typeof reportId !== 'string' || reportId.trim() === '') {
+        console.warn('useReport: Invalid reportId provided:', reportId);
+        return null;
       }
       
-      return response.json() as Promise<Report>;
+      try {
+        const response = await fetch(`/api/protected/reports/${encodeURIComponent(reportId)}`);
+        
+        if (!response.ok) {
+          const error = await response.json().catch(() => null);
+          
+          if (response.status === 404) {
+            throw new Error('Relatório não encontrado');
+          }
+          
+          throw new Error(error?.error || `Erro ao buscar relatório (${response.status})`);
+        }
+        
+        const data = await response.json();
+        
+        // Validate response structure
+        if (!data || typeof data !== 'object') {
+          throw new Error('Formato de resposta inválido');
+        }
+        
+        // Ensure required fields have defaults
+        return {
+          ...data,
+          title: data.title || 'Relatório sem título',
+          created_at: data.created_at || new Date().toISOString(),
+          updated_at: data.updated_at || new Date().toISOString(),
+          report_type: data.report_type || 'custom',
+          status: data.status || 'draft',
+          data: data.data || {},
+        } as Report;
+      } catch (error: any) {
+        console.error('useReport: Error fetching report:', error);
+        throw error;
+      }
     },
-    enabled: !!reportId,
+    enabled: !!reportId && typeof reportId === 'string',
     staleTime: 5 * 60 * 1000,
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('404') || error?.message?.includes('não encontrado')) {
+        return false;
+      }
+      return failureCount < 2;
+    },
   });
 }
 
@@ -92,16 +151,23 @@ export function useCreateReport() {
       return response.json();
     },
     onSuccess: (newReport) => {
-      // Invalidar lista de relatórios
-      queryClient.invalidateQueries({ queryKey: REPORTS_QUERY_KEYS.lists() });
-      
-      // Adicionar ao cache
-      queryClient.setQueryData(REPORTS_QUERY_KEYS.detail(newReport.id), newReport);
-      
-      toast.success('Relatório criado com sucesso!');
+      try {
+        // Invalidar lista de relatórios
+        queryClient.invalidateQueries({ queryKey: REPORTS_QUERY_KEYS.lists() });
+        
+        // Adicionar ao cache com null safety
+        if (newReport?.id) {
+          queryClient.setQueryData(REPORTS_QUERY_KEYS.detail(newReport.id), newReport);
+        }
+        
+        toast.success('Relatório criado com sucesso!');
+      } catch (error) {
+        console.error('useCreateReport: onSuccess error:', error);
+      }
     },
-    onError: (error) => {
-      toast.error(error.message || 'Erro ao criar relatório');
+    onError: (error: any) => {
+      console.error('useCreateReport: Mutation error:', error);
+      toast.error(error?.message || 'Erro ao criar relatório');
     },
   });
 }
@@ -168,21 +234,48 @@ export function useDeleteReport() {
   });
 }
 
-// Hook para buscar dados do dashboard
+// Hook para buscar dados do dashboard com null safety
 export function useDashboard() {
   return useQuery({
     queryKey: REPORTS_QUERY_KEYS.dashboard(),
-    queryFn: async () => {
-      const response = await fetch('/api/protected/analytics/dashboard');
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao buscar dados do dashboard');
+    queryFn: async (): Promise<DashboardMetrics> => {
+      try {
+        const response = await fetch('/api/protected/analytics/dashboard');
+        
+        if (!response.ok) {
+          const error = await response.json().catch(() => null);
+          throw new Error(error?.error || `Erro ao buscar dados do dashboard (${response.status})`);
+        }
+        
+        const data = await response.json();
+        
+        // Ensure valid structure with defaults
+        return {
+          totalUsers: data?.totalUsers || 0,
+          totalCells: data?.totalCells || 0,
+          totalChurches: data?.totalChurches || 0,
+          totalReports: data?.totalReports || 0,
+          growthMetrics: data?.growthMetrics || {
+            users: { current: 0, previous: 0, percentageChange: 0 },
+            cells: { current: 0, previous: 0, percentageChange: 0 },
+            churches: { current: 0, previous: 0, percentageChange: 0 },
+          },
+          recentActivities: Array.isArray(data?.recentActivities) ? data.recentActivities : [],
+          ...data,
+        } as DashboardMetrics;
+      } catch (error: any) {
+        console.error('useDashboard: Error fetching dashboard:', error);
+        throw error;
       }
-      
-      return response.json() as Promise<DashboardMetrics>;
     },
     staleTime: 2 * 60 * 1000, // 2 minutos
     refetchInterval: 5 * 60 * 1000, // Refetch a cada 5 minutos
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('permission') || error?.message?.includes('403')) {
+        return false;
+      }
+      return failureCount < 2;
+    },
   });
 }
 

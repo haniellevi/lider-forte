@@ -180,7 +180,7 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
               <Button
                 type="submit"
                 disabled={formContext.isSubmitting}
-                variant="primary"
+                variant="default"
               >
                 {formContext.isSubmitting ? t("invite.sending") : t("invite.send")}
               </Button>
@@ -232,7 +232,7 @@ export function InviteUserModal({ isOpen, onClose, onSuccess }: InviteUserModalP
               <Button
                 type="button"
                 onClick={() => setInviteStep("form")}
-                variant="primary"
+                variant="default"
               >
                 {t("invite.inviteAnother")}
               </Button>

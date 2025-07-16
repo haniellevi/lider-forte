@@ -7,13 +7,12 @@ import { useCreatePost, useUpdatePost, useDeletePost } from '@/hooks/mutations/u
 import { useUpdateProfile } from '@/hooks/mutations/useProfile';
 import { useUser } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 export function TanStackQueryDemo() {
   const { user } = useUser();
   const t = useTranslations('TanStackQuery');
   const [newPost, setNewPost] = useState({ title: '', content: '' });
-  const [editingPost, setEditingPost] = useState<string | null>(null);
   const [profileName, setProfileName] = useState('');
 
   // Queries
@@ -144,7 +143,7 @@ export function TanStackQueryDemo() {
               <Button
                 onClick={handleUpdateProfile}
                 disabled={updateProfileMutation.isPending}
-                variant="primary"
+                variant="default"
               >
                 {updateProfileMutation.isPending ? t('profile.updating') : t('profile.updateButton')}
               </Button>
@@ -174,7 +173,7 @@ export function TanStackQueryDemo() {
           <Button
             onClick={handleCreatePost}
             disabled={createPostMutation.isPending}
-            variant="primary"
+            variant="default"
           >
             {createPostMutation.isPending ? t('posts.create.creating') : t('posts.create.button')}
           </Button>

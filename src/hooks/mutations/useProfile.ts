@@ -15,38 +15,98 @@ export function useUpdateProfile() {
   
   return useMutation({
     mutationFn: async (updates: ProfileUpdate): Promise<Profile> => {
-      if (!user?.id) throw new Error('User not authenticated');
+      // Enhanced null safety checks
+      if (!user?.id) {
+        console.error('useUpdateProfile: No authenticated user');
+        throw new Error('User not authenticated');
+      }
       
-      // RLS automatically validates that only own profile can be updated
-      const { data, error } = await supabase
-        .from('profiles')
-        .update(updates)
-        .eq('user_id', user.id)
-        .select()
-        .single();
+      if (!updates || typeof updates !== 'object') {
+        throw new Error('Invalid update data provided');
+      }
       
-      if (error) throw error;
-      return data;
+      // Filter out undefined values
+      const cleanUpdates = Object.entries(updates).reduce((acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key as keyof ProfileUpdate] = value;
+        }
+        return acc;
+      }, {} as ProfileUpdate);
+      
+      if (Object.keys(cleanUpdates).length === 0) {
+        throw new Error('No valid fields to update');
+      }
+      
+      try {
+        // RLS automatically validates that only own profile can be updated
+        const { data, error } = await supabase
+          .from('profiles')
+          .update(cleanUpdates)
+          .eq('user_id', user.id)
+          .select()
+          .single();
+        
+        if (error) {
+          console.error('useUpdateProfile: Database error:', error);
+          throw new Error(`Failed to update profile: ${error.message}`);
+        }
+        
+        if (!data) {
+          throw new Error('No data returned from update operation');
+        }
+        
+        return data;
+      } catch (error: any) {
+        console.error('useUpdateProfile: Unexpected error:', error);
+        throw error;
+      }
     },
     onSuccess: (updatedProfile) => {
-      // Update profile cache
-      queryClient.setQueryData(['user', 'profile', updatedProfile.user_id], updatedProfile);
-      queryClient.setQueryData(['user', 'profile', 'current', user?.id], updatedProfile);
-      
-      // Invalidate related queries
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      
-      // Success toast via Zustand
-      showToast({
-        type: 'success',
-        message: 'Perfil atualizado com sucesso!'
-      });
+      try {
+        // Update profile cache with null safety
+        if (updatedProfile?.user_id) {
+          queryClient.setQueryData(['user', 'profile', updatedProfile.user_id], updatedProfile);
+        }
+        
+        if (user?.id) {
+          queryClient.setQueryData(['user', 'profile', 'current', user.id], updatedProfile);
+        }
+        
+        // Invalidate related queries
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+        
+        // Success toast via Zustand with null safety
+        if (showToast) {
+          showToast({
+            type: 'success',
+            message: 'Perfil atualizado com sucesso!'
+          });
+        }
+      } catch (error) {
+        console.error('useUpdateProfile: onSuccess error:', error);
+      }
     },
     onError: (error: any) => {
-      showToast({
-        type: 'error',
-        message: error.message || 'Falha ao atualizar perfil'
-      });
+      console.error('useUpdateProfile: Mutation error:', error);
+      
+      let message = 'Falha ao atualizar perfil';
+      
+      if (error?.message) {
+        if (error.message.includes('permission')) {
+          message = 'Você não tem permissão para atualizar este perfil';
+        } else if (error.message.includes('validation')) {
+          message = 'Dados inválidos fornecidos';
+        } else {
+          message = error.message;
+        }
+      }
+      
+      if (showToast) {
+        showToast({
+          type: 'error',
+          message
+        });
+      }
     },
   });
 }

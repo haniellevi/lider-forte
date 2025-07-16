@@ -47,16 +47,34 @@ export function useDashboardData() {
   return useQuery({
     queryKey: ['dashboard-data', user?.id],
     queryFn: async (): Promise<DashboardData> => {
-      if (!user?.id) throw new Error('User not authenticated');
+      if (!user?.id) {
+        console.warn('useDashboardData: No authenticated user');
+        throw new Error('User not authenticated');
+      }
       
-      // Get user profile to determine scope
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('church_id, role')
-        .eq('id', user.id)
-        .single();
-      
-      if (profileError) throw profileError;
+      try {
+        // Get user profile to determine scope with null safety
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('church_id, role')
+          .eq('id', user.id)
+          .single();
+        
+        if (profileError) {
+          console.error('useDashboardData: Profile fetch error:', profileError);
+          // Return default data instead of throwing
+          return {
+            stats: {
+              totalChurches: 0,
+              totalUsers: 0,
+              totalCells: 0,
+              pendingInvites: 0,
+              monthlyGrowth: { churches: 0, users: 0, cells: 0 },
+            },
+            recentActivities: [],
+            pendingInvites: [],
+          };
+        }
       
       const isAdmin = profile?.role === 'admin';
       const churchId = profile?.church_id;
@@ -210,13 +228,40 @@ export function useDashboardData() {
       }
       
       return {
-        stats,
-        recentActivities,
-        pendingInvites,
+        stats: stats || {
+          totalChurches: 0,
+          totalUsers: 0,
+          totalCells: 0,
+          pendingInvites: 0,
+          monthlyGrowth: { churches: 0, users: 0, cells: 0 },
+        },
+        recentActivities: recentActivities || [],
+        pendingInvites: pendingInvites || [],
       };
+      } catch (error: any) {
+        console.error('useDashboardData: Unexpected error:', error);
+        // Return safe default data on error
+        return {
+          stats: {
+            totalChurches: 0,
+            totalUsers: 0,
+            totalCells: 0,
+            pendingInvites: 0,
+            monthlyGrowth: { churches: 0, users: 0, cells: 0 },
+          },
+          recentActivities: [],
+          pendingInvites: [],
+        };
+      }
     },
     enabled: !!user?.id,
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
+    retry: (failureCount, error: any) => {
+      if (error?.message?.includes('permission') || error?.message?.includes('403')) {
+        return false;
+      }
+      return failureCount < 2;
+    },
   });
 }
 

@@ -264,7 +264,7 @@ function CellModeCard({ cell, churchId, onModeUpdated }: CellModeCardProps) {
 
           {cell.goal_description && (
             <p className="text-sm text-gray-600 italic">
-              "{cell.goal_description}"
+              &quot;{cell.goal_description}&quot;
             </p>
           )}
         </div>

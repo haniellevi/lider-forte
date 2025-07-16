@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Search, Plus, MoreVertical, Edit, Trash2, UserPlus } from "lucide-react";
+import { Search, MoreVertical, Edit, Trash2, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import InputGroup from "@/components/FormElements/InputGroup";
 import { Select } from "@/components/FormElements/select";
@@ -68,7 +68,7 @@ export function UserManagementTable() {
   };
 
   const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
     return matchesSearch && matchesRole;
@@ -125,7 +125,7 @@ export function UserManagementTable() {
         </div>
         <Button
           onClick={() => setIsInviteModalOpen(true)}
-          variant="primary"
+          variant="default"
           icon={<UserPlus className="h-4 w-4" />}
         >
           {t("table.inviteUser")}
@@ -150,10 +150,10 @@ export function UserManagementTable() {
                 <TableCell>
                   <div className="flex items-center space-x-3">
                     <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium">
-                      {user.name.split(" ").map(n => n[0]).join("").toUpperCase()}
+                      {user.full_name?.split(" ").map(n => n[0]).join("").toUpperCase() || user.email[0].toUpperCase()}
                     </div>
                     <div>
-                      <div className="font-medium">{user.name}</div>
+                      <div className="font-medium">{user.full_name || user.email}</div>
                       <div className="text-sm text-gray-500">{user.email}</div>
                     </div>
                   </div>

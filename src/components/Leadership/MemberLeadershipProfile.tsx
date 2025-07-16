@@ -449,7 +449,7 @@ export default function MemberLeadershipProfile({ memberId, onBack }: MemberLead
                     </p>
                   )}
                   {assessment.comments && (
-                    <p className="text-sm mt-2 italic">"{assessment.comments}"</p>
+                    <p className="text-sm mt-2 italic">&quot;{assessment.comments}&quot;</p>
                   )}
                   {assessment.is_validated && (
                     <Badge variant="secondary" className="mt-2">Validada</Badge>

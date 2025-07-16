@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useSuccessLadderActivities, useRegisterActivity } from '@/hooks/queries/useSuccessLadder';
 import { Database } from '@/lib/supabase/types';
 import { Spinner } from '@/components/ui/spinner';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 type ActivityCategory = Database['public']['Enums']['activity_category'];
 

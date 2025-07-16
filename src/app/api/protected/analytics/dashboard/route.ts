@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Processar tendências de crescimento
-    const growthTrends = [];
+    const growthTrends: any[] = [];
     
     if (recentMetrics) {
       // Agrupar métricas por tipo
@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
 
       // Criar tendências para cada tipo de métrica
       Object.entries(metricsByType).forEach(([metricType, metrics]) => {
-        const sortedMetrics = metrics.sort((a, b) => 
+        const sortedMetrics = (metrics as any[]).sort((a: any, b: any) => 
           new Date(a.period_start).getTime() - new Date(b.period_start).getTime()
         );
 

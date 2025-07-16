@@ -34,10 +34,23 @@ export function useNotificationsQuery() {
   const showToast = useShowToast()
   const addNotification = useAddNotification()
 
-  // Main query for notifications
+  // Main query for notifications with null safety
   const query = useQuery({
     queryKey: notificationKeys.list(user?.id || ''),
-    queryFn: () => notificationsApi.getNotifications(supabase, user!.id),
+    queryFn: async () => {
+      if (!user?.id) {
+        console.warn('useNotificationsQuery: No authenticated user');
+        return [];
+      }
+      
+      try {
+        const notifications = await notificationsApi.getNotifications(supabase, user.id);
+        return Array.isArray(notifications) ? notifications : [];
+      } catch (error) {
+        console.error('useNotificationsQuery: Error fetching notifications:', error);
+        return [];
+      }
+    },
     enabled: !!user?.id,
     staleTime: 30 * 1000, // 30 seconds - notifications are dynamic
     gcTime: 5 * 60 * 1000, // 5 minutes garbage collection
@@ -63,11 +76,14 @@ export function useNotificationsQuery() {
           if (payload.eventType === 'INSERT') {
             const newNotification = payload.new as Notification
             
-            // Update TanStack Query cache optimistically
-            queryClient.setQueryData(queryKey, (old: Notification[] = []) => [
-              newNotification,
-              ...old.slice(0, 49) // Keep max 50 notifications
-            ])
+            // Update TanStack Query cache optimistically with null safety
+            queryClient.setQueryData(queryKey, (old: any) => {
+              const safeOld = Array.isArray(old) ? old : [];
+              return [
+                newNotification,
+                ...safeOld.slice(0, 49) // Keep max 50 notifications
+              ];
+            })
             
             // Show toast for real-time feedback
             showToast({
@@ -85,16 +101,20 @@ export function useNotificationsQuery() {
             })
             
           } else if (payload.eventType === 'UPDATE') {
-            // Update specific notification in cache
-            queryClient.setQueryData(queryKey, (old: Notification[] = []) =>
-              old.map(n => n.id === payload.new.id ? payload.new as Notification : n)
-            )
+            // Update specific notification in cache with null safety
+            queryClient.setQueryData(queryKey, (old: any) => {
+              const safeOld = Array.isArray(old) ? old : [];
+              return safeOld.map(n => 
+                n?.id === payload.new?.id ? payload.new as Notification : n
+              );
+            })
             
           } else if (payload.eventType === 'DELETE') {
-            // Remove notification from cache
-            queryClient.setQueryData(queryKey, (old: Notification[] = []) =>
-              old.filter(n => n.id !== payload.old.id)
-            )
+            // Remove notification from cache with null safety
+            queryClient.setQueryData(queryKey, (old: any) => {
+              const safeOld = Array.isArray(old) ? old : [];
+              return safeOld.filter(n => n?.id !== payload.old?.id);
+            })
           }
         }
       )
@@ -105,15 +125,15 @@ export function useNotificationsQuery() {
     }
   }, [user?.id, queryClient, supabase, showToast, addNotification])
 
-  // Derived data with memoization for performance
+  // Derived data with memoization for performance and null safety
   const derivedData = useMemo(() => {
-    const notifications = query.data || []
+    const notifications = Array.isArray(query.data) ? query.data : []
     
     return {
       notifications,
       recentNotifications: notifications.slice(0, 10),
-      unreadCount: notifications.filter(n => !n.read).length,
-      unreadNotifications: notifications.filter(n => !n.read),
+      unreadCount: notifications.filter(n => n && !n.read).length,
+      unreadNotifications: notifications.filter(n => n && !n.read),
     }
   }, [query.data])
 

@@ -5,7 +5,7 @@
 
 export interface DemoUser {
   id: string;
-  name: string;
+  full_name: string;
   username: string;
   email: string;
   phone?: string;
@@ -25,7 +25,7 @@ export interface DemoNotification {
   time: string;
   unread: boolean;
   user?: {
-    name: string;
+    full_name: string;
     avatar?: string;
   };
   action?: {

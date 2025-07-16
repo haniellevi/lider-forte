@@ -120,7 +120,7 @@ export function MemberDistributionStep({
         onAssignmentsChange(newAssignments)
         
         // Definir líder automaticamente
-        const newLeader = newAssignments.find(a => a.assignment_type === 'new_leader')
+        const newLeader = newAssignments.find((a: any) => a.assignment_type === 'new_leader')
         if (newLeader) {
           onLeaderSelect(newLeader.member_id)
         }
@@ -407,7 +407,7 @@ export function MemberDistributionStep({
             <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="font-medium mb-2">Nenhuma sugestão gerada</h3>
             <p className="text-muted-foreground mb-4">
-              Clique em "Regerar Sugestões" para obter recomendações automáticas
+              Clique em &quot;Regerar Sugestões&quot; para obter recomendações automáticas
               baseadas no template selecionado.
             </p>
             <Button onClick={generateSuggestions} disabled={isGenerating || !templateId}>

@@ -29,8 +29,8 @@ export default async function UserDetailPage({
       <Breadcrumb 
         pageName={t("title")} 
         items={[
-          { name: t("breadcrumb.users"), href: "/app/users" },
-          { name: t("breadcrumb.profile") }
+          { label: t("breadcrumb.users"), href: "/app/users" },
+          { label: t("breadcrumb.profile"), href: "" }
         ]}
       />
       <div className="mx-auto max-w-5xl">

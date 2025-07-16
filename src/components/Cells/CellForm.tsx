@@ -137,7 +137,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
     .filter(user => ['leader', 'supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.name || user.email,
+      label: user.full_name || user.email,
     }));
 
   // Filter users that can be supervisors
@@ -145,7 +145,7 @@ export function CellForm({ cellId, parentCellId, onSuccess, onCancel }: CellForm
     .filter(user => ['supervisor', 'pastor'].includes(user.role || ''))
     .map(user => ({
       value: user.id,
-      label: user.name || user.email,
+      label: user.full_name || user.email,
     }));
 
   // Filter cells that can be parents (exclude current cell and its descendants)

@@ -104,7 +104,7 @@ export default function CommunicationsPage() {
         
         <Button
           onClick={() => setShowCreateModal(true)}
-          variant="primary"
+          variant="default"
           icon={<Plus className="h-4 w-4" />}
         >
           {t('create')}
@@ -211,7 +211,7 @@ export default function CommunicationsPage() {
           <p className="text-gray-500 dark:text-gray-400 mb-4">
             {t('noCommunicationsDescription')}
           </p>
-          <Button onClick={() => setShowCreateModal(true)} variant="primary">
+          <Button onClick={() => setShowCreateModal(true)} variant="default">
             {t('createFirst')}
           </Button>
         </div>
@@ -293,7 +293,7 @@ export default function CommunicationsPage() {
                   <Button
                     onClick={() => handleSendCommunication(communication.id)}
                     disabled={sendCommunicationMutation.isPending}
-                    variant="primary"
+                    variant="default"
                     size="small"
                     icon={<Send className="h-3 w-3" />}
                   >

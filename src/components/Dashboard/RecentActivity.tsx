@@ -133,7 +133,7 @@ export function RecentActivity({ limit = 10, className = "" }: RecentActivityPro
                     
                     {activity.user && (
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {activity.user.name} • {activity.user.email}
+                        {activity.user.full_name || activity.user.email} • {activity.user.email}
                       </p>
                     )}
                     

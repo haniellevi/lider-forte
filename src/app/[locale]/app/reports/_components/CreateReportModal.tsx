@@ -236,7 +236,7 @@ export function CreateReportModal({ isOpen, onClose, reportId }: CreateReportMod
             </Button>
             <Button
               type="submit"
-              variant="primary"
+              variant="default"
               disabled={isSubmitting}
             >
               {isEditing ? t('actions.save') : t('actions.create')}

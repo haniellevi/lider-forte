@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAnalytics, useLogRocketSession } from '@/providers/analytics-provider';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 /**
  * Componente de exemplo mostrando como usar o AnalyticsProvider

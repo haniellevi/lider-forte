@@ -241,7 +241,7 @@ export function TemplateSelectionStep({ selectedTemplate, onSelect }: TemplateSe
                 </p>
                 <p className="text-sm text-green-700 mt-2">
                   Este template irá gerar automaticamente sugestões para a distribuição de membros 
-                  no próximo passo, baseado na estratégia "{selectedTemplate.template_type}".
+                  no próximo passo, baseado na estratégia &quot;{selectedTemplate.template_type}&quot;.
                 </p>
               </div>
             </div>

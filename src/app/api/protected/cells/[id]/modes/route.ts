@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const cellId = params.id
+    const supabase = await createClient()
+    const { id: cellId } = await params
 
     // Verificar autenticação
     const {
@@ -70,7 +70,7 @@ export async function POST(
     const isLeaderOfCell = cell.leader_id === user.id
     const isSupervisorOfCell = cell.supervisor_id === user.id
 
-    if (!allowedRoles.includes(userProfile.role) && !isLeaderOfCell && !isSupervisorOfCell) {
+    if (!allowedRoles.includes((userProfile as any).role) && !isLeaderOfCell && !isSupervisorOfCell) {
       return NextResponse.json(
         { error: 'Sem permissão para gerenciar modos desta célula' },
         { status: 403 }
@@ -133,11 +133,11 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createClient()
-    const cellId = params.id
+    const supabase = await createClient()
+    const { id: cellId } = await params
     const { searchParams } = new URL(request.url)
     const action = searchParams.get('action')
 

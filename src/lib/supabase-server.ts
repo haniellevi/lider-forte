@@ -1,1 +1,1 @@
-export { createClient as createServerComponentClient } from './supabase/server'
+export { createClient, createServerClient, createAdminClient } from './supabase/server'

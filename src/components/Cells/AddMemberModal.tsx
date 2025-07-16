@@ -86,7 +86,7 @@ export function AddMemberModal({
     .filter(user => !existingMemberIds.includes(user.id))
     .map(user => ({
       value: user.id,
-      label: `${user.name || user.email} - ${t(`roles.${user.role || "member"}`)}`,
+      label: `${user.full_name || user.email} - ${t(`roles.${user.role || "member"}`)}`,
     }));
 
   return (

@@ -242,7 +242,7 @@ export function InviteCard({ invite, isOwner = false, onAction }: InviteCardProp
             <Button
               onClick={handleAccept}
               disabled={isLoading}
-              variant="primary"
+              variant="default"
               size="small"
               icon={<Check className="h-4 w-4" />}
               className="flex-1"

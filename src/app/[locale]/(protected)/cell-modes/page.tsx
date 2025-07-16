@@ -1,26 +1,26 @@
 import { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { Suspense } from 'react'
 import { Loader2 } from 'lucide-react'
-import { ModeDashboard } from '@/components/cells/mode-dashboard'
+import { ModeDashboard } from '@/components/Cells/mode-dashboard'
 
 interface CellModesPageProps {
-  params: {
+  params: Promise<{
     locale: string
-  }
-  searchParams: {
+  }>
+  searchParams: Promise<{
     supervisor_id?: string
     mode?: string
-  }
+  }>
 }
 
 export async function generateMetadata({
-  params: { locale }
+  params
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'CellModes.meta' })
+  const { locale } = await params
+  const t = await getTranslations({ locale: locale as any, namespace: 'CellModes.meta' })
 
   return {
     title: t('title'),
@@ -28,11 +28,13 @@ export async function generateMetadata({
   }
 }
 
-export default function CellModesPage({
-  params: { locale },
+export default async function CellModesPage({
+  params,
   searchParams
 }: CellModesPageProps) {
-  const t = useTranslations('CellModes')
+  const { locale } = await params
+  const { supervisor_id } = await searchParams
+  const t = await getTranslations({ locale: locale as any, namespace: 'CellModes' })
 
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8 pt-6">
@@ -54,7 +56,7 @@ export default function CellModesPage({
       >
         <ModeDashboard
           churchId="mock-church-id" // TODO: Obter da sessão/contexto
-          supervisorId={searchParams.supervisor_id}
+          supervisorId={supervisor_id}
           userRole="pastor" // TODO: Obter da sessão/contexto
         />
       </Suspense>

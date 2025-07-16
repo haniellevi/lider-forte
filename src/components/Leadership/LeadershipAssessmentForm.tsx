@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Alert } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
 import { useSubmitLeadershipAssessment } from '@/hooks/queries/useLeadershipPipeline';
 import { useToast } from '@/hooks/use-toast';
@@ -200,11 +200,13 @@ export default function LeadershipAssessmentForm({
           {/* Errors */}
           {errors.length > 0 && (
             <Alert variant="destructive">
-              <ul className="list-disc list-inside">
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
+              <AlertDescription>
+                <ul className="list-disc list-inside">
+                  {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </AlertDescription>
             </Alert>
           )}
 

@@ -10,10 +10,13 @@ const badgeVariants = cva(
       variant: {
         default: "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-300",
         primary: "bg-primary text-primary-foreground hover:bg-primary/90",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         success: "bg-green text-white hover:bg-green/90",
         warning: "bg-yellow-500 text-white hover:bg-yellow-500/90",
         error: "bg-red-light text-white hover:bg-red-light/90",
         info: "bg-blue-500 text-white hover:bg-blue-500/90",
+        outline: "border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
+        destructive: "bg-red-500 text-white hover:bg-red-500/90",
       },
       size: {
         sm: "px-1.5 py-0.5 text-xs",

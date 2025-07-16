@@ -232,11 +232,10 @@ export function WhatsAppFloat({
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsOpen(true)}
-          shape="full"
           className="group relative h-14 w-14 bg-green-500 p-0 shadow-lg transition-all duration-300 hover:bg-green-600 hover:scale-110 hover:shadow-xl text-white border-none"
           aria-label="Abrir chat do WhatsApp"
-          icon={<WhatsAppIcon className="h-6 w-6 text-white" />}
         >
+          <WhatsAppIcon className="h-6 w-6 text-white" />
           <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 animate-ping"></div>
           <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500"></div>
         </Button>
@@ -322,10 +321,10 @@ export function WhatsAppFloat({
                 <Button
                   onClick={handleNext}
                   variant="green"
-                  shape="rounded"
                   className="w-full"
-                  label="Iniciar Conversa"
-                />
+                >
+                  Iniciar Conversa
+                </Button>
               ) : currentStep === 'success' ? (
                 <div className="flex items-center justify-center text-green-600 dark:text-green-400">
                   <Check className="h-5 w-5 mr-2" />
@@ -362,12 +361,12 @@ export function WhatsAppFloat({
                     <Button
                       onClick={handleNext}
                       variant="green"
-                      shape="rounded"
                       size="small"
                       className="px-3"
                       disabled={isLoading}
-                      icon={<Send className="h-4 w-4" />}
-                    />
+                    >
+                      <Send className="h-4 w-4" />
+                    </Button>
                   )}
                 </div>
               )}

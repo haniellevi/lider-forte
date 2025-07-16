@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
@@ -25,7 +25,7 @@ export async function GET(
       return NextResponse.json({ error: 'Church not found' }, { status: 404 });
     }
 
-    const memberId = params.id;
+    const { id: memberId } = await params;
 
     // Check if user has permission to view recommendations for this member
     let hasPermission = false;
@@ -44,7 +44,7 @@ export async function GET(
         .eq('profile_id', memberId)
         .single();
 
-      hasPermission = cellMember?.cells?.leader_id === user.id;
+      hasPermission = (cellMember?.cells as any)?.leader_id === user.id;
     } else if (user.id === memberId) {
       // Users can view their own recommendations
       hasPermission = true;
@@ -251,9 +251,9 @@ export async function GET(
       data: {
         member: {
           id: memberId,
-          full_name: pipelineData.profiles.full_name,
-          role: pipelineData.profiles.role,
-          avatar_url: pipelineData.profiles.avatar_url
+          full_name: (pipelineData.profiles as any).full_name,
+          role: (pipelineData.profiles as any).role,
+          avatar_url: (pipelineData.profiles as any).avatar_url
         },
         leadership_score: pipelineData.leadership_score,
         potential_level: pipelineData.potential_level,
@@ -275,7 +275,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createServerClient();
@@ -302,7 +302,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
-    const memberId = params.id;
+    const { id: memberId } = await params;
     const body = await request.json();
     const { custom_recommendations, notes } = body;
 
