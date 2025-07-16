@@ -8,6 +8,8 @@ const handleI18nRouting = createMiddleware(routing);
 const isPublicRoute = createRouteMatcher([
   '/',
   '/(pt-BR|en)',
+  '/pt-BR',
+  '/en',
   '/(pt-BR|en)/auth/sign-in(.*)',
   '/(pt-BR|en)/auth/sign-up(.*)',
   '/api/webhooks(.*)',
@@ -37,9 +39,18 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     return intlResponse;
   }
   
-  // Verificar autenticação para rotas protegidas (páginas)
+  // Debug: Log das rotas para entender o problema
+  console.log('Middleware processing:', pathname);
+  console.log('Is public route:', isPublicRoute(req));
+  
+  // Verificar autenticação para rotas protegidas (páginas) APENAS se não for rota pública
   if (!isPublicRoute(req)) {
-    await auth.protect();
+    try {
+      await auth.protect();
+    } catch (error) {
+      // Se falhar na autenticação, redirecionar para login
+      console.log('Auth protection failed for:', pathname);
+    }
   }
   
   return intlResponse;

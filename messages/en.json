@@ -1,7 +1,6 @@
 {
   "Navigation": {
-    "dashboard": "Dashboard",
-    "ecommerce": "E-commerce",
+    "dashboard": "Overview",
     "calendar": "Calendar",
     "profile": "Profile",
     "forms": "Forms",
@@ -31,7 +30,25 @@
     "tanStackQuery": "TanStack Query",
     "mainMenu": "MAIN MENU",
     "others": "OTHERS",
-    "backend": "BACKEND"
+    "backend": "G12 System",
+    "churches": "Churches",
+    "cells": "Cells",
+    "cellModes": "Cell Modes",
+    "members": "Members",
+    "reports": "Reports",
+    "management": "G12 Management",
+    "ministry": "Ministry",
+    "leaders": "Leaders",
+    "hierarchy": "Hierarchy",
+    "ladder": "Success Ladder",
+    "multiplication": "Multiplication",
+    "leadership": "Leadership",
+    "pipeline": "Leadership Pipeline",
+    "levelsBadges": "Levels & Badges",
+    "discipleship": "Discipleship",
+    "consolidation": "Consolidation",
+    "evangelism": "Evangelism",
+    "sending": "Sending"
   },
   "Header": {
     "notifications": "Notifications",
@@ -1167,6 +1184,379 @@
       "error": "Error handling",
       "loading": "Loading states",
       "mutations": "Mutations with feedback"
+    }
+  },
+  "ChurchesPage": {
+    "meta": {
+      "title": "Church Management - LIDER FORTE",
+      "description": "Manage churches, view statistics and administer institutional data."
+    },
+    "title": "Churches",
+    "description": "Manage churches, view statistics and administer institutional data.",
+    "buttons": {
+      "export": "Export",
+      "addChurch": "New Church"
+    },
+    "table": {
+      "name": "Church",
+      "location": "Location",
+      "contact": "Contact",
+      "stats": "Statistics",
+      "pastor": "Pastor",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "filters": {
+      "searchPlaceholder": "Search by church name...",
+      "advanced": "Advanced Filters",
+      "clear": "Clear",
+      "city": "City",
+      "cityPlaceholder": "Enter city...",
+      "state": "State",
+      "allStates": "All states",
+      "active": "Active filters",
+      "searchLabel": "Search",
+      "cityLabel": "City",
+      "stateLabel": "State"
+    },
+    "pagination": {
+      "showing": "Showing {start} to {end} of {total} churches",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "emptyState": {
+      "title": "No churches found",
+      "description": "Start by creating your first church to manage members and cells.",
+      "action": "Create First Church"
+    },
+    "members": "members",
+    "cells": "cells",
+    "confirmDelete": "Are you sure you want to delete church \"{name}\"? This action cannot be undone.",
+    "deleteSuccess": "Church \"{name}\" deleted successfully.",
+    "deleteError": "Error deleting church. Please try again.",
+    "errorLoading": "Error loading churches. Please refresh the page."
+  },
+  "Cells": {
+    "meta": {
+      "title": "Cells - LIDER FORTE",
+      "description": "Manage church cells, members and organizational hierarchy."
+    },
+    "title": "Cells",
+    "subtitle": "Manage your church's hierarchical cell structure",
+    "leader": "Leader",
+    "supervisor": "Supervisor",
+    "member": "Member",
+    "members": "Members",
+    "parentCell": "Parent Cell",
+    "childCell": "Child Cell",
+    "childCells": "Child Cells",
+    "created": "Created",
+    "confirmDelete": "Are you sure you want to delete this cell?",
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    },
+    "roles": {
+      "pastor": "Pastor",
+      "supervisor": "Supervisor", 
+      "leader": "Leader",
+      "timoteo": "Timothy",
+      "member": "Member"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "addMember": "Add Member",
+      "createCell": "Create Cell",
+      "createSubCell": "Create Sub-cell",
+      "createFirstCell": "Create First Cell"
+    },
+    "viewMode": {
+      "tree": "Tree View",
+      "grid": "Grid View"
+    },
+    "filters": {
+      "searchPlaceholder": "Search cells...",
+      "leader": "Leader",
+      "selectLeader": "Select leader",
+      "allLeaders": "All leaders",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Select supervisor",
+      "allSupervisors": "All supervisors"
+    },
+    "hierarchy": {
+      "title": "Cell Hierarchy",
+      "noCells": "No cells found",
+      "noCellsDescription": "Start by creating your first cell to organize the church structure."
+    },
+    "form": {
+      "createTitle": "Create New Cell",
+      "editTitle": "Edit Cell",
+      "basicInfo": "Basic Information",
+      "meetingInfo": "Meeting Information",
+      "address": "Address",
+      "name": "Cell Name",
+      "namePlaceholder": "Enter cell name...",
+      "leader": "Leader",
+      "selectLeader": "Select leader",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Select supervisor",
+      "parentCell": "Parent Cell",
+      "selectParentCell": "Select parent cell",
+      "meetingDay": "Meeting Day",
+      "selectMeetingDay": "Select day",
+      "meetingTime": "Meeting Time",
+      "cancel": "Cancel",
+      "create": "Create Cell",
+      "update": "Update Cell",
+      "save": "Save",
+      "saving": "Saving...",
+      "selectRole": "Select role"
+    },
+    "members": {
+      "title": "Members",
+      "addMember": "Add Member",
+      "addMemberTitle": "Add Member to Cell",
+      "addFirstMember": "Add First Member",
+      "noMembers": "No members in this cell",
+      "noMembersDescription": "Start adding members to form your cell.",
+      "noAvailableUsers": "No available users to add",
+      "selectMember": "Select Member",
+      "selectMemberPlaceholder": "Choose a member...",
+      "member": "Member",
+      "role": "Role",
+      "joinedAt": "Joined",
+      "actions": "Actions",
+      "removeMember": "Remove Member",
+      "confirmRemove": "Are you sure you want to remove this member from the cell?",
+      "adding": "Adding...",
+      "addSuccess": "Member added successfully!",
+      "successLadder": "Success Ladder",
+      "successLadderScore": "Success Ladder Score",
+      "successLadderDescription": "Score from 0 to 100 based on member development",
+      "timoteo": "Timothy",
+      "timoteoStatus": "Timothy Status",
+      "timoteoDescription": "Mark as leader in training",
+      "importantNote": "Important Information",
+      "notePoint1": "Only members from the same church can be added",
+      "notePoint2": "The cell leader cannot be removed",
+      "notePoint3": "Success Ladder score helps track growth",
+      "successLadder": {
+        "excellent": "Excellent",
+        "good": "Good", 
+        "regular": "Regular",
+        "beginner": "Beginner"
+      }
+    },
+    "detail": {
+      "meta": {
+        "title": "Cell Details - LIDER FORTE",
+        "description": "View and manage cell details, members and activities."
+      },
+      "title": "Cell Details",
+      "breadcrumb": "Details",
+      "parentCell": "Parent Cell",
+      "addMember": "Add Member",
+      "editCell": "Edit Cell",
+      "backToCells": "Back to Cells",
+      "cellNotFound": "Cell not found",
+      "cellNotFoundDescription": "The cell you are looking for does not exist or has been removed.",
+      "leadership": "Leadership",
+      "leader": "Leader",
+      "supervisor": "Supervisor",
+      "meetingInfo": "Meeting Information",
+      "statistics": "Statistics",
+      "totalMembers": "Total Members",
+      "childCells": "Child Cells",
+      "tabs": {
+        "overview": "Overview",
+        "members": "Members",
+        "meetings": "Meetings"
+      },
+      "meetings": {
+        "comingSoon": "Coming Soon",
+        "comingSoonDescription": "The meetings system will be available soon to track attendance and activities."
+      }
+    },
+    "noCells": "No cells found",
+    "noCellsDescription": "Start by creating your first cell to organize the church structure.",
+    "noResultsFound": "No results found",
+    "tryDifferentFilters": "Try using different filters to find cells."
+  },
+  "Reports": {
+    "meta": {
+      "title": "Reports - LIDER FORTE",
+      "description": "Church reports and analytics to track growth and performance."
+    },
+    "title": "Reports",
+    "subtitle": "Track your church's growth and performance",
+    "dashboard": {
+      "title": "Dashboard",
+      "overview": "Overview",
+      "metrics": "Key Metrics",
+      "growth": "Growth",
+      "performance": "Performance"
+    },
+    "types": {
+      "church_overview": "Church Overview",
+      "cell_performance": "Cell Performance", 
+      "member_growth": "Member Growth",
+      "leadership_development": "Leadership Development",
+      "financial_summary": "Financial Summary",
+      "attendance_tracking": "Attendance Tracking",
+      "event_statistics": "Event Statistics"
+    },
+    "metrics": {
+      "member_count": "Total Members",
+      "cell_count": "Total Cells",
+      "conversion_rate": "Conversion Rate",
+      "attendance_rate": "Attendance Rate",
+      "growth_rate": "Growth Rate",
+      "retention_rate": "Retention Rate",
+      "engagement_score": "Engagement Score",
+      "leadership_ratio": "Leadership Ratio",
+      "total_leaders": "Active Leaders",
+      "total_supervisors": "Supervisors",
+      "new_members_30d": "New Members (30 days)",
+      "new_cells_30d": "New Cells (30 days)",
+      "avg_members_per_cell": "Average per Cell"
+    },
+    "periods": {
+      "daily": "Daily",
+      "weekly": "Weekly", 
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly"
+    },
+    "charts": {
+      "memberGrowth": "Member Growth",
+      "roleDistribution": "Role Distribution",
+      "topCells": "Top Performing Cells", 
+      "recentActivity": "Recent Activity",
+      "growthTrend": "Growth Trend",
+      "cellPerformance": "Cell Performance"
+    },
+    "actions": {
+      "create": "Create Report",
+      "edit": "Edit",
+      "delete": "Delete",
+      "generate": "Generate",
+      "export": "Export",
+      "share": "Share",
+      "save": "Save",
+      "cancel": "Cancel",
+      "view": "View",
+      "download": "Download"
+    },
+    "form": {
+      "createTitle": "Create New Report",
+      "editTitle": "Edit Report",
+      "name": "Report Name",
+      "namePlaceholder": "Enter report name...",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the purpose of this report...",
+      "type": "Report Type",
+      "selectType": "Select type",
+      "parameters": "Parameters",
+      "filters": "Filters",
+      "isPublic": "Public Report",
+      "isPublicDescription": "Allow other users to view this report",
+      "scheduledFrequency": "Update Frequency",
+      "selectFrequency": "Select frequency",
+      "noSchedule": "No automatic scheduling",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "cellIds": "Specific Cells",
+      "selectCells": "Select cells",
+      "allCells": "All cells",
+      "metricTypes": "Metric Types",
+      "selectMetrics": "Select metrics",
+      "periodType": "Period"
+    },
+    "list": {
+      "title": "My Reports",
+      "subtitle": "Manage your saved reports",
+      "noReports": "No reports found",
+      "noReportsDescription": "Start by creating your first report to track important metrics.",
+      "createFirst": "Create First Report",
+      "searchPlaceholder": "Search reports...",
+      "filterByType": "Filter by type",
+      "allTypes": "All types",
+      "showPublic": "Show public",
+      "showPrivate": "Show private",
+      "createdBy": "Created by",
+      "createdAt": "Created at",
+      "lastGenerated": "Last generated",
+      "never": "Never",
+      "public": "Public",
+      "private": "Private"
+    },
+    "generate": {
+      "title": "Generate Report",
+      "subtitle": "Configure parameters to generate a custom report",
+      "selectReportType": "Select report type",
+      "configureFilters": "Configure filters",
+      "selectFormat": "Output format",
+      "formats": {
+        "json": "JSON",
+        "pdf": "PDF",
+        "excel": "Excel"
+      },
+      "generating": "Generating report...",
+      "success": "Report generated successfully!",
+      "error": "Error generating report",
+      "downloadReady": "Your report is ready for download"
+    },
+    "messages": {
+      "createSuccess": "Report created successfully!",
+      "updateSuccess": "Report updated successfully!",
+      "deleteSuccess": "Report deleted successfully!",
+      "generateSuccess": "Report generated successfully!",
+      "createError": "Error creating report",
+      "updateError": "Error updating report",
+      "deleteError": "Error deleting report",
+      "generateError": "Error generating report",
+      "loadError": "Error loading reports",
+      "confirmDelete": "Are you sure you want to delete this report?",
+      "deleteWarning": "This action cannot be undone.",
+      "noPermission": "You don't have permission to perform this action",
+      "onlyPublicPastors": "Only pastors and supervisors can create public reports"
+    },
+    "events": {
+      "member_created": "New member added",
+      "cell_created": "New cell created",
+      "member_role_changed": "Member role changed",
+      "cell_leader_changed": "Cell leader changed",
+      "member_added_to_cell": "Member added to cell",
+      "member_removed_from_cell": "Member removed from cell"
+    },
+    "loading": "Loading...",
+    "noData": "No data available",
+    "error": "Error",
+    "retry": "Try again",
+    "refresh": "Refresh",
+    "empty": {
+      "title": "No data",
+      "description": "There is not enough data to generate this report.",
+      "suggestion": "Try adjusting the filters or wait for more church activity."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of",
+      "showing": "Showing",
+      "results": "results"
     }
   }
 }

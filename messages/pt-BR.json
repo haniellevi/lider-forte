@@ -1,7 +1,6 @@
 {
   "Navigation": {
-    "dashboard": "Painel",
-    "ecommerce": "Principal",
+    "dashboard": "Visão Geral",
     "calendar": "Calendário",
     "profile": "Perfil",
     "forms": "Formulários",
@@ -32,13 +31,25 @@
     "analyticsDemo": "Demo Analytics",
     "mainMenu": "MENU PRINCIPAL",
     "others": "OUTROS",
-    "backend": "Gestão",
+    "backend": "Sistema G12",
     "churches": "Igrejas",
     "cells": "Células",
+    "cellModes": "Modos de Célula",
     "members": "Membros",
     "reports": "Relatórios",
-    "management": "Administração",
-    "ministry": "Ministério"
+    "management": "Gestão G12",
+    "ministry": "Ministério",
+    "leaders": "Líderes",
+    "hierarchy": "Hierarquia",
+    "ladder": "Escada do Sucesso",
+    "multiplication": "Multiplicação",
+    "leadership": "Liderança",
+    "pipeline": "Pipeline de Líderes",
+    "levelsBadges": "Níveis e Badges",
+    "discipleship": "Discipulado",
+    "consolidation": "Consolidação",
+    "evangelism": "Evangelismo",
+    "sending": "Envio"
   },
   "Header": {
     "notifications": "Notificações",
@@ -318,6 +329,104 @@
     "thisMonth": "este mês",
     "lastMonth": "mês passado"
   },
+  "Multiplication": {
+    "title": "Multiplicação de Célula",
+    "wizard": "Wizard de Multiplicação",
+    "basicInfo": "Informações Básicas",
+    "templateSelection": "Seleção de Template",
+    "memberDistribution": "Distribuição de Membros",
+    "leaderSelection": "Seleção do Líder",
+    "planReview": "Revisão do Plano",
+    "approvalSubmission": "Submissão para Aprovação",
+    "newCellName": "Nome da Nova Célula",
+    "meetingDay": "Dia da Reunião",
+    "meetingTime": "Horário da Reunião",
+    "address": "Endereço",
+    "city": "Cidade",
+    "state": "Estado",
+    "zipCode": "CEP",
+    "strategy": "Estratégia",
+    "balanced": "Divisão Equilibrada",
+    "growthFocused": "Foco no Crescimento",
+    "leadershipDev": "Desenvolvimento de Liderança",
+    "geographic": "Divisão Geográfica",
+    "custom": "Personalizado",
+    "staysSource": "Permanece na célula original",
+    "movesNew": "Vai para nova célula",
+    "newLeader": "Novo líder",
+    "undecided": "Não decidido",
+    "generateSuggestions": "Gerar Sugestões",
+    "leadershipScore": "Score de Liderança",
+    "ladderScore": "Escada do Sucesso",
+    "monthsInCell": "Meses na Célula",
+    "timoteo": "Timóteo",
+    "excellent": "Excelente",
+    "veryGood": "Muito Bom",
+    "good": "Bom",
+    "needsDevelopment": "Precisa Desenvolvimento",
+    "planValid": "Plano Válido",
+    "attentionProblems": "Atenção - Problemas Identificados",
+    "reviewChecklist": "Checklist de Revisão",
+    "approvalProcess": "Processo de Aprovação",
+    "automaticReview": "Revisão Automática",
+    "ministerialAnalysis": "Análise Ministerial",
+    "finalDecision": "Decisão Final",
+    "responsibleApproval": "Responsáveis pela Aprovação",
+    "submissionNotes": "Observações para Aprovação",
+    "sendForApproval": "Enviar para Aprovação",
+    "planSentApproval": "Plano Enviado para Aprovação!",
+    "awaitingApproval": "Aguardando Aprovação",
+    "successfullySubmitted": "Enviado com sucesso para aprovação hierárquica",
+    "afterApproval": "Após a Aprovação",
+    "templates": {
+      "balanced": {
+        "name": "Divisão Equilibrada",
+        "description": "Divisão meio-a-meio mantendo equilíbrio de perfis",
+        "bestFor": "Células estáveis que querem crescer gradualmente"
+      },
+      "growthFocused": {
+        "name": "Foco no Crescimento", 
+        "description": "Maximiza potencial de crescimento de ambas as células",
+        "bestFor": "Células com forte foco evangelístico"
+      },
+      "leadershipDev": {
+        "name": "Desenvolvimento de Liderança",
+        "description": "Prioriza desenvolvimento de novos líderes",
+        "bestFor": "Células com muitos líderes em desenvolvimento"
+      }
+    },
+    "validation": {
+      "hasLeader": "Novo líder selecionado",
+      "hasMembers": "Membros para nova célula definidos",
+      "isBalanced": "Distribuição equilibrada"
+    },
+    "steps": {
+      "1": {
+        "name": "Informações Básicas",
+        "description": "Definir nome e configurações da nova célula"
+      },
+      "2": {
+        "name": "Seleção de Template",
+        "description": "Escolher estratégia de multiplicação"
+      },
+      "3": {
+        "name": "Distribuição de Membros",
+        "description": "Definir quais membros irão para nova célula"
+      },
+      "4": {
+        "name": "Novo Líder",
+        "description": "Selecionar e confirmar o novo líder"
+      },
+      "5": {
+        "name": "Revisão do Plano",
+        "description": "Revisar todas as configurações antes da aprovação"
+      },
+      "6": {
+        "name": "Submissão para Aprovação",
+        "description": "Enviar para aprovação hierárquica"
+      }
+    }
+  },
   "Components": {
     "chats": "Conversas",
     "decreased": "Diminuiu",
@@ -422,18 +531,18 @@
     "send": "Enviar",
     "save": "Salvar",
     "variant": {
-      "ring": "Ring",
-      "dots": "Dots", 
-      "pulse": "Pulse",
-      "bars": "Bars",
-      "bounce": "Bounce"
+      "ring": "Anel",
+      "dots": "Pontos", 
+      "pulse": "Pulso",
+      "bars": "Barras",
+      "bounce": "Salto"
     },
     "color": {
-      "primary": "Primary",
-      "success": "Success",
-      "warning": "Warning",
-      "error": "Error",
-      "gray": "Gray"
+      "primary": "Primário",
+      "success": "Sucesso",
+      "warning": "Aviso",
+      "error": "Erro",
+      "gray": "Cinza"
     }
   },
   "Toast": {
@@ -463,15 +572,15 @@
     "processing": "Processando...",
     "closeAll": "Fechar Todos",
     "multipleToasts": "Múltiplos Toasts",
-    "topRight": "Top Right",
+    "topRight": "Superior Direito",
     "otherPositions": "Outras Posições",
     "positionNote": "* A posição é configurada globalmente no ToastProvider",
     "defaultPosition": "Toast no canto superior direito (padrão)",
     "changePosition": "Para alterar posição, configure no ToastProvider",
-    "successToast": "Success Toast",
-    "errorToast": "Error Toast",
-    "warningToast": "Warning Toast",
-    "infoToast": "Info Toast",
+    "successToast": "Toast de Sucesso",
+    "errorToast": "Toast de Erro",
+    "warningToast": "Toast de Aviso",
+    "infoToast": "Toast de Informação",
     "completeToast": "Toast Completo",
     "customDuration": "Toast com Duração Customizada",
     "withAction": "Toast com Ação",
@@ -497,6 +606,118 @@
   "Pages": {
     "basicChart": "Gráfico Básico",
     "calendarPage": "Calendário"
+  },
+  "SuccessLadder": {
+    "title": "Escada do Sucesso",
+    "subtitle": "Sistema de gamificação G12",
+    "levelUp": "Subiu de Nível!",
+    "achievedLevel": "Você alcançou o nível {level}!",
+    "nextLevel": "Próximo Nível",
+    "pointsNeeded": "{points} pontos necessários",
+    "progress": "Progresso",
+    "currentLevelPoints": "Pontos no Nível",
+    "pointsToNext": "Para Próximo",
+    "maxLevelReached": "Nível Máximo Alcançado!",
+    "maxLevelDescription": "Parabéns! Você atingiu o topo da Escada do Sucesso.",
+    "points": "pontos",
+    "categories": {
+      "all": "Todas",
+      "frequency": "Frequência",
+      "leadership": "Liderança",
+      "learning": "Aprendizado",
+      "service": "Serviço",
+      "presence": "Presença",
+      "evangelism": "Evangelismo",
+      "discipleship": "Discipulado",
+      "multiplication": "Multiplicação",
+      "consolidation": "Consolidação",
+      "training": "Treinamento",
+      "meeting": "Reunião",
+      "prayer": "Oração",
+      "worship": "Adoração",
+      "general": "Geral"
+    },
+    "periods": {
+      "all": "Todos os Tempos",
+      "allTime": "Histórico",
+      "today": "Hoje",
+      "week": "Semana",
+      "month": "Mês",
+      "quarter": "Trimestre",
+      "year": "Ano"
+    },
+    "filters": {
+      "all": "Todas"
+    },
+    "time": {
+      "minutesAgo": "{minutes}m atrás",
+      "hoursAgo": "{hours}h atrás",
+      "daysAgo": "{days}d atrás"
+    },
+    "badges": {
+      "title": "Conquistas",
+      "progress": "{unlocked} de {total} conquistadas",
+      "completion": "Conclusão",
+      "noBadges": "Nenhuma conquista encontrada",
+      "recent": "Conquistas Recentes",
+      "andMore": "e mais {count}",
+      "categories": {
+        "all": "Todas",
+        "frequency": "Frequência",
+        "leadership": "Liderança",
+        "learning": "Aprendizado",
+        "service": "Serviço"
+      }
+    },
+    "activity": {
+      "title": "Atividades Recentes",
+      "subtitle": "{count} atividades encontradas",
+      "totalPoints": "Total de Pontos",
+      "noActivities": "Nenhuma atividade encontrada",
+      "noRecentActivities": "Nenhuma atividade recente",
+      "loadMore": "Carregar Mais",
+      "recent": "Atividades Recentes"
+    },
+    "leaderboard": {
+      "title": "Ranking",
+      "subtitle": "{count} membros no ranking",
+      "noData": "Nenhum dado de ranking disponível",
+      "yourPosition": "Sua Posição",
+      "you": "Você",
+      "place": "lugar",
+      "cell": {
+        "title": "Ranking da Célula"
+      },
+      "church": {
+        "title": "Ranking da Igreja"
+      },
+      "podium": {
+        "title": "Pódio dos Campeões"
+      }
+    },
+    "stats": {
+      "totalPoints": "Pontos Totais",
+      "currentLevel": "Nível Atual",
+      "rank": "Posição",
+      "badges": "Conquistas",
+      "monthlyPoints": "Pontos do Mês",
+      "weeklyPoints": "Pontos da Semana",
+      "totalActivities": "Total de Atividades",
+      "additional": "Estatísticas Adicionais"
+    },
+    "dashboard": {
+      "noData": "Dados não disponíveis"
+    },
+    "levelUp": {
+      "congratulations": "Parabéns!",
+      "newLevelReached": "Você alcançou um novo nível!",
+      "pointsGained": "Pontos Ganhos",
+      "totalPoints": "Total: {total} pontos",
+      "newBadges": "Novas Conquistas",
+      "andMoreBadges": "e mais {count} conquistas",
+      "continue": "Continuar",
+      "keepGoing": "Continue assim! Você está fazendo um ótimo trabalho."
+    }
   },
   "Calendar": {
     "title": "Calendário",
@@ -1185,6 +1406,60 @@
       "mutations": "Mutations com feedback"
     }
   },
+  "ChurchesPage": {
+    "meta": {
+      "title": "Gerenciamento de Igrejas - LIDER FORTE",
+      "description": "Gerencie igrejas, visualize estatísticas e administre dados institucionais."
+    },
+    "title": "Igrejas",
+    "description": "Gerencie as igrejas, visualize estatísticas e administre dados institucionais.",
+    "buttons": {
+      "export": "Exportar",
+      "addChurch": "Nova Igreja"
+    },
+    "table": {
+      "name": "Igreja",
+      "location": "Localização",
+      "contact": "Contato",
+      "stats": "Estatísticas",
+      "pastor": "Pastor",
+      "actions": "Ações"
+    },
+    "actions": {
+      "view": "Visualizar",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar por nome da igreja...",
+      "advanced": "Filtros Avançados",
+      "clear": "Limpar",
+      "city": "Cidade",
+      "cityPlaceholder": "Digite a cidade...",
+      "state": "Estado",
+      "allStates": "Todos os estados",
+      "active": "Filtros ativos",
+      "searchLabel": "Busca",
+      "cityLabel": "Cidade",
+      "stateLabel": "Estado"
+    },
+    "pagination": {
+      "showing": "Mostrando {start} a {end} de {total} igrejas",
+      "previous": "Anterior",
+      "next": "Próximo"
+    },
+    "emptyState": {
+      "title": "Nenhuma igreja encontrada",
+      "description": "Comece criando sua primeira igreja para gerenciar membros e células.",
+      "action": "Criar Primeira Igreja"
+    },
+    "members": "membros",
+    "cells": "células",
+    "confirmDelete": "Tem certeza que deseja excluir a igreja \"{name}\"? Esta ação não pode ser desfeita.",
+    "deleteSuccess": "Igreja \"{name}\" excluída com sucesso.",
+    "deleteError": "Erro ao excluir igreja. Tente novamente.",
+    "errorLoading": "Erro ao carregar igrejas. Tente recarregar a página."
+  },
   "metadata": {
     "analytics-demo": {
       "title": "Demo de Analytics",
@@ -1204,5 +1479,537 @@
     },
     "title": "Página Inicial",
     "pageDescription": "Este é um componente básico para a página inicial da aplicação."
+  },
+  "Cells": {
+    "meta": {
+      "title": "Células - LIDER FORTE",
+      "description": "Gerencie as células da igreja, membros e hierarquia organizacional."
+    },
+    "title": "Células",
+    "subtitle": "Gerencie a estrutura hierárquica de células da sua igreja",
+    "leader": "Líder",
+    "supervisor": "Supervisor",
+    "member": "Membro",
+    "members": "Membros",
+    "parentCell": "Célula Pai",
+    "childCell": "Célula Filha",
+    "childCells": "Células Filhas",
+    "created": "Criada",
+    "confirmDelete": "Tem certeza que deseja excluir esta célula?",
+    "days": {
+      "sunday": "Domingo",
+      "monday": "Segunda-feira",
+      "tuesday": "Terça-feira",
+      "wednesday": "Quarta-feira",
+      "thursday": "Quinta-feira",
+      "friday": "Sexta-feira",
+      "saturday": "Sábado"
+    },
+    "roles": {
+      "pastor": "Pastor",
+      "supervisor": "Supervisor", 
+      "leader": "Líder",
+      "timoteo": "Timóteo",
+      "member": "Membro"
+    },
+    "actions": {
+      "view": "Visualizar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "addMember": "Adicionar Membro",
+      "createCell": "Criar Célula",
+      "createSubCell": "Criar Sub-célula",
+      "createFirstCell": "Criar Primeira Célula"
+    },
+    "viewMode": {
+      "tree": "Visualização em Árvore",
+      "grid": "Visualização em Grade"
+    },
+    "filters": {
+      "searchPlaceholder": "Buscar células...",
+      "leader": "Líder",
+      "selectLeader": "Selecionar líder",
+      "allLeaders": "Todos os líderes",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Selecionar supervisor",
+      "allSupervisors": "Todos os supervisores"
+    },
+    "hierarchy": {
+      "title": "Hierarquia de Células",
+      "noCells": "Nenhuma célula encontrada",
+      "noCellsDescription": "Comece criando sua primeira célula para organizar a estrutura da igreja."
+    },
+    "form": {
+      "createTitle": "Criar Nova Célula",
+      "editTitle": "Editar Célula",
+      "basicInfo": "Informações Básicas",
+      "meetingInfo": "Informações de Reunião",
+      "address": "Endereço",
+      "name": "Nome da Célula",
+      "namePlaceholder": "Digite o nome da célula...",
+      "leader": "Líder",
+      "selectLeader": "Selecionar líder",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Selecionar supervisor",
+      "parentCell": "Célula Pai",
+      "selectParentCell": "Selecionar célula pai",
+      "meetingDay": "Dia da Reunião",
+      "selectMeetingDay": "Selecionar dia",
+      "meetingTime": "Horário da Reunião",
+      "cancel": "Cancelar",
+      "create": "Criar Célula",
+      "update": "Atualizar Célula",
+      "save": "Salvar",
+      "saving": "Salvando...",
+      "selectRole": "Selecionar papel"
+    },
+    "members": {
+      "title": "Membros",
+      "addMember": "Adicionar Membro",
+      "addMemberTitle": "Adicionar Membro à Célula",
+      "addFirstMember": "Adicionar Primeiro Membro",
+      "noMembers": "Nenhum membro nesta célula",
+      "noMembersDescription": "Comece adicionando membros para formar sua célula.",
+      "noAvailableUsers": "Não há usuários disponíveis para adicionar",
+      "selectMember": "Selecionar Membro",
+      "selectMemberPlaceholder": "Escolha um membro...",
+      "member": "Membro",
+      "role": "Papel",
+      "joinedAt": "Entrou em",
+      "actions": "Ações",
+      "removeMember": "Remover Membro",
+      "confirmRemove": "Tem certeza que deseja remover este membro da célula?",
+      "adding": "Adicionando...",
+      "addSuccess": "Membro adicionado com sucesso!",
+      "successLadder": "Escada do Sucesso",
+      "successLadderScore": "Pontuação da Escada do Sucesso",
+      "successLadderDescription": "Pontuação de 0 a 100 baseada no desenvolvimento do membro",
+      "timoteo": "Timóteo",
+      "timoteoStatus": "Status Timóteo",
+      "timoteoDescription": "Marcar como líder em formação",
+      "importantNote": "Informações Importantes",
+      "notePoint1": "Apenas membros da mesma igreja podem ser adicionados",
+      "notePoint2": "O líder da célula não pode ser removido",
+      "notePoint3": "A pontuação da Escada do Sucesso ajuda no acompanhamento do crescimento",
+      "successLadder": {
+        "excellent": "Excelente",
+        "good": "Bom", 
+        "regular": "Regular",
+        "beginner": "Iniciante"
+      }
+    },
+    "detail": {
+      "meta": {
+        "title": "Detalhes da Célula - LIDER FORTE",
+        "description": "Visualize e gerencie os detalhes, membros e atividades da célula."
+      },
+      "title": "Detalhes da Célula",
+      "breadcrumb": "Detalhes",
+      "parentCell": "Célula Pai",
+      "addMember": "Adicionar Membro",
+      "editCell": "Editar Célula",
+      "backToCells": "Voltar às Células",
+      "cellNotFound": "Célula não encontrada",
+      "cellNotFoundDescription": "A célula que você está procurando não existe ou foi removida.",
+      "leadership": "Liderança",
+      "leader": "Líder",
+      "supervisor": "Supervisor",
+      "meetingInfo": "Informações de Reunião",
+      "statistics": "Estatísticas",
+      "totalMembers": "Total de Membros",
+      "childCells": "Células Filhas",
+      "tabs": {
+        "overview": "Visão Geral",
+        "members": "Membros",
+        "meetings": "Reuniões"
+      },
+      "meetings": {
+        "comingSoon": "Em Breve",
+        "comingSoonDescription": "O sistema de reuniões estará disponível em breve para registrar frequência e atividades."
+      }
+    },
+    "noCells": "Nenhuma célula encontrada",
+    "noCellsDescription": "Comece criando sua primeira célula para organizar a estrutura da igreja.",
+    "noResultsFound": "Nenhum resultado encontrado",
+    "tryDifferentFilters": "Tente usar filtros diferentes para encontrar células."
+  },
+  "Reports": {
+    "meta": {
+      "title": "Relatórios - LIDER FORTE",
+      "description": "Relatórios e analytics da igreja para acompanhar crescimento e performance."
+    },
+    "title": "Relatórios",
+    "subtitle": "Acompanhe o crescimento e performance da sua igreja",
+    "dashboard": {
+      "title": "Dashboard",
+      "overview": "Visão Geral",
+      "metrics": "Métricas Principais",
+      "growth": "Crescimento",
+      "performance": "Performance"
+    },
+    "types": {
+      "church_overview": "Visão Geral da Igreja",
+      "cell_performance": "Performance de Células", 
+      "member_growth": "Crescimento de Membros",
+      "leadership_development": "Desenvolvimento de Liderança",
+      "financial_summary": "Resumo Financeiro",
+      "attendance_tracking": "Controle de Frequência",
+      "event_statistics": "Estatísticas de Eventos"
+    },
+    "metrics": {
+      "member_count": "Total de Membros",
+      "cell_count": "Total de Células",
+      "conversion_rate": "Taxa de Conversão",
+      "attendance_rate": "Taxa de Frequência",
+      "growth_rate": "Taxa de Crescimento",
+      "retention_rate": "Taxa de Retenção",
+      "engagement_score": "Pontuação de Engajamento",
+      "leadership_ratio": "Proporção de Liderança",
+      "total_leaders": "Líderes Ativos",
+      "total_supervisors": "Supervisores",
+      "new_members_30d": "Novos Membros (30 dias)",
+      "new_cells_30d": "Novas Células (30 dias)",
+      "avg_members_per_cell": "Média por Célula"
+    },
+    "periods": {
+      "daily": "Diário",
+      "weekly": "Semanal", 
+      "monthly": "Mensal",
+      "quarterly": "Trimestral",
+      "yearly": "Anual"
+    },
+    "charts": {
+      "memberGrowth": "Crescimento de Membros",
+      "roleDistribution": "Distribuição de Papéis",
+      "topCells": "Células com Melhor Performance", 
+      "recentActivity": "Atividades Recentes",
+      "growthTrend": "Tendência de Crescimento",
+      "cellPerformance": "Performance de Células"
+    },
+    "actions": {
+      "create": "Criar Relatório",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "generate": "Gerar",
+      "export": "Exportar",
+      "share": "Compartilhar",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "view": "Visualizar",
+      "download": "Baixar"
+    },
+    "form": {
+      "createTitle": "Criar Novo Relatório",
+      "editTitle": "Editar Relatório",
+      "name": "Nome do Relatório",
+      "namePlaceholder": "Digite o nome do relatório...",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Descreva o objetivo deste relatório...",
+      "type": "Tipo de Relatório",
+      "selectType": "Selecione o tipo",
+      "parameters": "Parâmetros",
+      "filters": "Filtros",
+      "isPublic": "Relatório Público",
+      "isPublicDescription": "Permitir que outros usuários vejam este relatório",
+      "scheduledFrequency": "Frequência de Atualização",
+      "selectFrequency": "Selecionar frequência",
+      "noSchedule": "Sem agendamento automático",
+      "startDate": "Data Inicial",
+      "endDate": "Data Final",
+      "cellIds": "Células Específicas",
+      "selectCells": "Selecionar células",
+      "allCells": "Todas as células",
+      "metricTypes": "Tipos de Métricas",
+      "selectMetrics": "Selecionar métricas",
+      "periodType": "Período"
+    },
+    "list": {
+      "title": "Meus Relatórios",
+      "subtitle": "Gerencie seus relatórios salvos",
+      "noReports": "Nenhum relatório encontrado",
+      "noReportsDescription": "Comece criando seu primeiro relatório para acompanhar métricas importantes.",
+      "createFirst": "Criar Primeiro Relatório",
+      "searchPlaceholder": "Buscar relatórios...",
+      "filterByType": "Filtrar por tipo",
+      "allTypes": "Todos os tipos",
+      "showPublic": "Mostrar públicos",
+      "showPrivate": "Mostrar privados",
+      "createdBy": "Criado por",
+      "createdAt": "Criado em",
+      "lastGenerated": "Última geração",
+      "never": "Nunca",
+      "public": "Público",
+      "private": "Privado"
+    },
+    "generate": {
+      "title": "Gerar Relatório",
+      "subtitle": "Configure os parâmetros para gerar um relatório customizado",
+      "selectReportType": "Selecione o tipo de relatório",
+      "configureFilters": "Configure os filtros",
+      "selectFormat": "Formato de saída",
+      "formats": {
+        "json": "JSON",
+        "pdf": "PDF",
+        "excel": "Excel"
+      },
+      "generating": "Gerando relatório...",
+      "success": "Relatório gerado com sucesso!",
+      "error": "Erro ao gerar relatório",
+      "downloadReady": "Seu relatório está pronto para download"
+    },
+    "messages": {
+      "createSuccess": "Relatório criado com sucesso!",
+      "updateSuccess": "Relatório atualizado com sucesso!",
+      "deleteSuccess": "Relatório excluído com sucesso!",
+      "generateSuccess": "Relatório gerado com sucesso!",
+      "createError": "Erro ao criar relatório",
+      "updateError": "Erro ao atualizar relatório",
+      "deleteError": "Erro ao excluir relatório",
+      "generateError": "Erro ao gerar relatório",
+      "loadError": "Erro ao carregar relatórios",
+      "confirmDelete": "Tem certeza que deseja excluir este relatório?",
+      "deleteWarning": "Esta ação não pode ser desfeita.",
+      "noPermission": "Você não tem permissão para realizar esta ação",
+      "onlyPublicPastors": "Apenas pastores e supervisores podem criar relatórios públicos"
+    },
+    "events": {
+      "member_created": "Novo membro adicionado",
+      "cell_created": "Nova célula criada",
+      "member_role_changed": "Papel de membro alterado",
+      "cell_leader_changed": "Líder de célula alterado",
+      "member_added_to_cell": "Membro adicionado à célula",
+      "member_removed_from_cell": "Membro removido da célula"
+    },
+    "loading": "Carregando...",
+    "noData": "Nenhum dado disponível",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "refresh": "Atualizar",
+    "empty": {
+      "title": "Sem dados",
+      "description": "Não há dados suficientes para gerar este relatório.",
+      "suggestion": "Tente ajustar os filtros ou aguarde mais atividade na igreja."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo",
+      "page": "Página",
+      "of": "de",
+      "showing": "Mostrando",
+      "results": "resultados"
+    }
+  },
+  "CellModes": {
+    "meta": {
+      "title": "Modos Estratégicos - LIDER FORTE",
+      "description": "Sistema de modos estratégicos da Visão G12 para foco semanal das células."
+    },
+    "title": "Modos Estratégicos",
+    "subtitle": "Sistema G12 de foco estratégico para células",
+    "description": "Gerencie os 4 modos estratégicos da Visão G12 para orientar o foco semanal das células",
+    "modes": {
+      "GANHAR": {
+        "name": "Modo Ganhar",
+        "fullName": "Modo Ganhar - Evangelismo",
+        "description": "Foco em alcançar novos visitantes e conversões",
+        "shortDesc": "Evangelismo e alcance"
+      },
+      "CONSOLIDAR": {
+        "name": "Modo Consolidar", 
+        "fullName": "Modo Consolidar - Cuidado Pastoral",
+        "description": "Foco em cuidar e integrar novos membros",
+        "shortDesc": "Cuidado pastoral"
+      },
+      "DISCIPULAR": {
+        "name": "Modo Discipular",
+        "fullName": "Modo Discipular - Ensino e Crescimento", 
+        "description": "Foco no crescimento espiritual e educação",
+        "shortDesc": "Ensino e crescimento"
+      },
+      "ENVIAR": {
+        "name": "Modo Enviar",
+        "fullName": "Modo Enviar - Multiplicação e Liderança",
+        "description": "Foco em treinar líderes e preparar multiplicação",
+        "shortDesc": "Multiplicação"
+      }
+    },
+    "status": {
+      "active": "Ativo",
+      "expired": "Expirado", 
+      "indefinite": "Indefinido",
+      "today": "Termina Hoje"
+    },
+    "dashboard": {
+      "title": "Dashboard de Modos",
+      "subtitle": "Visão geral dos modos estratégicos por célula",
+      "statistics": "Estatísticas Gerais",
+      "distribution": "Distribuição por Modo",
+      "cellsWithoutMode": "Células sem Modo Ativo",
+      "recommendations": "Recomendações",
+      "stats": {
+        "totalCells": "Total de Células",
+        "activeModes": "Modos Ativos",
+        "expiredModes": "Modos Expirados",
+        "withoutMode": "Sem Modo"
+      }
+    },
+    "selector": {
+      "title": "Selecionar Modo Estratégico",
+      "selectMode": "Escolha um modo para sua célula",
+      "duration": "Duração (semanas)",
+      "goal": "Objetivo Específico",
+      "goalPlaceholder": "Descreva o objetivo específico para este período...",
+      "suggestedActivities": "Atividades Sugeridas",
+      "mainMetrics": "Métricas Principais",
+      "configure": "Configurar",
+      "activate": "Ativar Modo",
+      "activating": "Ativando...",
+      "weeks": "semanas",
+      "cancel": "Cancelar"
+    },
+    "metrics": {
+      "title": "Métricas do Modo",
+      "updateMetrics": "Atualizar Métricas",
+      "overallProgress": "Progresso Geral",
+      "target": "Meta",
+      "achieved": "Alcançada",
+      "metricsProgress": "Progresso das Métricas",
+      "performanceSummary": "Resumo de Performance",
+      "goalsAchieved": "Metas Alcançadas",
+      "inProgress": "Em Progresso", 
+      "needsAttention": "Precisam Atenção",
+      "saving": "Salvando...",
+      "save": "Salvar",
+      "startDate": "Início",
+      "endDate": "Fim"
+    },
+    "activities": {
+      "title": "Atividades do Modo",
+      "create": "Criar Atividade",
+      "createTitle": "Criar Nova Atividade",
+      "edit": "Editar Atividade",
+      "delete": "Excluir Atividade",
+      "complete": "Marcar como Concluída",
+      "uncomplete": "Marcar como Pendente",
+      "noActivities": "Nenhuma atividade encontrada",
+      "createFirst": "Criar primeira atividade",
+      "types": {
+        "meeting": "Reunião",
+        "outreach": "Evangelismo", 
+        "training": "Treinamento",
+        "service": "Serviço",
+        "fellowship": "Confraternização",
+        "mentoring": "Mentoria"
+      },
+      "form": {
+        "type": "Tipo de Atividade",
+        "selectType": "Selecione o tipo",
+        "description": "Descrição",
+        "descriptionPlaceholder": "Descreva a atividade...",
+        "plannedDate": "Data Planejada",
+        "completedDate": "Data de Conclusão",
+        "participantsExpected": "Participantes Esperados",
+        "participantsActual": "Participantes Reais",
+        "results": "Resultados",
+        "isCompleted": "Atividade Concluída",
+        "create": "Criar Atividade",
+        "update": "Atualizar Atividade",
+        "creating": "Criando...",
+        "updating": "Atualizando..."
+      }
+    },
+    "recommendations": {
+      "title": "Recomendação de Modo",
+      "subtitle": "Baseado no contexto atual da célula",
+      "recommended": "Recomendado",
+      "reason": "Motivo",
+      "confidence": "Confiança",
+      "applyRecommendation": "Aplicar Recomendação",
+      "reasons": {
+        "matureCellMultiplication": "Célula madura com mais de 12 membros, pronta para multiplicação",
+        "highNewMemberFlow": "Alto fluxo de novos membros que precisam ser consolidados",
+        "fewMembers": "Célula com poucos membros, foco em evangelismo",
+        "timeForDiscipleship": "Tempo de fortalecer o ensino e crescimento espiritual",
+        "cycleProgression": "Próximo modo no ciclo estratégico"
+      }
+    },
+    "progress": {
+      "daysRemaining": "dias restantes",
+      "daysRemainingOne": "dia restante",
+      "endsToday": "Termina hoje",
+      "expiredDays": "Expirado há {days} dias",
+      "expiredDaysOne": "Expirado há {days} dia",
+      "activeFor": "Ativo por {weeks} semana",
+      "activeForMany": "Ativo por {weeks} semanas",
+      "indefinite": "Duração indefinida"
+    },
+    "actions": {
+      "activateMode": "Ativar Modo",
+      "defineMode": "Definir Modo",
+      "updateMetrics": "Atualizar Métricas",
+      "viewHistory": "Ver Histórico",
+      "changeMode": "Alterar Modo",
+      "extendDuration": "Estender Duração",
+      "finishMode": "Finalizar Modo"
+    },
+    "messages": {
+      "activateSuccess": "Modo ativado com sucesso!",
+      "updateSuccess": "Métricas atualizadas com sucesso!",
+      "createActivitySuccess": "Atividade criada com sucesso!",
+      "updateActivitySuccess": "Atividade atualizada com sucesso!",
+      "deleteActivitySuccess": "Atividade excluída com sucesso!",
+      "activateError": "Erro ao ativar modo",
+      "updateError": "Erro ao atualizar métricas",
+      "loadError": "Erro ao carregar dados",
+      "invalidMode": "Modo inválido selecionado",
+      "noPermission": "Sem permissão para gerenciar modos desta célula",
+      "confirmDeleteActivity": "Tem certeza que deseja excluir esta atividade?",
+      "fillAllFields": "Preencha todos os campos obrigatórios"
+    },
+    "filters": {
+      "allModes": "Todos os Modos",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Selecionar supervisor",
+      "allSupervisors": "Todos os supervisores",
+      "status": "Status",
+      "selectStatus": "Selecionar status",
+      "allStatuses": "Todos os status"
+    },
+    "tips": {
+      "ganhar": [
+        "Organize eventos evangelísticos",
+        "Incentive convites pessoais",
+        "Compartilhe testemunhos", 
+        "Faça ações sociais comunitárias"
+      ],
+      "consolidar": [
+        "Realize visitas pastorais",
+        "Acompanhe novos convertidos",
+        "Ministre às necessidades específicas",
+        "Promova integração à igreja"
+      ],
+      "discipular": [
+        "Conduza estudos bíblicos profundos",
+        "Ofereça cursos de crescimento",
+        "Desenvolva mentoria individual",
+        "Incentive leitura dirigida"
+      ],
+      "enviar": [
+        "Treine novos líderes",
+        "Desenvolva Timóteos",
+        "Planeje multiplicação",
+        "Realize escola de líderes"
+      ]
+    },
+    "history": {
+      "title": "Histórico de Modos",
+      "noHistory": "Nenhum histórico encontrado",
+      "duration": "Duração",
+      "from": "De",
+      "to": "até",
+      "ongoing": "Em andamento",
+      "completedSuccessfully": "Concluído com sucesso",
+      "expiredIncomplete": "Expirado (incompleto)"
+    }
   }
 }

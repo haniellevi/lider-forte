@@ -15,6 +15,7 @@ export {
   ChevronsRight as ChevronDoubleRight,
   Building as ChurchIcon,
   Users as CellsIcon,
+  Target as CellModesIcon,
   BarChart as ReportsIcon,
   Settings as SettingsIcon,
 } from 'lucide-react';

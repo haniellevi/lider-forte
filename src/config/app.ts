@@ -175,23 +175,23 @@ export interface AppConfig {
 // Configuração principal da aplicação
 export const appConfig: AppConfig = {
   app: {
-    name: "AI Coders - Starter Kit",
-    version: "1.2.1",
-    description: "Template moderno e rico em recursos para dashboard admin em Next.js",
-    tagline: "Dashboard Admin Moderno com Next.js",
+    name: "Líder Forte - Sistema G12",
+    version: "1.0.0",
+    description: "Plataforma de Gestão G12 - Sistema operacional para igrejas que seguem a Visão G12",
+    tagline: "Acelere o crescimento da sua igreja com a Visão G12",
     url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     locale: "pt-BR",
     timezone: "America/Sao_Paulo"
   },
 
   company: {
-    name: "AI Coders",
-    legalName: "AI Coders Technology Solutions",
-    description: "Soluções tecnológicas inovadoras para empresas modernas",
-    tagline: "Tecnologia que transforma negócios",
-    founded: "2024",
+    name: "Líder Forte",
+    legalName: "Líder Forte Tecnologia Eclesiástica Ltda",
+    description: "Plataforma tecnológica especializada na Visão G12 para crescimento exponencial de igrejas",
+    tagline: "Transformando igrejas através da tecnologia G12",
+    founded: "2025",
     address: {
-      street: "Rua das Inovações, 123",
+      street: "Rua da Multiplicação, 777",
       city: "São Paulo",
       state: "SP",
       zipCode: "01310-100",
@@ -213,53 +213,32 @@ export const appConfig: AppConfig = {
 
   social: [
     {
-      name: "GitHub",
-      url: "https://github.com/ai-coders",
-      icon: FaGithub,
-      color: "#181717",
-      username: "@ai-coders"
-    },
-    {
-      name: "LinkedIn",
-      url: "https://linkedin.com/company/ai-coders",
-      icon: FaLinkedin,
-      color: "#0A66C2",
-      username: "AI Coders"
-    },
-    {
-      name: "Twitter",
-      url: "https://twitter.com/ai_coders",
-      icon: FaTwitter,
-      color: "#1DA1F2",
-      username: "@ai_coders"
-    },
-    {
       name: "Instagram",
-      url: "https://instagram.com/ai.coders",
+      url: "https://instagram.com/liderforte",
       icon: FaInstagram,
       color: "#E4405F",
-      username: "@ai.coders"
+      username: "@liderforte"
     },
     {
       name: "YouTube",
-      url: "https://youtube.com/@ai-coders",
+      url: "https://youtube.com/@liderforte",
       icon: FaYoutube,
       color: "#FF0000",
-      username: "AI Coders"
+      username: "Líder Forte"
     },
     {
-      name: "Discord",
-      url: "https://discord.gg/ai-coders",
-      icon: FaDiscord,
-      color: "#5865F2",
-      username: "AI Coders Community"
+      name: "LinkedIn",
+      url: "https://linkedin.com/company/lider-forte",
+      icon: FaLinkedin,
+      color: "#0A66C2",
+      username: "Líder Forte"
     }
   ],
 
   contact: {
-    email: "contato@ai-coders.com.br",
+    email: "contato@liderforte.com.br",
     phone: "+55 (11) 99999-9999",
-    website: "https://ai-coders.com.br"
+    website: "https://liderforte.com.br"
   },
 
   theme: {
@@ -285,21 +264,21 @@ export const appConfig: AppConfig = {
   },
 
   seo: {
-    title: "AI Coders - Starter Kit | Dashboard Admin Moderno",
-    description: "Template moderno e rico em recursos para dashboard admin em Next.js com autenticação Clerk, internacionalização e componentes de UI elegantes.",
+    title: "Líder Forte - Sistema G12 | Plataforma de Gestão Eclesiástica",
+    description: "Plataforma completa para gestão de igrejas que seguem a Visão G12. Acelere o crescimento, multiplique células e desenvolva líderes com tecnologia especializada.",
     keywords: [
-      "nextjs",
-      "dashboard",
-      "admin",
-      "template",
-      "typescript",
-      "tailwind",
-      "clerk",
-      "i18n",
-      "zod",
-      "react-hook-form",
-      "brasil",
-      "starter-kit"
+      "g12",
+      "visao-g12",
+      "gestao-igreja",
+      "celulas",
+      "multiplicacao",
+      "lideranca",
+      "discipulado",
+      "igreja",
+      "pastor",
+      "crescimento-igreja",
+      "sistema-eclesiástico",
+      "plataforma-g12"
     ],
     ogImage: "/images/og-image.png",
     twitterCard: "summary_large_image"
@@ -342,11 +321,11 @@ export const appConfig: AppConfig = {
 
   urls: {
     docs: "/docs",
-    support: "mailto:suporte@ai-coders.com.br",
+    support: "mailto:suporte@liderforte.com.br",
     privacy: "/privacy",
     terms: "/terms",
-    blog: "https://blog.ai-coders.com.br",
-    status: "https://status.ai-coders.com.br"
+    blog: "https://blog.liderforte.com.br",
+    status: "https://status.liderforte.com.br"
   },
 
   development: {

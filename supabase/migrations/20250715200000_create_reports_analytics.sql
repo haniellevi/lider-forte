@@ -146,7 +146,7 @@ select
   p.role as leader_role,
   
   -- Células filhas
-  (select count(*) from public.cells child where child.parent_cell_id = ce.id) as child_cells_count,
+  (select count(*) from public.cells child where child.parent_id = ce.id) as child_cells_count,
   
   -- Score médio da escada do sucesso
   (select avg(success_ladder_score) from public.cell_members cm where cm.cell_id = ce.id) as avg_success_score,

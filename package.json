@@ -1,10 +1,11 @@
 {
-  "name": "ai-coders-starter-kit",
+  "name": "lider-forte-g12",
   "version": "1.0.0",
   "private": true,
-  "author": "AI Coders Academy",
+  "author": "Líder Forte",
   "license": "Apache-2.0",
-  "homepage": "https://aicoders.academy",
+  "homepage": "https://liderforte.com.br",
+  "description": "Plataforma de Gestão G12 - Sistema operacional para igrejas que seguem a Visão G12",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -28,6 +29,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "dotenv": "^17.2.0",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",

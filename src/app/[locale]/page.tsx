@@ -1,8 +1,5 @@
 import { HeroSection } from './_components/hero-section';
 import { FeaturesSection } from './_components/features-section';
-import { ComponentsShowcaseSection } from './_components/components-showcase-section';
-import { TechStackSection } from './_components/tech-stack-section';
-import { DocumentationSection } from './_components/documentation-section';
 import { PricingSection } from './_components/pricing-section';
 import { TestimonialsSection } from './_components/testimonials-section';
 import { StatsSection } from './_components/stats-section';
@@ -17,12 +14,9 @@ export default function LandingPage() {
       <LandingNavbar />
       <HeroSection />
       <FeaturesSection />
-      <ComponentsShowcaseSection />
-      <TechStackSection />
-      <DocumentationSection />
+      <StatsSection />
       <PricingSection />
       <TestimonialsSection />
-      <StatsSection />
       <CtaSection />
       <WhatsAppFloat />
       <LandingFooter />

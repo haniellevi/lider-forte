@@ -15,12 +15,7 @@ export function useNavigation(): NavigationData {
         {
           title: t('dashboard'),
           icon: Icons.HomeIcon,
-          items: [
-            {
-              title: t('ecommerce'),
-              url: '/app/dashboard',
-            },
-          ],
+          url: '/app',
         },
       ],
     },
@@ -36,6 +31,11 @@ export function useNavigation(): NavigationData {
           title: t('cells'),
           icon: Icons.CellsIcon,
           url: '/app/cells',
+        },
+        {
+          title: t('cellModes'),
+          icon: Icons.CellModesIcon,
+          url: '/app/cell-modes',
         },
         {
           title: t('reports'),

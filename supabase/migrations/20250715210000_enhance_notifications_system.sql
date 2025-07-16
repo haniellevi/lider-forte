@@ -248,14 +248,14 @@ ALTER TABLE public.notification_templates ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can view templates from their church" ON public.notification_templates
   FOR SELECT USING (
     church_id IS NULL OR 
-    church_id IN (SELECT church_id FROM profiles WHERE id = auth.jwt() ->> 'sub')
+    church_id IN (SELECT church_id FROM profiles WHERE id = (auth.jwt() ->> 'sub')::uuid)
   );
 
 CREATE POLICY "Pastors can manage templates" ON public.notification_templates
   FOR ALL USING (
     church_id IN (
       SELECT church_id FROM profiles 
-      WHERE id = auth.jwt() ->> 'sub' AND role = 'pastor'
+      WHERE id = (auth.jwt() ->> 'sub')::uuid AND role = 'pastor'
     )
   );
 
@@ -270,14 +270,14 @@ ALTER TABLE public.mass_communications ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can view communications from their church" ON public.mass_communications
   FOR SELECT USING (
-    church_id IN (SELECT church_id FROM profiles WHERE id = auth.jwt() ->> 'sub')
+    church_id IN (SELECT church_id FROM profiles WHERE id = (auth.jwt() ->> 'sub')::uuid)
   );
 
 CREATE POLICY "Pastors and supervisors can manage communications" ON public.mass_communications
   FOR ALL USING (
     church_id IN (
       SELECT church_id FROM profiles 
-      WHERE id = auth.jwt() ->> 'sub' AND role IN ('pastor', 'supervisor')
+      WHERE id = (auth.jwt() ->> 'sub')::uuid AND role IN ('pastor', 'supervisor')
     )
   );
 

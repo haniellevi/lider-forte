@@ -76,7 +76,7 @@ CREATE INDEX IF NOT EXISTS idx_backup_configurations_next_backup ON backup_confi
 
 CREATE INDEX IF NOT EXISTS idx_backup_records_church_id ON backup_records(church_id);
 CREATE INDEX IF NOT EXISTS idx_backup_records_status ON backup_records(church_id, status);
-CREATE INDEX IF NOT EXISTS idx_backup_records_created_at ON backup_records(church_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_backup_records_started_at ON backup_records(church_id, started_at DESC);
 CREATE INDEX IF NOT EXISTS idx_backup_records_expires_at ON backup_records(expires_at) WHERE expires_at IS NOT NULL;
 
 CREATE INDEX IF NOT EXISTS idx_backup_logs_church_id ON backup_logs(church_id);
