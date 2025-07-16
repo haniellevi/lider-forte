@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCreateMassCommunication } from '@/hooks/queries/useNotifications';
 import { useCells } from '@/hooks/queries/useCells';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { 
   X, 

@@ -39,9 +39,6 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     return intlResponse;
   }
   
-  // Debug: Log das rotas para entender o problema
-  console.log('Middleware processing:', pathname);
-  console.log('Is public route:', isPublicRoute(req));
   
   // Verificar autenticação para rotas protegidas (páginas) APENAS se não for rota pública
   if (!isPublicRoute(req)) {
@@ -49,7 +46,6 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
       await auth.protect();
     } catch (error) {
       // Se falhar na autenticação, redirecionar para login
-      console.log('Auth protection failed for:', pathname);
     }
   }
   

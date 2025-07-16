@@ -15,7 +15,7 @@ import {
   UserPlus,
   CalendarDays
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CellForm, CellMembersTable, AddMemberModal } from "@/components/Cells";
 import { useCell, useCellMembers } from "@/hooks/queries/useCells";

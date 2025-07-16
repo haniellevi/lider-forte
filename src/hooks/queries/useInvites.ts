@@ -2,14 +2,67 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSupabase } from '@/hooks/useSupabase';
 import { useUser } from '@clerk/nextjs';
 import { useShowToast } from '@/store';
-import { Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/types';
+import { Database } from '@/lib/supabase/types';
 
-type Invite = Tables<'invites'>;
-type InviteInsert = TablesInsert<'invites'>;
-type InviteUpdate = TablesUpdate<'invites'>;
+// Temporary type definition based on migration until types are regenerated
+interface Invite {
+  id: string;
+  email: string;
+  full_name: string;
+  phone: string | null;
+  role: Database['public']['Enums']['user_role'];
+  message: string | null;
+  token: string;
+  status: 'pending' | 'accepted' | 'rejected' | 'expired';
+  church_id: string;
+  created_by: string;
+  accepted_by: string | null;
+  expires_at: string;
+  accepted_at: string | null;
+  rejected_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface InviteInsert {
+  id?: string;
+  email: string;
+  full_name: string;
+  phone?: string | null;
+  role?: Database['public']['Enums']['user_role'];
+  message?: string | null;
+  token?: string;
+  status?: 'pending' | 'accepted' | 'rejected' | 'expired';
+  church_id: string;
+  created_by: string;
+  accepted_by?: string | null;
+  expires_at?: string;
+  accepted_at?: string | null;
+  rejected_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface InviteUpdate {
+  id?: string;
+  email?: string;
+  full_name?: string;
+  phone?: string | null;
+  role?: Database['public']['Enums']['user_role'];
+  message?: string | null;
+  token?: string;
+  status?: 'pending' | 'accepted' | 'rejected' | 'expired';
+  church_id?: string;
+  created_by?: string;
+  accepted_by?: string | null;
+  expires_at?: string;
+  accepted_at?: string | null;
+  rejected_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
 
 type InviteStatus = 'pending' | 'accepted' | 'rejected' | 'expired';
-type UserRole = 'admin' | 'leader' | 'member';
 
 interface InviteWithChurch extends Invite {
   church?: {
@@ -114,7 +167,7 @@ export function useCreateInvite() {
   return useMutation({
     mutationFn: async (params: {
       email: string;
-      role: UserRole;
+      role: Database['public']['Enums']['user_role'];
       message?: string;
     }) => {
       if (!user?.id) throw new Error('User not authenticated');

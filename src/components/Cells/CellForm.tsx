@@ -14,7 +14,7 @@ import {
   Save,
   X
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { FormInput, AddressForm } from "@/components/FormElements/enhanced";
 import { Select } from "@/components/FormElements/select";
 import { useFormValidation } from "@/hooks/useFormValidation";

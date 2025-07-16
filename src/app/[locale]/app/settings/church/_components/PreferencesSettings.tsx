@@ -11,7 +11,7 @@ import {
   Clock,
   MapPin 
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Select } from "@/components/FormElements/select";
 import { Switch } from "@/components/FormElements/switch";
 import { FormInput } from "@/components/FormElements/enhanced";

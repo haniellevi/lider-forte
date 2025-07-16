@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { LeaderboardEntry, getCurrentLevel } from './types';
-import { AnimatedCounter, CompactLevelProgress } from './AnimatedCounter';
+import { AnimatedCounter } from './AnimatedCounter';
+import { LevelProgressBar } from './LevelProgressBar';
 
 interface LeaderboardWidgetProps {
   entries: LeaderboardEntry[];
@@ -275,9 +276,10 @@ const UserRankingCard: FC<UserRankingCardProps> = ({
 
         {showLevel && !compact && (
           <div className="mt-1">
-            <CompactLevelProgress 
+            <LevelProgressBar 
               currentPoints={entry.score}
-              showText={false}
+              className="scale-75"
+              showLevelUpAnimation={false}
             />
             <p className="text-xs text-body-color dark:text-body-color-dark mt-1">
               {entry.level.name}

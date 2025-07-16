@@ -1,4 +1,4 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js';
 import { auth } from '@clerk/nextjs/server';
 
 // Cache para instâncias do cliente por token
@@ -20,7 +20,7 @@ export const createClient = async () => {
   }
   
   // Criar nova instância
-  const client = createClient(
+  const client = createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -49,7 +49,7 @@ export const createClient = async () => {
 export const createServerClient = createClient;
 
 export const createAdminClient = () => {
-  return createClient(
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {

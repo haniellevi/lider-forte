@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Bell, Mail, MessageSquare, Users, Save } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/FormElements/switch";
 import { toast } from "sonner";
 

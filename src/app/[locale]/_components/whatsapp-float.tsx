@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { X, MessageCircle, Send, Phone, User, Check } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "./whatsapp-icon";
 
 interface WhatsAppFloatProps {

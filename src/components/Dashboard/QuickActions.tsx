@@ -11,7 +11,7 @@ import {
   FileText,
   Zap
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { useCurrentUserProfile } from "@/hooks/queries/useUsers";
 
 interface QuickActionProps {

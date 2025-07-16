@@ -16,7 +16,7 @@ import {
   Eye,
   Building
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dropdown, DropdownContent, DropdownTrigger } from "@/components/ui/dropdown";
 import { useDeleteCell } from "@/hooks/queries/useCells";

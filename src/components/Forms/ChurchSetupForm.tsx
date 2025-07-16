@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { ValidatedInput, FormInput } from "@/components/FormElements/enhanced";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/TextArea";
 import { useFormValidation } from "@/hooks/useFormValidation";

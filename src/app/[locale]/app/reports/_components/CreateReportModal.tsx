@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCreateReport, useUpdateReport, useReport } from '@/hooks/queries/useReports';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { X } from 'lucide-react';
 import { CreateReportRequest, UpdateReportRequest } from '@/types/reports';

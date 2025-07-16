@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useGenerateReport } from '@/hooks/queries/useReports';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { X, Download, Zap } from 'lucide-react';
 import { ReportGenerationRequest, ReportGenerationResponse } from '@/types/reports';

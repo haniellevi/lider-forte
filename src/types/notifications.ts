@@ -149,6 +149,7 @@ export interface CreateMassCommunicationRequest {
 }
 
 export interface UpdateNotificationRequest {
+  id: string;
   read?: boolean;
   metadata?: Record<string, any>;
 }

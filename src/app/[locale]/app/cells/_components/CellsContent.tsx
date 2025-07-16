@@ -11,7 +11,7 @@ import {
   List,
   Plus
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import InputGroup from "@/components/FormElements/InputGroup";
 import { Select } from "@/components/FormElements/select";
 import { CellCard, CellsTree, CellForm } from "@/components/Cells";

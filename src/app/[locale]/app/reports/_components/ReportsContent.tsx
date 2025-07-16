@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Plus, BarChart3, FileText, Zap } from 'lucide-react';
 import { DashboardOverview } from '@/components/Reports/DashboardOverview';
 import { ReportsList } from './ReportsList';

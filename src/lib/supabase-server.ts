@@ -1,0 +1,1 @@
+export { createClient as createServerComponentClient } from './supabase/server'

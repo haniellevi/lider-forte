@@ -69,7 +69,7 @@ export {
   useLeaderboard,
   useCreateLadderLevel,
   useUpdateLadderLevel,
-  useLevelByScore,
+  getLevelByScore,
   useLevelProgress,
   useLevelStatistics
 } from '@/hooks/queries/useLevels';

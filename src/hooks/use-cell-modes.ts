@@ -36,7 +36,7 @@ export function useCellModes() {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar templates de modo',
-        variant: 'destructive'
+        variant: 'error'
       })
     } finally {
       setLoading(false)
@@ -73,7 +73,7 @@ export function useCellMode(cellId: string) {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar modo atual da célula',
-        variant: 'destructive'
+        variant: 'error'
       })
     } finally {
       setLoading(false)
@@ -95,7 +95,7 @@ export function useCellMode(cellId: string) {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar histórico de modos',
-        variant: 'destructive'
+        variant: 'error'
       })
     }
   }
@@ -147,7 +147,7 @@ export function useCellMode(cellId: string) {
       toast({
         title: 'Erro',
         description: error instanceof Error ? error.message : 'Erro ao ativar modo',
-        variant: 'destructive'
+        variant: 'error'
       })
       throw error
     } finally {
@@ -196,7 +196,7 @@ export function useModeMetrics(modeId: string) {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar métricas do modo',
-        variant: 'destructive'
+        variant: 'error'
       })
     } finally {
       setLoading(false)
@@ -233,7 +233,7 @@ export function useModeMetrics(modeId: string) {
       toast({
         title: 'Erro',
         description: error instanceof Error ? error.message : 'Erro ao atualizar métricas',
-        variant: 'destructive'
+        variant: 'error'
       })
       throw error
     } finally {
@@ -281,7 +281,7 @@ export function useModeActivities(modeId: string) {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar atividades',
-        variant: 'destructive'
+        variant: 'error'
       })
     } finally {
       setLoading(false)
@@ -318,7 +318,7 @@ export function useModeActivities(modeId: string) {
       toast({
         title: 'Erro',
         description: error instanceof Error ? error.message : 'Erro ao criar atividade',
-        variant: 'destructive'
+        variant: 'error'
       })
       throw error
     } finally {
@@ -356,7 +356,7 @@ export function useModeActivities(modeId: string) {
       toast({
         title: 'Erro',
         description: error instanceof Error ? error.message : 'Erro ao atualizar atividade',
-        variant: 'destructive'
+        variant: 'error'
       })
       throw error
     } finally {
@@ -388,7 +388,7 @@ export function useModeActivities(modeId: string) {
       toast({
         title: 'Erro',
         description: error instanceof Error ? error.message : 'Erro ao excluir atividade',
-        variant: 'destructive'
+        variant: 'error'
       })
       throw error
     } finally {
@@ -437,7 +437,7 @@ export function useModeDashboard(churchId: string) {
       toast({
         title: 'Erro',
         description: 'Erro ao carregar dashboard de modos',
-        variant: 'destructive'
+        variant: 'error'
       })
     } finally {
       setLoading(false)

@@ -1,11 +1,17 @@
 import {Link} from "@/i18n/navigation";
 import { useTranslations } from 'next-intl';
 
-interface BreadcrumbProps {
-  pageName: string;
+interface BreadcrumbItem {
+  label: string;
+  href: string;
 }
 
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
+interface BreadcrumbProps {
+  pageName: string;
+  items?: BreadcrumbItem[];
+}
+
+const Breadcrumb = ({ pageName, items }: BreadcrumbProps) => {
   const t = useTranslations('Navigation');
   
   return (
@@ -16,12 +22,28 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
 
       <nav>
         <ol className="flex items-center gap-2">
-          <li>
-            <Link className="font-medium" href="/">
-              {t('dashboard')} /
-            </Link>
-          </li>
-          <li className="font-medium text-primary">{pageName}</li>
+          {items ? (
+            items.map((item, index) => (
+              <li key={index}>
+                {index === items.length - 1 ? (
+                  <span className="font-medium text-primary">{item.label}</span>
+                ) : (
+                  <Link className="font-medium" href={item.href}>
+                    {item.label} /
+                  </Link>
+                )}
+              </li>
+            ))
+          ) : (
+            <>
+              <li>
+                <Link className="font-medium" href="/">
+                  {t('dashboard')} /
+                </Link>
+              </li>
+              <li className="font-medium text-primary">{pageName}</li>
+            </>
+          )}
         </ol>
       </nav>
     </div>

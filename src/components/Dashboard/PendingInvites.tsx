@@ -9,7 +9,7 @@ import {
   User,
   MoreHorizontal 
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useDashboardData } from "@/hooks/queries/useDashboard";
 import { formatDistanceToNow } from "date-fns";

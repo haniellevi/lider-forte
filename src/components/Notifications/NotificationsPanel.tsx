@@ -9,7 +9,7 @@ import {
   useDeleteNotification,
   useUpdateNotification 
 } from '@/hooks/queries/useNotifications';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { 
   Bell, 
   BellOff, 

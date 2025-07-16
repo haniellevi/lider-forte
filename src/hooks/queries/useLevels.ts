@@ -144,8 +144,8 @@ export const useUpdateLadderLevel = () => {
   });
 };
 
-// Hook to get level by score (utility function)
-export const useLevelByScore = (score: number, levels?: LadderLevel[]) => {
+// Utility function to get level by score
+export const getLevelByScore = (score: number, levels?: LadderLevel[]) => {
   if (!levels) return null;
 
   for (const level of levels) {
@@ -162,7 +162,7 @@ export const useLevelByScore = (score: number, levels?: LadderLevel[]) => {
 export const useLevelProgress = (currentScore: number, levels?: LadderLevel[]) => {
   if (!levels) return { progress: 0, pointsToNext: 0, nextLevel: null };
 
-  const currentLevel = useLevelByScore(currentScore, levels);
+  const currentLevel = getLevelByScore(currentScore, levels);
   if (!currentLevel) return { progress: 0, pointsToNext: 0, nextLevel: null };
 
   const nextLevel = levels.find(level => level.order_index === currentLevel.order_index + 1);

@@ -22,7 +22,17 @@
       "Bash(cp:*)",
       "Bash(taskkill:*)",
       "Bash(timeout 3 curl -s http://localhost:3000/)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm outdated)",
+      "Bash(npm ci:*)",
+      "Bash(npm update:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 8 npm run dev)",
+      "Bash(timeout:*)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }

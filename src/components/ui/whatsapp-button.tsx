@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { X, Send, Phone, User, Check } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 interface WhatsAppIconProps {
   className?: string;

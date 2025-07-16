@@ -1,65 +1,82 @@
-import { cva, VariantProps } from "class-variance-authority";
-import type { HTMLAttributes } from "react";
+"use client";
+
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2.5 text-center font-medium hover:bg-opacity-90 font-medium transition focus:outline-none",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "bg-primary text-white",
-        green: "bg-green text-white",
-        dark: "bg-dark text-white dark:bg-white/10",
-        outlinePrimary:
-          "border border-primary hover:bg-primary/10 text-primary",
-        outlineGreen: "border border-green hover:bg-green/10 text-green",
-        outlineDark:
-          "border border-dark hover:bg-dark/10 text-dark dark:hover:bg-white/10 dark:border-white/25 dark:text-white",
-      },
-      shape: {
-        default: "",
-        rounded: "rounded-[5px]",
-        full: "rounded-full",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        green: "bg-green-500 text-white hover:bg-green-600",
+        outlinePrimary: "border border-primary text-primary hover:bg-primary hover:text-primary-foreground",
+        outlineDark: "border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white",
+        error: "bg-red-500 text-white hover:bg-red-600",
       },
       size: {
-        default: "py-3.5 px-10 py-3.5 lg:px-8 xl:px-10",
-        small: "py-[11px] px-6",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+        small: "h-8 px-3 text-xs",
+      },
+      shape: {
+        default: "rounded-md",
+        rounded: "rounded-lg",
+        full: "rounded-full",
       },
     },
     defaultVariants: {
-      variant: "primary",
-      shape: "default",
+      variant: "default",
       size: "default",
+      shape: "default",
     },
-  },
+  }
 );
 
-type ButtonProps = HTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof buttonVariants> & {
-    label?: string;
-    icon?: React.ReactNode;
-    disabled?: boolean;
-    type?: "button" | "submit" | "reset";
-    children?: React.ReactNode;
-  };
-
-export function Button({
-  label,
-  icon,
-  variant,
-  shape,
-  size,
-  className,
-  children,
-  ...props
-}: ButtonProps) {
-  return (
-    <button
-      className={buttonVariants({ variant, shape, size, className })}
-      {...props}
-    >
-      {icon && <span>{icon}</span>}
-      {label}
-      {children}
-    </button>
-  );
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  label?: string;
+  icon?: React.ReactNode;
 }
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, shape, asChild = false, label, icon, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    
+    const content = (
+      <>
+        {icon && <span className="flex items-center">{icon}</span>}
+        {label && <span>{label}</span>}
+        {children}
+      </>
+    );
+
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, shape, className }))}
+        ref={ref}
+        {...props}
+      >
+        {content}
+      </Comp>
+    );
+  }
+);
+Button.displayName = "Button";
+
+export { Button, buttonVariants };

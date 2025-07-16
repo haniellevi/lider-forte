@@ -2,23 +2,20 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSupabase } from '@/hooks/useSupabase';
 import { useUser } from '@clerk/nextjs';
 import { useShowToast } from '@/store';
-import { Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/types';
+import { Tables, TablesInsert, TablesUpdate, Database } from '@/lib/supabase/types';
 
 type Profile = Tables<'profiles'>;
 type ProfileInsert = TablesInsert<'profiles'>;
 type ProfileUpdate = TablesUpdate<'profiles'>;
 
-type UserRole = 'admin' | 'leader' | 'member';
-
 interface ChurchUser extends Profile {
-  role: UserRole;
   joined_at: string;
   last_active: string | null;
 }
 
 export function useChurchUsers(params: {
   search?: string;
-  role?: UserRole;
+  role?: Database['public']['Enums']['user_role'];
   page?: number;
   limit?: number;
 }) {
@@ -67,7 +64,7 @@ export function useChurchUsers(params: {
       
       return (data || []).map(user => ({
         ...user,
-        role: (user.role as UserRole) || 'member',
+        role: user.role || 'member',
         joined_at: user.created_at,
         last_active: user.updated_at,
       }));
@@ -83,7 +80,7 @@ export function useUpdateUserRole() {
   const { user } = useUser();
   
   return useMutation({
-    mutationFn: async (params: { userId: string; role: UserRole }) => {
+    mutationFn: async (params: { userId: string; role: Database['public']['Enums']['user_role'] }) => {
       if (!user?.id) throw new Error('User not authenticated');
       
       const { data, error } = await supabase
@@ -147,7 +144,7 @@ export function useInviteUser() {
   return useMutation({
     mutationFn: async (params: {
       email: string;
-      role: UserRole;
+      role: Database['public']['Enums']['user_role'];
       message?: string;
     }) => {
       if (!user?.id) throw new Error('User not authenticated');

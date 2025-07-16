@@ -34,6 +34,215 @@ export type Database = {
   }
   public: {
     Tables: {
+      approval_workflows: {
+        Row: {
+          id: string
+          multiplication_id: string
+          church_id: string
+          workflow_type: Database["public"]["Enums"]["workflow_type"]
+          current_step: number
+          total_steps: number
+          status: Database["public"]["Enums"]["approval_workflow_status"]
+          initiated_by: string
+          initiated_at: string
+          completed_at: string | null
+          workflow_config: Json
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          multiplication_id: string
+          church_id: string
+          workflow_type?: Database["public"]["Enums"]["workflow_type"]
+          current_step?: number
+          total_steps?: number
+          status?: Database["public"]["Enums"]["approval_workflow_status"]
+          initiated_by: string
+          initiated_at?: string
+          completed_at?: string | null
+          workflow_config?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          multiplication_id?: string
+          church_id?: string
+          workflow_type?: Database["public"]["Enums"]["workflow_type"]
+          current_step?: number
+          total_steps?: number
+          status?: Database["public"]["Enums"]["approval_workflow_status"]
+          initiated_by?: string
+          initiated_at?: string
+          completed_at?: string | null
+          workflow_config?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_workflows_church_id_fkey"
+            columns: ["church_id"]
+            isOneToOne: false
+            referencedRelation: "churches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_workflows_initiated_by_fkey"
+            columns: ["initiated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_workflows_multiplication_id_fkey"
+            columns: ["multiplication_id"]
+            isOneToOne: false
+            referencedRelation: "multiplication_processes"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      approval_steps: {
+        Row: {
+          id: string
+          workflow_id: string
+          step_number: number
+          approver_role: Database["public"]["Enums"]["profile_role"]
+          required_approver_id: string | null
+          status: Database["public"]["Enums"]["step_status"]
+          approved_by: string | null
+          approved_at: string | null
+          rejection_reason: string | null
+          comments: string | null
+          auto_approved: boolean
+          expires_at: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          workflow_id: string
+          step_number: number
+          approver_role: Database["public"]["Enums"]["profile_role"]
+          required_approver_id?: string | null
+          status?: Database["public"]["Enums"]["step_status"]
+          approved_by?: string | null
+          approved_at?: string | null
+          rejection_reason?: string | null
+          comments?: string | null
+          auto_approved?: boolean
+          expires_at: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          workflow_id?: string
+          step_number?: number
+          approver_role?: Database["public"]["Enums"]["profile_role"]
+          required_approver_id?: string | null
+          status?: Database["public"]["Enums"]["step_status"]
+          approved_by?: string | null
+          approved_at?: string | null
+          rejection_reason?: string | null
+          comments?: string | null
+          auto_approved?: boolean
+          expires_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_steps_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "approval_workflows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_steps_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      approval_notifications: {
+        Row: {
+          id: string
+          workflow_id: string
+          step_id: string
+          recipient_id: string
+          notification_type: Database["public"]["Enums"]["notification_type"]
+          title: string
+          message: string
+          priority: Database["public"]["Enums"]["notification_priority"]
+          is_read: boolean
+          is_dismissed: boolean
+          action_url: string | null
+          action_label: string | null
+          read_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          workflow_id: string
+          step_id: string
+          recipient_id: string
+          notification_type: Database["public"]["Enums"]["notification_type"]
+          title: string
+          message: string
+          priority?: Database["public"]["Enums"]["notification_priority"]
+          is_read?: boolean
+          is_dismissed?: boolean
+          action_url?: string | null
+          action_label?: string | null
+          read_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          workflow_id?: string
+          step_id?: string
+          recipient_id?: string
+          notification_type?: Database["public"]["Enums"]["notification_type"]
+          title?: string
+          message?: string
+          priority?: Database["public"]["Enums"]["notification_priority"]
+          is_read?: boolean
+          is_dismissed?: boolean
+          action_url?: string | null
+          action_label?: string | null
+          read_at?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_notifications_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "approval_workflows"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_notifications_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "approval_steps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_notifications_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       churches: {
         Row: {
           id: string,
@@ -1124,6 +1333,12 @@ export type Database = {
     }
     Enums: {
       user_role: "pastor" | "supervisor" | "leader" | "timoteo" | "member"
+      profile_role: "pastor" | "supervisor" | "leader" | "timoteo" | "member"
+      workflow_type: "multiplication" | "leadership_promotion" | "cell_creation" | "budget_approval"
+      approval_workflow_status: "pending" | "approved" | "rejected" | "cancelled" | "expired"
+      step_status: "pending" | "approved" | "rejected" | "skipped" | "expired"
+      notification_type: "approval_request" | "approval_reminder" | "approval_approved" | "approval_rejected" | "workflow_completed" | "workflow_expired" | "info" | "success" | "warning" | "error" | "message" | "alert" | "reminder" | "update"
+      notification_priority: "low" | "medium" | "high" | "urgent"
       activity_category: "attendance" | "events" | "courses" | "service" | "consistency"
       badge_category: "frequency" | "leadership" | "learning" | "service" | "special"
       badge_rarity: "common" | "rare" | "epic" | "legendary"
@@ -1253,6 +1468,12 @@ export const Constants = {
   public: {
     Enums: {
       user_role: ["pastor", "supervisor", "leader", "timoteo", "member"],
+      profile_role: ["pastor", "supervisor", "leader", "timoteo", "member"],
+      workflow_type: ["multiplication", "leadership_promotion", "cell_creation", "budget_approval"],
+      approval_workflow_status: ["pending", "approved", "rejected", "cancelled", "expired"],
+      step_status: ["pending", "approved", "rejected", "skipped", "expired"],
+      notification_type: ["approval_request", "approval_reminder", "approval_approved", "approval_rejected", "workflow_completed", "workflow_expired", "info", "success", "warning", "error", "message", "alert", "reminder", "update"],
+      notification_priority: ["low", "medium", "high", "urgent"],
       activity_category: ["attendance", "events", "courses", "service", "consistency"],
       badge_category: ["frequency", "leadership", "learning", "service", "special"],
       badge_rarity: ["common", "rare", "epic", "legendary"],
